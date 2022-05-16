@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./dist/weapp",
+  "projectname": "xgniao",
+  "description": "寻工鸟",
+  "appid": "wxb58c34613a3e403e",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}

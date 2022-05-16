@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./dist/tt",
+  "projectname": "xgniao",
+  "description": "寻工鸟",
+  "appid": "",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}
