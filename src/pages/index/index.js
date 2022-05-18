@@ -1,10 +1,10 @@
 import { useDidHide, useDidShow } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { observer } from 'mobx-react-lite'
+import { View } from '@tarojs/components'
 
-import counterStore from './store'
+import List from './list';
+import Counter from './counter';
 
-import './index.scss'
+import styles from  './Index.module.scss'
 
 const Index = () => {
   useDidHide(() => {
@@ -14,13 +14,11 @@ const Index = () => {
     console.log('Index Did Show');
   })
   return (
-    <View className='index'>
-      <Button onClick={() => counterStore.increment()}>+</Button>
-      <Button onClick={() => counterStore.decrement()}>-</Button>
-      <Button onClick={() => counterStore.incrementAsync()}>Add Async</Button>
-      <Text>{counterStore.counter}</Text>
+    <View className={styles.container}>
+      <Counter />
+      <List />
     </View>
   )
 };
 
-export default observer(Index)
+export default Index
