@@ -1,6 +1,8 @@
 # 跨平台小程序基础框架模板
 模板基于Taro[https://taro-docs.jd.com/taro/docs/]+ React + Mobx 进行开发
 
+项目中使用 Taro-iconfont-cli[https://github.com/iconfont-cli/taro-iconfont-cli]渲染iconfont，图标更新请执行`npx iconfont-taro`
+
 ## 环境变量配置
 `./config/dev.js` 配置开发环境
 `./config/prod.js` 配置生产和UAT环境
