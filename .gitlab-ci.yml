@@ -1,0 +1,67 @@
+stages:
+  - fws_deploy
+  - fat_deploy
+  - uat_deploy
+  - prod_deploy
+
+cache:
+  paths:
+    - node_modules/
+
+fws_deploy:
+  stage: fws_deploy
+  environment:
+    name: fws
+  only:
+    - merge_requests
+  variables:
+    APP_ID: ''
+    APP_SUB_DIR: ''
+  script:
+    - /bin/bash /opt/k8s/app.sh 
+  when: always
+
+fat_deploy:
+  stage: fat_deploy
+  environment:
+    name: fat
+  tags:
+    - dev
+  only:
+    - dev
+  variables:
+    APP_ID: ''
+    APP_SUB_DIR: ''
+  script:
+    - /bin/bash /opt/k8s/app.sh
+  when: manual
+
+uat_deploy:
+  stage: uat_deploy
+  environment:
+    name: uat
+  tags:
+    - dev
+  only:
+    - dev
+  variables:
+    APP_ID: ''
+    APP_SUB_DIR: ''
+  script:
+    - /bin/bash /opt/k8s/app.sh
+  when: always
+
+prod_deploy:
+  stage: prod_deploy
+  environment:
+    name: prod
+  tags:
+    - aliyun
+  only:
+    - /^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$/
+  variables:
+    APP_ID: ''
+    APP_SUB_DIR: ''
+  script:
+    - /bin/bash /opt/k8s/app.sh
+  when: manual
