@@ -5,13 +5,14 @@ export type ActionType = {
 }
 
 export type Props = {
-  onClick: () => void;
+  icon: {
+    src: string,
+    width?: number, //192
+    height?: number, // 192
+  };
+  customIcon: JSX.Element;
   title?: string | JSX.Element;
-  icon: string;
-  width?: string;
-  height?: string,
   status?: string;
   subTitle?: string | JSX.Element;
   extra?:string | JSX.Element;
-  children?: JSX.Element;
 };
