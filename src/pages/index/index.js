@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDidHide, useDidShow, navigateTo } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components'
-import { Modal, Dialog } from '@/components';
+import { View } from '@tarojs/components'
+import { Modal, Dialog, Button } from '@/components';
 import List from './list';
 import Counter from './counter';
 
@@ -31,11 +31,63 @@ const Index = () => {
 
   return (
     <View className={styles.container}>
-      <View style='display: flex; align-items: center'>
-        <Button size='mini' type='primary' onClick={handleFormClick}>表单</Button>
-        <Button size='mini' type='primary' onClick={() => setModalVisible(true)}>Modal</Button>
-        <Button size='mini' type='primary' onClick={() => setDialogVisible(true)}>Dialog</Button>
-        <Button size='mini' type='primary' onClick={handleToResult}>结果页</Button>
+      <View style='display: flex; align-items: center; justify-content: space-between; flex-wrap: no-wrap'>
+        <Button
+          type='primary'
+          onClick={handleFormClick}
+          ghost
+        >表单</Button>
+        <Button
+          size='mini'
+          type='primary'
+          ghost
+          onClick={() => setModalVisible(true)}
+        >Modal</Button>
+        <Button
+          size='mini'
+          type='primary'
+          ghost
+          disabled
+          onClick={() => setModalVisible(true)}
+        >Disabled</Button>
+        <Button
+          size='mini'
+          type='primary'
+          ghost
+          round={false}
+        >NoRound</Button>
+      </View>
+      <View style='display: flex; align-items: center; margin-top: 10Px; justify-content: space-between; flex-wrap: no-wrap'>
+        <Button
+          size='mini'
+          type='primary'
+          loading
+          onClick={() => setModalVisible(true)}
+        >Modal</Button>
+        <Button
+          size='mini'
+          type='primary'
+          onClick={() => setDialogVisible(true)}
+        >Dialog</Button>
+        <Button
+          size='mini'
+          type='primary'
+          onClick={() => setDialogVisible(true)}
+          disabled
+        >Disabled</Button>
+        <Button
+          size='mini'
+          type='primary'
+          round={false}
+          loading
+        >NoRound</Button>
+      </View>
+      <View style='display: flex; align-items: center; margin-top: 10Px'>
+        <Button
+          size='mini'
+          type='primary'
+          onClick={handleToResult}
+        >结果页</Button>
         <Counter />
       </View>
       <List />
