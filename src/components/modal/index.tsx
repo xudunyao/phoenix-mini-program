@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components';
 import { IconFont } from '@/components';
 import { Props } from './types';
 
-import styles from './Modal.module.scss';
+import './styles.scss';
 
 const Modal: React.FC<Props> = ({
   onClose,
@@ -18,22 +18,22 @@ const Modal: React.FC<Props> = ({
     }
   }
   return (
-    <View className={styles.container} style={{ display: visible ? 'block' : 'none' }}>
-      <View className={styles.mask} onClick={handleMaskClick}></View>
-      <View className={styles.body}>
-        <View className={styles.header}>
+    <View className='modal' style={{ display: visible ? 'block' : 'none' }}>
+      <View className='modal-mask' onClick={handleMaskClick}></View>
+      <View className='modal-body'>
+        <View className='modal-header'>
           <View style='flex: 1'>
             {typeof title === 'string' ?(
-              <Text className={styles.title}>
+              <Text className='modal-title'>
                 {title}
               </Text>
             ) : title}
           </View>
-          <View className={styles.close} onClick={onClose}>
+          <View className='modal-close' onClick={onClose}>
             <IconFont name='close' />
           </View>
         </View>
-        <View className={styles.content}>
+        <View className='modal-content'>
           {children}
         </View>
       </View>

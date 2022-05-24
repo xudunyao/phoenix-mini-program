@@ -3,7 +3,7 @@ import { View } from '@tarojs/components';
 import Loading from '../loading';
 import { Props } from './types';
 
-import styles from './Button.module.scss';
+import './styles.scss';
 
 const Button: React.FC<Props> = ({
   title,
@@ -24,17 +24,17 @@ const Button: React.FC<Props> = ({
   return (
     <View
       className={`
-        ${styles.container}
-        ${ghost && styles.ghost}
-        ${(disabled || loading) && styles.disabled}
-        ${round && styles.round}
-        ${styles[size]}
+        button
+        ${ghost && 'button-ghost'}
+        ${(disabled || loading) && 'button-disabled'}
+        ${round && 'button-round'}
+        ${`button-${size}`}
       `}
       onClick={handleClick}
       style={customStyles}
     >
       {loading && (
-        <View style='margin-right: 10Px'>
+        <View className='activity-indicator'>
           <Loading size='16Px' color={ghost ? '#80A2FF' : '#ffffff'} />
         </View>
       )}

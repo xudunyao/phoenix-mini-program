@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text } from '@tarojs/components';
-import { IconFont } from '@/components';
 import { Props } from './types';
 
 import styles from './Dialog.module.scss';
+import './styles.scss';
 
 const Dialog: React.FC<Props> = ({
   onClose,
@@ -25,28 +25,28 @@ const Dialog: React.FC<Props> = ({
     type: 'primary'
   }]
   return (
-    <View className={styles.container} style={{ display: visible ? 'block' : 'none' }}>
-      <View className={styles.mask} onClick={handleMaskClick}></View>
-      <View className={styles.body}>
-        <View className={styles.header}>
+    <View className='dialog' style={{ display: visible ? 'block' : 'none' }}>
+      <View className='dialog-mask' onClick={handleMaskClick}></View>
+      <View className='dialog-body'>
+        <View className='dialog-header'>
           {typeof title === 'string' ?(
-            <Text className={styles.title}>
+            <Text className='dialog-title'>
               {title}
             </Text>
           ) : title}
         </View>
-        <View className={styles.content}>
+        <View className='dialog-content'>
           {typeof content === 'string' ?(
-            <Text className={styles.contentText}>
+            <Text className='dialog-content-text'>
               {content}
             </Text>
           ) : content}
         </View>
-        <View className={styles.actions}>
+        <View className='dialog-actions'>
           {
             renderedActions.map(a => (
-              <View key={a.title} className={styles.action} onClick={a.onClick || onClose}>
-                <Text className={`${styles.actionTitle} ${styles[`actionTitle-${a.type}`]}`}>{a.title}</Text>
+              <View key={a.title} className='dialog-actions-item' onClick={a.onClick || onClose}>
+                <Text className={`dialog-actions-item-title dialog-actions-item-title__${a.type}`}>{a.title}</Text>
               </View>
             ))
           }

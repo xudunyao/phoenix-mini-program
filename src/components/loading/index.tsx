@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from '@tarojs/components'
 
-import styles from './Loading.module.scss'
+import './styles.scss'
 
 interface Props {
   size?: string | number
@@ -24,10 +24,10 @@ const Loading: React.FC<Props> = ({
     const ringStyle = Object.assign({}, colorStyle, sizeStyle)
 
     return (
-      <View className={styles.loading} style={sizeStyle}>
-        <View className={styles.ring} style={ringStyle}></View>
-        <View className={styles.ring} style={ringStyle}></View>
-        <View className={styles.ring} style={ringStyle}></View>
+      <View className='loading' style={sizeStyle}>
+        <View className='loading-ring' style={ringStyle}></View>
+        <View className='loading-ring' style={ringStyle}></View>
+        <View className='loading-ring' style={ringStyle}></View>
       </View>
     )
 }
