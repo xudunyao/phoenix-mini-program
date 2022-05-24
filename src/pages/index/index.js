@@ -21,7 +21,13 @@ const Index = () => {
     navigateTo({
       url: '/pages/form/index'
     })
-  }
+  };
+
+  const handleToResult = () => {
+    navigateTo({
+      url: '/pages/result/index'
+    })
+  };
 
   return (
     <View className={styles.container}>
@@ -29,6 +35,7 @@ const Index = () => {
         <Button size='mini' type='primary' onClick={handleFormClick}>表单</Button>
         <Button size='mini' type='primary' onClick={() => setModalVisible(true)}>Modal</Button>
         <Button size='mini' type='primary' onClick={() => setDialogVisible(true)}>Dialog</Button>
+        <Button size='mini' type='primary' onClick={handleToResult}>结果页</Button>
         <Counter />
       </View>
       <List />
