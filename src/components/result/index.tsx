@@ -16,12 +16,17 @@ const Result: React.FC<Props> = ({
   return (
     <View className={styles.result}>
       {customIcon ? {customIcon} :(
-         <Image className={styles.img} src={icon?.src} style={`width: ${icon.width?icon.width:192}px;height: ${icon.height?icon.height:192}px;`} />
+         <Image src={icon?.src} style={`width: ${icon.width?icon.width:192}px;height: ${icon.height?icon.height:192}px;`} />
         )
       }
-      {title? <View className={styles.title}>{title}</View> : null}
-      {subTitle? <View className={styles.subTitle}>{subTitle}</View>: null}
-      {extra?<View className={styles.btn}>{extra}</View>:null}
+      <View className={styles.space}>
+        {title? <View className={styles.title}>{title}</View> : null}
+      </View>
+        {subTitle? <View className={styles.subTitle}>{subTitle}</View>: null}
+      <View className={styles.space}>
+       {extra?<View className={styles.btn}>{extra}</View>:null}
+      </View>
+      
     </View>
   )
 }
