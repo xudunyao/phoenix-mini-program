@@ -3,7 +3,7 @@ import { View, Image } from '@tarojs/components';
 
 import { Props } from './types';
 
-import styles from './result.module.scss';
+import './styles.scss';
 
 const Result: React.FC<Props> = ({
   title,
@@ -13,14 +13,14 @@ const Result: React.FC<Props> = ({
   extra,
 }) => {
   return (
-    <View className={styles.Result}>
+    <View className='result'>
       {customIcon || <Image src={icon?.src} style={`width: ${icon.width?icon.width:192}px;height: ${icon.height?icon.height:192}px;`} /> }
-      <View className={styles.space}>
-        {title? <View className={styles.title}>{title}</View> : null}
+      <View className='result-space'>
+        {title? <View className='result-title'>{title}</View> : null}
       </View>
-        {subTitle? <View className={styles.subTitle}>{subTitle}</View>: null}
-      <View className={styles.space}>
-       {extra?<View className={styles.btn}>{extra}</View>:null}
+        {subTitle? <View className='result-subTitle'>{subTitle}</View>: null}
+      <View className='result-space'>
+       {extra?<View className='result-btn'>{extra}</View>:null}
       </View>
       
     </View>
