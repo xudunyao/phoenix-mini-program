@@ -2,7 +2,7 @@ import { ScrollView, View, Text, Button } from '@tarojs/components'
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { Props, ResponseTypes, PaginationTypes  } from './types';
 
-import styles from './InfiniteScroll.module.scss';
+import './styles.scss';
 
 const InfiniteScroll: React.FC<Props> = ({
   renderItem,
@@ -91,7 +91,7 @@ const InfiniteScroll: React.FC<Props> = ({
 
   return (
     <ScrollView
-      className={styles.container}
+      className='infinite-scroll'
       scrollY
       scrollWithAnimation
       upperThreshold={50}
@@ -102,23 +102,23 @@ const InfiniteScroll: React.FC<Props> = ({
     >
       {
         isLoading ? (
-          <View className={styles['fill-parent-container']}>
-            <Text className={styles.text}>Loading……</Text>
+          <View className='infinite-scroll-container'>
+            <Text className='infinite-scroll-text'>Loading……</Text>
           </View>
         ) : (
           <>
             <View>
-              {isRefreshing && (refreshComponent || <Text className={styles.text}>刷新中……</Text>)}
+              {isRefreshing && (refreshComponent || <Text className='infinite-scroll-text'>刷新中……</Text>)}
             </View>
             {
               list?.length
                 ? list.map((i, index) => renderItem(i, index))
                 : (
-                  <View className={styles['fill-parent-container']}>
+                  <View className='infinite-scroll-container'>
                     {
                       noDataComponent || (
                       <>
-                        <Text className={styles.text}>No Data</Text>
+                        <Text className='infinite-scroll-text'>No Data</Text>
                         <Button size='mini' onClick={() => refresh(true)}>重新获取</Button>
                       </>)
                     }
@@ -128,8 +128,8 @@ const InfiniteScroll: React.FC<Props> = ({
             {list.length ? (
               <View>
                 {
-                  isLoadingMore ? (loadingMoreComponent || (<Text className={styles.text}>数据加载中……</Text>)) : (
-                    hasMore ? (hasMoreComponent || (<Text className={styles.text}>上拉加载更多数据</Text>)) : (noMoreComponent || (<Text className={styles.text}>没有更多数据了</Text>))
+                  isLoadingMore ? (loadingMoreComponent || (<Text className='infinite-scroll-text'>数据加载中……</Text>)) : (
+                    hasMore ? (hasMoreComponent || (<Text className='infinite-scroll-text'>上拉加载更多数据</Text>)) : (noMoreComponent || (<Text className='infinite-scroll-text'>没有更多数据了</Text>))
                   )
                 }
               </View>
