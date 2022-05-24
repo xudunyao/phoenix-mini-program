@@ -1,0 +1,42 @@
+@import '@/scss/variable.scss';
+
+.form-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20Px;
+  &-label {
+    margin-right: 10Px;
+    font-size: 16Px;
+    &__top {
+      margin-right: 0;
+      margin-bottom: 6Px;
+    }
+    &__right {
+      text-align: right;
+    }
+  }
+  &-control {
+    position: relative;
+    flex: 1;
+  }
+  &-extra {
+    position: absolute;
+    bottom: -24Px;
+    font-size: 14Px;
+    line-height: 24Px;
+    color: $text-tertiary;
+  }
+  &-error {
+    color: $color-error;
+  }
+  &-required-flag {
+    margin-right: 6Px;
+    color: $color-error;
+  }
+
+  &__vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

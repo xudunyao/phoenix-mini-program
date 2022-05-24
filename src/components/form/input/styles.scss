@@ -1,0 +1,32 @@
+@import '@/scss/variable.scss';
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  border: 1Px solid #ddd;
+  border-radius: 4Px;
+  overflow: hidden;
+  &__error {
+    border-color: $color-error;
+  }
+  .input {
+    box-sizing: border-box;
+    flex: 1;
+    height: 42Px;
+    line-height: 22Px;
+    padding: 10Px;
+    font-size: 16Px;
+  }
+  .clear {
+    position: absolute;
+    height: 100%;
+    width: 42px;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+}
