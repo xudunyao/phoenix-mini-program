@@ -9,5 +9,5 @@ export default defineAppConfig({
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: '寻工鸟',
     navigationBarTextStyle: 'black'
-  }
+  },
 })
