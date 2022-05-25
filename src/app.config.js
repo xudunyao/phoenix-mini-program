@@ -1,3 +1,5 @@
+import { useGlobalIconFont } from './components/iconfont/helper';
+
 export default defineAppConfig({
   pages: [
     'pages/index/index',
@@ -10,4 +12,6 @@ export default defineAppConfig({
     navigationBarTitleText: '寻工鸟',
     navigationBarTextStyle: 'black'
   },
+  /* eslint-disable */
+  usingComponents: Object.assign(useGlobalIconFont()),
 })

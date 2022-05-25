@@ -1,6 +1,6 @@
 Component({
   properties: {
-    // warning-circle-fill | clear | warning | close
+    // radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
     name: {
       type: String,
     },
