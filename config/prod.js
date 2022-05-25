@@ -1,6 +1,7 @@
 module.exports = {
   env: {
-    NODE_ENV: '"production"'
+    NODE_ENV: '"production"',
+    TARO_ENV:Taro.getEnv(),
   },
   defineConstants: {
     // uat用于小程序预览环境

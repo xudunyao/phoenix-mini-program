@@ -1,6 +1,7 @@
 module.exports = {
   env: {
-    NODE_ENV: '"development"'
+    NODE_ENV: '"development"',
+    TARO_ENV:Taro.getEnv(),
   },
   defineConstants: {
     API_ENDPOINT: '',

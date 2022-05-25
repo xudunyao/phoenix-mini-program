@@ -11,47 +11,44 @@ import './styles.scss';
 
 
 const NavBar: React.FC<Props> = ({
-  title,
-  customNavStyle,
-  brand=false,
-  leftArrow=true,
+  title='寻工鸟',
+  customStyle,
+  showBack=true,
 }) => {
   const [ navHeight, setNavHeight] =useState(0);
   const [ navContentHeight, setNavContentHeight] =useState(0);
   const [ statusHeight, setStatusHeight] = useState(0);
   const getNavHeight =() =>{
-    const menuButtonObject = Taro.getMenuButtonBoundingClientRect();
     const sysinfo = Taro.getSystemInfoSync(); 
     const statusBarHeight:any = sysinfo.statusBarHeight; 
-    const menuBottonHeight =  menuButtonObject.height;
-    const menuBottonTop =  menuButtonObject.top;
-    const navBarHeight = statusBarHeight + menuBottonHeight + (menuBottonTop - statusBarHeight) * 2 ; 
+    const navBarHeight = 44+statusBarHeight;
     const navBarContent = navBarHeight -statusBarHeight;
     setNavHeight(navBarHeight);
     setNavContentHeight(navBarContent);
     setStatusHeight(statusBarHeight);
   };
+  const isH5 = process.env.TARO_ENV === 'h5'
   useEffect(() => {
-    if (Taro.getEnv()!=='WEB') {
+    if (!isH5) {
       getNavHeight();
     }
   }, [])
 
   return (
-    Taro.getEnv()!=='WEB'?<View className='navbar' style={`height:${navHeight}px;`+customNavStyle} >
-      <View className='navbar-content' style={`height:${navContentHeight}px;marginTop:${statusHeight}px;`}>
-      {brand && !!leftArrow?<View className='navbar-content-logo' style={`height:${navContentHeight}px;`}>
-          <Image className='navbar-content-logo-img' src={logo} />
-          <View className='navbar-content-logo-text'>
-            <View className='navbar-content-logo-text-title'>寻工鸟</View>
-            <View className='navbar-content-logo-text-subTitle'>富士康旗下劳务招聘平台</View>
-          </View>
-         
-        </View>:<View className='navbar-content-back' style={`line-height:${navContentHeight}px`}><Image className='navbar-content-back-img' src={backArrow} /></View>}
-        <View className='navbar-content-title' style={`line-height:${navContentHeight}px`}>{title}</View>
+    !isH5 ? (
+      <View className='navbar' style={`height:${navHeight}px;`+customStyle} >
+        <View className='navbar-content' style={`marginTop:${statusHeight}px;`}>
+        {
+          showBack?(
+            <View className='navbar-content-back' style={`line-height:${navContentHeight}px`}>
+              <Image className='navbar-content-back-img' src={backArrow} />
+            </View>
+          ):null
+        }
+          <View className='navbar-content-title'>{title}</View>
+        </View>
       </View>
-      
-    </View>:null
+    ):null
   )
 }
 
