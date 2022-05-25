@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from 'react';
 
 interface Props {
-  name: 'close';
+  name: 'warning-circle-fill' | 'clear' | 'warning' | 'close';
   size?: number;
   color?: string | string[];
   style?: React.CSSProperties;

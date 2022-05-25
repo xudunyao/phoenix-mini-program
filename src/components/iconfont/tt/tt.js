@@ -1,6 +1,6 @@
 Component({
   properties: {
-    // close
+    // warning-circle-fill | clear | warning | close
     name: {
       type: String,
     },

@@ -1,6 +1,6 @@
 Component({
   props: {
-    // close
+    // warning-circle-fill | clear | warning | close
     name: null,
     // string | string[]
     color: '',
