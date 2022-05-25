@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDidHide, useDidShow, navigateTo } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { Modal, Dialog, Button } from '@/components';
+import { Modal, Dialog, Button, NavBar } from '@/components';
 import List from './list';
 import Counter from './counter';
 
@@ -28,9 +28,9 @@ const Index = () => {
       url: '/pages/result/index'
     })
   };
-
   return (
     <View className={styles.container}>
+      <NavBar brand />
       <View style='display: flex; align-items: center; justify-content: space-between; flex-wrap: no-wrap'>
         <Button
           type='primary'

@@ -1,0 +1,51 @@
+@import '@/scss/variable.scss';
+.navbar{
+  position: fixed;
+  top: 0;
+  z-index: 11;
+  width: 100%;
+  background: linear-gradient(180deg, #EAEFFF 0%, #F4F7FF 100%);
+  justify-content: center;
+  color: $text-primary;
+  flex-shrink: 0;
+  &-content{
+    width: 100%;
+    text-align: center;
+    &-back{
+      position: fixed;
+      left: 12px;
+      z-index: 12;
+      &-img{
+       width: 16px;
+       height: 16px;
+      }
+    }
+    &-title{
+      font-size: 18px;
+      font-weight: 500;
+    }
+    &-logo {
+      display: flex;
+      justify-content: flex-start;
+      align-items:center;
+      
+      padding-left: 12px;
+      &-img{
+        width: 32px;
+        height: 32px;
+        vertical-align: middle;
+      }
+      &-text{
+        padding-left: 10px;
+        text-align: left;
+        &-title{
+          font-weight: 600;
+        }
+        &-subTitle{
+          font-size: 10px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
