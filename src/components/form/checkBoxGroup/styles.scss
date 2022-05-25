@@ -1,0 +1,23 @@
+@import '@/scss/variable.scss';
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  .taro-checkbox_checked {
+    margin-right: 6Px;
+  }
+  .checkbox-list__label {
+    margin-right: 10Px;
+  }
+  &-item {
+    line-height: 22Px;
+    padding: 10Px 0;
+    font-size: 16Px;
+    margin-right: 10Px;
+    color: $text-primary;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -8,9 +8,13 @@
   &-label {
     margin-right: 10Px;
     font-size: 16Px;
+    line-height: 22Px;
+    padding: 10Px 0;
+    box-sizing: border-box;
     &__top {
       margin-right: 0;
       margin-bottom: 6Px;
+      width: 100% !important;
     }
     &__right {
       text-align: right;
@@ -37,6 +41,6 @@
 
   &__vertical {
     flex-direction: column;
-    align-items: flex-start;
+    align-items:unset;
   }
 }

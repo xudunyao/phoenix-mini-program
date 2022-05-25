@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Input, View } from '@tarojs/components';
 import { IconFont } from '@/components';
 import { Props } from './types';
@@ -9,16 +9,14 @@ const MyInput: React.FC<Props> = ({
   onInput,
   onFocus,
   onBlur,
+  value = '',
   clearable = true,
   disabled = false,
   maxlength = 1000,
   placeholder = '请输入',
   error = false,
 }) => {
-  const [val, setVal] = useState('');
   const handleInput = (e) => {
-    console.log('handleInput', e?.detail?.value);
-    setVal(e?.detail?.value);
     if (onInput) {
       onInput(e?.detail?.value || '');
     }
@@ -35,6 +33,12 @@ const MyInput: React.FC<Props> = ({
       onBlur(e?.detail?.value);
     }
   }
+
+  const handleClear = () => {
+    if (onInput) {
+      onInput('');
+    }
+  }
   return (
     <View className={`input-wrapper ${error ? 'input-wrapper__error' : ''}`}>
       <Input
@@ -45,8 +49,9 @@ const MyInput: React.FC<Props> = ({
         onBlur={handleBlur}
         disabled={disabled}
         maxlength={maxlength}
+        value={value}
       />
-      {clearable && !!val && (<View className='clear'>
+      {clearable && !!value && (<View className='clear' onClick={handleClear}>
         <IconFont name='clear' color='#ccc' />
       </View>)}
     </View>

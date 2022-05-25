@@ -6,7 +6,7 @@ import './styles.scss';
 
 const FormItem: React.FC<Props> = ({
   label,
-  labelAlign = 'right',
+  labelAlign = 'top',
   labelWidth = 80,
   errorMsg,
   children,

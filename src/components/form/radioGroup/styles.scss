@@ -1,0 +1,17 @@
+@import '@/scss/variable.scss';
+
+.radio-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  &-item {
+    line-height: 22Px;
+    padding: 10Px 0;
+    font-size: 16Px;
+    margin-right: 10Px;
+    color: $text-primary;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
