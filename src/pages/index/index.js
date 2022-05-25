@@ -30,8 +30,8 @@ const Index = () => {
   };
   return (
     <View className={styles.container}>
-      <NavBar brand />
-      <View style='display: flex; align-items: center; justify-content: space-between; flex-wrap: no-wrap'>
+      <NavBar showBack />
+      <View style='display: flex; align-items: center; justify-content: space-between; flex-wrap: no-wrap;padding-top:100px'>
         <Button
           type='primary'
           onClick={handleFormClick}
