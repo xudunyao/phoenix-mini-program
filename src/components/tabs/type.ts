@@ -7,7 +7,7 @@ export type Props = {
   children: JSX.Element | JSX.Element[] ;
   tabStyle?: React.CSSProperties;
   swiperParams?: SwiperProps;
-  extra?: JSX.Element;
+  extra?: JSX.Element|string;
 };
 type Tab = {
   title: string;
