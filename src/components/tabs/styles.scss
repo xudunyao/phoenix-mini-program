@@ -1,0 +1,34 @@
+@import '@/scss/variable.scss';
+
+.container{
+   white-space: nowrap;
+  .tab-content{
+    display: block;
+  }
+  .tap-horizontal{
+    display: inline-block;
+  }
+  .tab-item{
+    font-size: 14px;
+    padding: 6Px 16Px;
+    color: $text-primary;
+    line-height: 20px;
+  }
+  .tab-item-active{
+    font-weight: 600;
+    line-height: 22px;
+  }
+  .tab-item-inactive{
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .tab-line{
+    height:2Px;
+    background: rgb(37, 22, 22);
+    display: block;
+  }
+  .panel-content{
+    pointer-events:none;
+    height: 100vh;
+  }
+}
