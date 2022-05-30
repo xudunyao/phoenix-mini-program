@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 import React from 'react';
+import IconLocation from './IconLocation';
+import IconTabsSelected from './IconTabsSelected';
 import IconRadiounchecked from './IconRadiounchecked';
 import IconRadiochecked from './IconRadiochecked';
 import IconBack from './IconBack';
@@ -8,6 +10,8 @@ import IconWarningCircleFill from './IconWarningCircleFill';
 import IconClear from './IconClear';
 import IconWarning from './IconWarning';
 import IconClose from './IconClose';
+export { default as IconLocation } from './IconLocation';
+export { default as IconTabsSelected } from './IconTabsSelected';
 export { default as IconRadiounchecked } from './IconRadiounchecked';
 export { default as IconRadiochecked } from './IconRadiochecked';
 export { default as IconBack } from './IconBack';
@@ -18,6 +22,10 @@ export { default as IconClose } from './IconClose';
 
 const IconFont = ({ name, ...rest }) => {
   switch (name) {
+    case 'location':
+      return <IconLocation {...rest} />;
+    case 'tabs_selected':
+      return <IconTabsSelected {...rest} />;
     case 'radiounchecked':
       return <IconRadiounchecked {...rest} />;
     case 'radiochecked':

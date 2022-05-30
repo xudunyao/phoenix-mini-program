@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { View } from '@tarojs/components';
-import { Tabs, TabsPanel } from '@/components';
+import { Tabs, TabsPanel, IconFont } from '@/components';
 import styles from  './Index.module.scss';
 import SwiperIndex from './components/swiperIndex';
+import ListIndex from './components/listIndex';
 
 const tabList = [{
   title: '全部',
@@ -23,9 +24,23 @@ const Index = () => {
   return (
     <View className={styles.container}>
       <SwiperIndex />
-      <View>
-        <Tabs tabList={tabList} current={tabCurrent} onTabClick={onTabClick} >
-          <TabsPanel>111111</TabsPanel>
+      <View className={styles.list}>
+        <Tabs tabList={tabList} current={tabCurrent} onTabClick={onTabClick} extra={<IconFont name='tabs_selected' style={{margin:'0 auto',display:'block'}} />} >
+          <TabsPanel>
+            <ListIndex />
+          </TabsPanel>
+          <TabsPanel>
+            <ListIndex />
+          </TabsPanel>
+          <TabsPanel>
+            <ListIndex />
+          </TabsPanel>
+          <TabsPanel>
+            <ListIndex />
+          </TabsPanel>
+          <TabsPanel>
+            <ListIndex />
+          </TabsPanel>
         </Tabs>
       </View>
     </View>

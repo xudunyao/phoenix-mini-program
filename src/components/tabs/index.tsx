@@ -14,7 +14,7 @@ const Tabs: React.FC<Props> = (
 }
 ) => {
   return (
-    <view>
+    <view className='tabs'>
       <view  className='tab-content' style={{overflowX:'scroll',width:'100%'}}>
         {
            tabList.map((item, index) => {
@@ -28,14 +28,15 @@ const Tabs: React.FC<Props> = (
                   {item.title}
                 </View>
                 {
-                  extra ? extra : (<view className={current === index ? 'tab-line':''}></view>)
+                  extra && current === index ? extra : (<view className={current === index ? 'tab-line':''}></view>)
                 }
+                
               </view>
             )
           })
         }
       </view>
-      <Swiper className='panel-content' current={current} circular {...swiperParams}>
+      <Swiper className='panel-content' current={current} >
         {
           children.constructor === Array ? children.map((item, index) => (
             <SwiperItem key={index}>
@@ -50,7 +51,7 @@ const Tabs: React.FC<Props> = (
 }
 export const TabsPanel = (props) => {
   return (
-    <View>
+    <View style='height: 100%'>
       {props.children}
     </View>
   )

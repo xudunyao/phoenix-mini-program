@@ -1,6 +1,6 @@
 Component({
   properties: {
-    // radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
+    // location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
     name: {
       type: String,
     },

@@ -23,7 +23,7 @@ const SwiperIndex = () => {
         className={styles['swiper-content']}
         indicatorColor='#999'
         indicatorActiveColor='#333'
-        autoplay
+        autoplay='false'
         circular
         current={current}
         onChange={onChange}

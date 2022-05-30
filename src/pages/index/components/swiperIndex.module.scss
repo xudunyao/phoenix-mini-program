@@ -1,0 +1,80 @@
+@import '@/scss/variable.scss';
+.list {
+  background: $color-white;
+  box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-around;
+  padding: 16px 0;
+  width: 351px;
+  margin: 10px auto;
+  &-img {
+    width: 106px;
+    height: 106px;
+  }
+  &-content {
+    width: 210px;
+    background-color: 000;
+    &-tags{
+      display: flex;
+      justify-content: flex-start;
+      padding: 5px 0;
+      &-item{
+        font-weight: 400;
+        color: #FFA050;
+        line-height: 14px;
+        font-size: 10px;
+        text-shadow: 0px 2px 11px rgba(23, 43, 98, 0.07);
+        box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
+        border-radius: 2px;
+        border: 1px solid rgba(255, 160, 80, 0.36);
+        padding: 0 2px;
+        margin-right: 5px;
+      }
+    }
+    &-location{
+      font-size: 12px;
+      font-weight: 400;
+      color: #8F929D;
+      line-height: 17px;
+      text-shadow: 0px 2px 11px rgba(23, 43, 98, 0.07);
+      display: flex;
+      justify-content: flex-start;
+    }
+    &-title{
+      color: $text-primary;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    &-money {
+      padding: 5px 0;
+      display: flex;
+      justify-content: flex-start;
+      &-price{
+        color:$text-red;
+        &-count{
+          font-size: 16px;
+        }
+        &-unit{
+          font-size: 12px;
+        }
+      }
+      &-subsidy{
+        height: 22px;
+        padding: 0 4px;
+        margin-left: 16px;
+        background: linear-gradient(227deg, #FFA050 0%, #FF5E5E 100%);
+        box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
+        border-radius: 100px 100px 100px 2px;
+        color:$color-white;
+        &-count{
+          font-size: 16px;
+        }
+        &-unit{
+          font-size: 10px;
+        }
+      }
+    }
+   
+  }
+}

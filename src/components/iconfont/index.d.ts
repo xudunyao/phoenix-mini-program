@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from 'react';
 
 interface Props {
-  name: 'radiounchecked' | 'radiochecked' | 'back' | 'warning-circle-fill' | 'clear' | 'warning' | 'close';
+  name: 'location' | 'tabs_selected' | 'radiounchecked' | 'radiochecked' | 'back' | 'warning-circle-fill' | 'clear' | 'warning' | 'close';
   size?: number;
   color?: string | string[];
   style?: React.CSSProperties;
