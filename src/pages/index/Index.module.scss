@@ -2,46 +2,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  // height: 100%;
-  // padding-bottom: 100px;
 }
-.swiper {
-  width: 100%;
-  height: 231px;
-  position: relative;
-  &-content{
-    width: 100%;
-    height: 100%;
-    &-img{
-      height: 231px;
-      width: 100%;
-    }
-  }
-  &-dots{
-    position: absolute;
-    bottom: 30px;
-    left: 76px;
-    width: 100%;
-    display: flex;
-    z-index: 11;
-    justify-content: flex-start;
-    &-dot{
-      width: 11px;
-      height: 4px;
-      background: #80A2FF;
-      margin-left: 5px;
-      border-radius: 2px;
-      
-    }
-    &-dot_active{
-      width: 4px;
-      height: 4px;
-      background: #CBCED8;
-      border-radius: 4px;
-      margin-left: 5px;
-    }
-  }
-}
+
 .list{
   border-radius: 12px 12px 0px 0px;
   padding-top: 15px;
@@ -50,12 +12,16 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: sticky;
+  top:0;
+  z-index: 100;
   :global(.tabs) {
+    height: 100%;
     flex: 1;
     display: flex;
     flex-direction: column;
   }
-  :global(.tabs .panel-content) {
-    flex: 1;
+  :global(.tab-content.icon){
+    margin: 0 auto;
   }
 }

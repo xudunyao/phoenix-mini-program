@@ -28,7 +28,7 @@ const Tabs: React.FC<Props> = (
                   {item.title}
                 </View>
                 {
-                  extra && current === index ? extra : (<view className={current === index ? 'tab-line':''}></view>)
+                  extra && current === index ? extra : (<view className={current === index ? 'tab-line':'tab-empty'}></view>)
                 }
                 
               </view>
@@ -51,7 +51,7 @@ const Tabs: React.FC<Props> = (
 }
 export const TabsPanel = (props) => {
   return (
-    <View style='height: 100%'>
+    <View style='height: 100%;overflow-y: auto;'>
       {props.children}
     </View>
   )

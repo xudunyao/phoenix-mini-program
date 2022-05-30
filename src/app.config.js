@@ -20,8 +20,8 @@ export default defineAppConfig({
     list: [{
       pagePath: 'pages/index/index',
       text: '首页',
-      iconPath:"assets/images/job.png",
-      selectedIconPath:"assets/images/job_active.png",
+      iconPath:"assets/images/index.png",
+      selectedIconPath:"assets/images/index_active.png",
     }, {
       pagePath: 'pages/message/index',
       text: '消息',
