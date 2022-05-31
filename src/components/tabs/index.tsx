@@ -52,7 +52,7 @@ const Tabs: React.FC<Props> = (
 export const TabsPanel = (props) => {
   const isH5 = process.env.TARO_ENV === 'h5';
   return (
-    <View style={{height: isH5 ?'100vh':'100%',overflowY: 'auto'}}>
+    <View className='tab-panel'>
       {props.children}
     </View>
   )

@@ -1,6 +1,6 @@
 Component({
   props: {
-    // location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
+    // exclamation | right | clock | location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
     name: null,
     // string | string[]
     color: '',

@@ -20,7 +20,7 @@
   display: block;
 }
 .money{
-  padding: 5PX 0;
+  padding: 5px 0;
   margin: 0;
   font-size: 16px;
 }
@@ -39,12 +39,12 @@
   box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
   border-radius: 100px 100px 100px 2px;
   color:$color-white;
-  margin-left: 12PX;
+  margin-left: 12px;
   &_count{
-    font-size: 16PX;
+    font-size: 16px;
   }
   &_unit{
-    font-size: 10PX;
+    font-size: 10px;
   }
 }
 .tags{

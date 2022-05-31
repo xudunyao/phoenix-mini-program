@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont } from '@/components';
+
 import styles from  './Index.module.scss';
 import SwiperIndex from './components/swiper/index';
 import ListIndex from './components/list/index';

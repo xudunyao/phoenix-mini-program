@@ -31,7 +31,7 @@ const Swipers = () => {
         {
           swiperList.map((f) => (
             <SwiperItem>
-              <Image className={styles.img} src={f.url}></Image>
+              <Image mode='widthFix' className={styles.img} src={f.url}></Image>
             </SwiperItem>
           ))
         }

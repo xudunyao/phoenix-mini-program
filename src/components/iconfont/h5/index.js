@@ -1,6 +1,9 @@
 /* eslint-disable */
 
 import React from 'react';
+import IconExclamation from './IconExclamation';
+import IconRight from './IconRight';
+import IconClock from './IconClock';
 import IconLocation from './IconLocation';
 import IconTabsSelected from './IconTabsSelected';
 import IconRadiounchecked from './IconRadiounchecked';
@@ -10,6 +13,9 @@ import IconWarningCircleFill from './IconWarningCircleFill';
 import IconClear from './IconClear';
 import IconWarning from './IconWarning';
 import IconClose from './IconClose';
+export { default as IconExclamation } from './IconExclamation';
+export { default as IconRight } from './IconRight';
+export { default as IconClock } from './IconClock';
 export { default as IconLocation } from './IconLocation';
 export { default as IconTabsSelected } from './IconTabsSelected';
 export { default as IconRadiounchecked } from './IconRadiounchecked';
@@ -22,6 +28,12 @@ export { default as IconClose } from './IconClose';
 
 const IconFont = ({ name, ...rest }) => {
   switch (name) {
+    case 'exclamation':
+      return <IconExclamation {...rest} />;
+    case 'right':
+      return <IconRight {...rest} />;
+    case 'clock':
+      return <IconClock {...rest} />;
     case 'location':
       return <IconLocation {...rest} />;
     case 'tabs_selected':
