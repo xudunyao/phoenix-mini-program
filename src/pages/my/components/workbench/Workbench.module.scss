@@ -1,0 +1,60 @@
+@import '@/scss/variable.scss';
+
+.workbench{
+  background: $color-white;
+  border-radius: 12Px;
+  box-sizing: border-box;
+  padding-top: 16Px;
+  padding-right: 12Px;
+  margin-bottom: 8Px;
+}
+.title{
+  width: 48Px;
+  font-size: 16Px;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: 22Px;
+  margin-left: 12Px;
+  margin-bottom: 14Px;
+}
+.workbenchItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  margin-bottom: 8Px;
+}
+.iconWrapper{
+  width: 30Px;
+  height: 30Px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon{
+  height: 30Px;
+  background-position: center;
+}
+.subTitle{
+  height: 20Px;
+  font-size: 14Px;
+  color:$text-primary;
+  line-height: 20Px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 2Px;
+  margin-left:7Px;
+}
+.line{
+  height: 1Px;
+  background: $border-primary;
+  border-radius: 12Px;
+  margin-left:12Px;
+  margin-bottom: 9Px;
+}

@@ -1,0 +1,38 @@
+@import '@/scss/variable.scss';
+
+.wallet{
+  height: 89Px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:16Px 20Px;
+  background-image:url(./img/wallet-bg.png);
+  background-position: center;
+  background-size: cover;
+  box-sizing: border-box;
+  border-radius: 12Px;
+  margin-bottom: 10Px;
+}
+.title{
+  font-size: 12Px;
+  color: $color-white;
+  line-height: 17Px;
+  margin-bottom: 9Px;
+}
+.money{
+  font-size: 24Px;
+  font-weight: bold;
+  color:$color-white;
+  line-height: 31Px;
+}
+.button{
+  height: 28Px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 2px 6px 0px rgba(157, 103, 255, 0.24);
+  border-radius: 14px;
+  font-weight: 500;
+  font-size: 14Px;
+  padding: 4Px 14Px;
+  box-sizing: border-box;
+  color: $color-primary;
+}

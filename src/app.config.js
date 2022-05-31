@@ -2,10 +2,10 @@ import { useGlobalIconFont } from './components/iconfont/helper';
 
 export default defineAppConfig({
   pages: [
-    'pages/registration/index',
-    'pages/index/index',
-    'pages/message/index',
     'pages/my/index',
+    'pages/index/index',
+    'pages/registration/index',
+    'pages/message/index',
     'pages/form/index',
     'pages/result/index',
   ],
