@@ -1,6 +1,6 @@
 Component({
   props: {
-    // exclamation | right | clock | location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
+    // call | safety | phone | wechat | exclamation | right | clock | location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
     name: null,
     // string | string[]
     color: '',

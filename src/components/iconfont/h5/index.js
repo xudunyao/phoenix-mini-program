@@ -1,6 +1,10 @@
 /* eslint-disable */
 
 import React from 'react';
+import IconCall from './IconCall';
+import IconSafety from './IconSafety';
+import IconPhone from './IconPhone';
+import IconWechat from './IconWechat';
 import IconExclamation from './IconExclamation';
 import IconRight from './IconRight';
 import IconClock from './IconClock';
@@ -13,6 +17,10 @@ import IconWarningCircleFill from './IconWarningCircleFill';
 import IconClear from './IconClear';
 import IconWarning from './IconWarning';
 import IconClose from './IconClose';
+export { default as IconCall } from './IconCall';
+export { default as IconSafety } from './IconSafety';
+export { default as IconPhone } from './IconPhone';
+export { default as IconWechat } from './IconWechat';
 export { default as IconExclamation } from './IconExclamation';
 export { default as IconRight } from './IconRight';
 export { default as IconClock } from './IconClock';
@@ -28,6 +36,14 @@ export { default as IconClose } from './IconClose';
 
 const IconFont = ({ name, ...rest }) => {
   switch (name) {
+    case 'call':
+      return <IconCall {...rest} />;
+    case 'safety':
+      return <IconSafety {...rest} />;
+    case 'phone':
+      return <IconPhone {...rest} />;
+    case 'wechat':
+      return <IconWechat {...rest} />;
     case 'exclamation':
       return <IconExclamation {...rest} />;
     case 'right':

@@ -1,0 +1,46 @@
+@import '@/scss/variable.scss';
+
+.login {
+  background: $background;
+  flex: 1;
+  position: relative;
+  :global(.input-wrapper){
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+}
+.login-btn{
+  background: $button-background;
+  width: 307px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  font-size: 16px;
+  box-shadow: $box-shadow;
+  border-radius: 21px;
+  color: $color-white;
+  text-shadow: $text-shadow;
+  margin-top: 40px;
+}
+.content{
+  width: 307px;
+  margin: 0 auto;
+  
+}
+.send{
+  color: $color-primary;
+  font-size: 14px;
+}
+
+.protocol{
+  color: $text-darkSlateBlue;
+  font-size: 12px;
+  padding-top: 48px;
+  text-align: center;
+  font-weight: 400;
+}
+.protocol-text{
+  color: $color-primary;
+}

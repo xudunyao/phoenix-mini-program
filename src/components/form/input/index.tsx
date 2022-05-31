@@ -10,7 +10,9 @@ const MyInput: React.FC<Props> = ({
   onFocus,
   onBlur,
   value = '',
-  clearable = true,
+  clearable = false,
+  prefix,
+  suffix,
   disabled = false,
   maxlength = 1000,
   placeholder = '请输入',
@@ -23,6 +25,7 @@ const MyInput: React.FC<Props> = ({
   }
 
   const handleFocus = (e) => {
+    console.log(e)
     if (onFocus) {
       onFocus();
     }
@@ -41,8 +44,10 @@ const MyInput: React.FC<Props> = ({
   }
   return (
     <View className={`input-wrapper ${error ? 'input-wrapper__error' : ''}`}>
+      {
+        prefix ? (<View className='prefix'>{prefix}</View>) : null
+      }
       <Input
-        className='input'
         placeholder={placeholder}
         onInput={handleInput}
         onFocus={handleFocus}
@@ -54,6 +59,9 @@ const MyInput: React.FC<Props> = ({
       {clearable && !!value && (<View className='clear' onClick={handleClear}>
         <IconFont name='clear' color='#ccc' />
       </View>)}
+      {
+        suffix ? (<View className='suffix'>{suffix}</View>) : null
+      }
     </View>
   )
 }
