@@ -1,0 +1,9 @@
+@import '@/scss/variable.scss';
+
+.send {
+  width: 100px;
+  color: $color-primary;
+  font-size: 16px;
+  text-align: right;
+  white-space: nowrap;
+}

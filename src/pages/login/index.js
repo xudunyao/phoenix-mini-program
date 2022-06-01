@@ -3,6 +3,7 @@ import { showToast } from '@tarojs/taro';
 import { IconFont } from "@/components";
 import { View } from "@tarojs/components";
 import { FormItem, Input } from '@/components/form';
+import VerifyCode from '../components/verifyCode';
 
 import Logo from '../components/logo';
 import styles from './Login.module.scss'
@@ -16,9 +17,10 @@ const initForm = {
     value: '',
     error: '',
   },
-}
+};
 const Login = () => {
   const [form, setForm] = useState(initForm);
+  const [sendStatus, setSendStatus] = useState(true);
 
   const setFormFieldValue = (fieldName, value) => {
     setForm({
@@ -28,7 +30,7 @@ const Login = () => {
         error: null,
       },
     })
-  }
+  };
 
   const setFormFieldError = (fieldName, error) => {
     setForm({
@@ -38,7 +40,7 @@ const Login = () => {
         error,
       },
     })
-  }
+  };
 
   const validate = () => {
     // TODO: 根据业务需求来
@@ -51,7 +53,7 @@ const Login = () => {
       return false;
     }
     return true;
-  }
+  };
 
   const handleSubmit = () => {
     console.log(form,'from')
@@ -62,13 +64,20 @@ const Login = () => {
         title: '提交成功！'
       })
     }
-  }
+  };
   const handleInputBlur = (value) => {
     console.log(value,'----');
     // if (!value) {
     //   setFormFieldError('input', 'Input 不能为空');
     // }
-  }
+  };
+  const getCode = (call) => {
+    call && call();
+    setSendStatus(false)
+  };
+  const handleListeners = () => {
+    setSendStatus(true)
+  };
   return(
     <View className={styles.login}>
       <Logo />
@@ -94,7 +103,7 @@ const Login = () => {
         <Input
           placeholder='请输入验证码'
           prefix={<IconFont name='safety' size='20px' />}
-          suffix={<View className={styles.send}>发送验证码</View>}
+          suffix={<VerifyCode className={styles.send} onClick={sendStatus && getCode} listeners={handleListeners} />}
           value={form.sms.value}
           onInput={(value) => setFormFieldValue('sms', value)}
           error={!!form.sms.error}
