@@ -1,0 +1,80 @@
+@import '@/scss/variable.scss';
+
+.item{
+  box-sizing: border-box;
+  background:$color-white;
+  border-radius: 12Px;
+  padding: 16Px 12Px 0Px 12Px;
+  margin: 10Px 12Px;
+}
+.content{
+  display: flex;
+  justify-content: space-between;
+}
+.title{
+  max-width: 210Px;
+  font-size: 16Px;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: 22Px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 6Px;
+}
+.wrapper{
+  font-size: 10Px;
+  font-weight: 600;
+  line-height: 22Px;
+  margin-bottom: 10Px;
+}
+.money{
+    font-size: 16Px;
+}
+.wages{
+    color: $text-wages;
+    margin-right: 8Px;
+    display: inline-block;
+}
+.subsidy{
+    line-height: 22Px;
+    color: $color-white;
+    background: linear-gradient(227deg, $text-tags 0%, $text-wages 100%);
+    border-radius: 100Px 100Px 100Px 2Px;
+    display: inline-block;
+    padding: 0Px 8Px;
+}
+.tags{
+  display: flex;
+  padding: 0Px 2Px;
+}
+.tag{
+  margin-right: 10px;
+  font-size: 10px;
+  color: $text-tags;
+  line-height: 14px;  border-radius: 2px;
+  display: inline-block;
+  border: 1px solid rgba(255, 160, 80, 0.36);
+}
+.root{
+  display: flex;
+  justify-content: space-between;
+  line-height: 41Px;
+  margin-top: 13Px;
+  border-top: 1Px solid  $border-primary;
+}
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map{
+  border-right:1Px solid $border-primary;
+}
+.root-text{
+  flex:1;
+  display: flex;
+  font-size: 12Px;
+  color: $text-subTitle;
+}
+

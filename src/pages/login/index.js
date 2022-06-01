@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { showToast } from '@tarojs/taro';
+import Taro, { showToast } from '@tarojs/taro';
 import { IconFont } from "@/components";
 import { View } from "@tarojs/components";
 import { FormItem, Input } from '@/components/form';
+import { httpRequest } from '@/utils';
 import VerifyCode from '../components/verifyCode';
 
 import Logo from '../components/logo';
@@ -22,6 +23,7 @@ const Login = () => {
   const [form, setForm] = useState(initForm);
   const [sendStatus, setSendStatus] = useState(true);
 
+  const isH5 = process.env.TARO_ENV === 'h5';
   const setFormFieldValue = (fieldName, value) => {
     setForm({
       ...form,
@@ -54,26 +56,89 @@ const Login = () => {
     }
     return true;
   };
-
-  const handleSubmit = () => {
-    console.log(form,'from')
-    if (validate()) {
-      // TODO: submit
-      showToast({
-        icon: 'success',
-        title: '提交成功！'
+  const miniLogin = () => {
+    Taro.login({
+      success: async (res) => {
+        if (res.code) {
+          //发起网络请求
+          try {
+            const resCallBack = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',{
+              data: {
+                mobile: form.phone.value,
+                smsCode: form.sms.value,
+                code: res.code,
+                channelCode: '',
+              }
+            });
+            if (resCallBack?.code !== 0) {
+              showToast({
+                icon: 'none',
+                title: resCallBack.msg
+              })
+            }
+            Taro.switchTab({
+              url: '/pages/index/index'
+            })
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  };
+  const webLogin = async () => {
+    try {
+      const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',{
+        data: {
+          mobile: form.phone.value,
+          smsCode: form.sms.value,
+          channelCode: '',
+        }
+      });
+      if (res?.code !== 0) {
+        showToast({
+          icon: 'none',
+          title: resCallBack.msg
+        })
+      }
+      Taro.switchTab({
+        url: '/pages/index/index'
       })
+    } catch (err) {
+      console.log(err);
     }
   };
-  const handleInputBlur = (value) => {
-    console.log(value,'----');
-    // if (!value) {
-    //   setFormFieldError('input', 'Input 不能为空');
-    // }
+  const handleSubmit = async () => {
+    if (validate()) {
+     if(isH5){
+      webLogin();
+     } else {
+      miniLogin()
+     }
+    }
   };
-  const getCode = (call) => {
-    call && call();
-    setSendStatus(false)
+  const getCode = async (call) => {
+    
+    const regex = new RegExp("^1[3-9]\\d{9}$")
+    if(regex.test(form.phone.value)){
+      try {
+        const res = await httpRequest.post('phoenix-center-backend/sms/send',{data: { mobile: form.phone.value }});
+        if (res?.code !== 0) {
+          showToast({
+            title: res.msg
+          })
+        }
+        call && call();
+        setSendStatus(false)
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setFormFieldError('phone', '请输入正确的手机号码');
+    }
+    
   };
   const handleListeners = () => {
     setSendStatus(true)
@@ -92,7 +157,6 @@ const Login = () => {
           value={form.phone.value}
           onInput={(value) => setFormFieldValue('phone', value)}
           error={!!form.phone.error}
-          onBlur={handleInputBlur}
         />
       </FormItem>
       <FormItem
@@ -107,7 +171,6 @@ const Login = () => {
           value={form.sms.value}
           onInput={(value) => setFormFieldValue('sms', value)}
           error={!!form.sms.error}
-          onBlur={handleInputBlur}
         />
       </FormItem>
       <View onClick={handleSubmit} className={styles['login-btn']}>

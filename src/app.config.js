@@ -4,9 +4,10 @@ export default defineAppConfig({
   pages: [
     'pages/login/index',
     'pages/loginGuide/index',
-    'pages/index/index',
-    'pages/message/index',
     'pages/my/index',
+    'pages/index/index',
+    'pages/registration/index',
+    'pages/message/index',
     'pages/form/index',
     'pages/result/index',
   ],

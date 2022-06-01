@@ -1,0 +1,48 @@
+@import '@/scss/variable.scss';
+
+.auth{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 60Px;
+  box-sizing: border-box;
+  margin-bottom: 20Px;
+}
+.center{
+ display: flex;
+ align-items: center;
+}
+.img{
+  width: 60Px;
+  height: 60Px;
+  margin-right: 16Px;
+  border-radius: 50%;
+  background-color: $color-white;
+}
+.icon{
+  width: 18Px;
+  height: 19Px;
+  line-height: 0Px;
+}
+.name{
+  font-size: 20Px;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: 20Px;
+}
+
+.base{
+  height: 28Px;
+  border-radius: 14Px;
+  font-size: 14Px;
+  padding: 4Px 8Px;
+  box-sizing: border-box;
+}
+.active{
+  background: linear-gradient(90deg, #FF9D00 0%, #FFC871 100%);
+  font-weight: 500;
+  color: $color-white;
+}
+.inactive{
+  background: linear-gradient(270deg, #80A2FF 0%, #5482FF 100%);
+}
