@@ -3,7 +3,7 @@ module.exports = {
     NODE_ENV: '"development"',
   },
   defineConstants: {
-    API_ENDPOINT: 'http://xgn-inner-fat.fjf.com/phoenix-center-backend',
+    API_ENDPOINT: '"https://xgn-gateway-uat.fuzfu.net/"',
   },
   mini: {},
   h5: {}

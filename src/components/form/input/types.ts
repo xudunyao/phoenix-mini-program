@@ -8,4 +8,6 @@ export type Props = {
   onBlur?: (value: string) => void;
   clearable?: boolean;
   error?: boolean;
+  prefix: JSX.Element;
+  suffix: JSX.Element;
 }

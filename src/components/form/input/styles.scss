@@ -6,6 +6,9 @@
   border: 1Px solid #ddd;
   border-radius: 4Px;
   overflow: hidden;
+  padding: 10Px;
+  box-sizing: border-box;
+  font-size: 16Px;
   &__error {
     border-color: $color-error;
   }
@@ -27,6 +30,9 @@
     justify-content: center;
     align-items: center;
     z-index: 2;
+  }
+  .prefix {
+    margin-right: 10Px;
   }
 
 }

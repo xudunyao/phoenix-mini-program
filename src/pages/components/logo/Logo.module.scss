@@ -1,0 +1,17 @@
+@import '@/scss/variable.scss';
+
+.logo {
+  width: 180px;
+  margin: 0 auto;
+  padding:88px 0 30px 0;
+}
+.img {
+  width: 128px;
+  margin: 0 auto;
+  display: block;
+}
+.text{
+  color: $text-darkSlateBlue;
+  font-size: 16px;
+  font-weight: 400;
+}

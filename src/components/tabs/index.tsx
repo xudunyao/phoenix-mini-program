@@ -50,7 +50,6 @@ const Tabs: React.FC<Props> = (
   )
 }
 export const TabsPanel = (props) => {
-  const isH5 = process.env.TARO_ENV === 'h5';
   return (
     <View className='tab-panel'>
       {props.children}

@@ -15,13 +15,18 @@ const FormItem: React.FC<Props> = ({
 }) => {
   return (
     <View className={`form-item ${labelAlign === 'top' ? 'form-item__vertical' : ''} ${errorMsg ? 'form-item__error' : ''}`}>
-      <Text
-        className={`form-item-label form-item-label__${labelAlign}`}
-        style={{ width: typeof labelWidth === 'number' ? `${labelWidth}Px` : labelWidth}}
-      >
-        {required && <Text className='form-item-required-flag'>*</Text>}
-        {label}
-      </Text>
+      {
+        label ? (
+          <Text
+            className={`form-item-label form-item-label__${labelAlign}`}
+            style={{ width: typeof labelWidth === 'number' ? `${labelWidth}Px` : labelWidth}}
+          >
+            {required && <Text className='form-item-required-flag'>*</Text>}
+            {label}
+          </Text>
+        ) : null
+      }
+      
       <View className='form-item-control'>
         {children}
         {errorMsg && (

@@ -1,0 +1,200 @@
+import { useState } from 'react';
+import Taro, { showToast } from '@tarojs/taro';
+import { IconFont } from "@/components";
+import { View } from "@tarojs/components";
+import { FormItem, Input } from '@/components/form';
+import { httpRequest } from '@/utils';
+import { regExp } from '@/constants';
+import VerifyCode from '../components/verifyCode';
+
+import Logo from '../components/logo';
+import styles from './Login.module.scss'
+
+const initForm = {
+  phone: {
+    value: '',
+    error: '',
+  },
+  sms: {
+    value: '',
+    error: '',
+  },
+};
+const Login = () => {
+  const [form, setForm] = useState(initForm);
+  const [sendStatus, setSendStatus] = useState(true);
+  const sourceChannel = Taro.getStorageSync('sourceChannelId')|| null;
+
+  const isH5 = process.env.TARO_ENV === 'h5';
+  const setFormFieldValue = (fieldName, value) => {
+    setForm({
+      ...form,
+      [fieldName]: {
+        value,
+        error: null,
+      },
+    })
+  };
+
+  const setFormFieldError = (fieldName, error) => {
+    setForm({
+      ...form,
+      [fieldName]: {
+        ...form[fieldName],
+        error,
+      },
+    })
+  };
+
+  const validate = () => {
+    // TODO: 根据业务需求来
+    if (!form.phone.value ) {
+      setFormFieldError('phone', '手机号不能为空！');
+      return false;
+    }
+    if(!regExp.phone(form.phone.value)){
+      setFormFieldError('phone', '手机号格式不正确！');
+      return false;
+    }
+    if(!form.sms.value) {
+      setFormFieldError('sms', '验证码不能为空！');
+      return false;
+    }
+    return true;
+  };
+  const miniLogin = () => {
+    Taro.login({
+      success: async (res) => {
+        if (res.code) {
+          //发起网络请求
+          try {
+            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',
+              {
+                mobile: form.phone.value,
+                smsCode: form.sms.value,
+                code: res.code,
+                sourceChannelId: sourceChannel,
+              }
+            );
+            if (resInfo?.code !== 0) {
+              showToast({
+                icon: 'none',
+                title: resInfo.msg
+              })
+            } else {
+              Taro.setStorageSync('openId', resInfo.data.openId)
+              Taro.setStorageSync('unionId', resInfo.data.unionId)
+              Taro.setStorageSync('mobile', resInfo.data.mobile)
+              Taro.setStorageSync('userId', resInfo.data.userId)
+              Taro.setStorageSync('token', resInfo.data.jwt)
+              Taro.switchTab({
+                url: '/pages/index/index'
+              });
+            }
+            
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  };
+  const webLogin = async () => {
+    try {
+      const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',
+        {
+          mobile: form.phone.value,
+          smsCode: form.sms.value,
+          channelCode: sourceChannel,
+        }
+      );
+      if (res?.code !== 0) {
+        showToast({
+          icon: 'none',
+          title: resCallBack.msg
+        })
+      } else {
+        Taro.setStorageSync('mobile', res.data.mobile);
+        Taro.setStorageSync('userId', res.data.userId);
+        Taro.setStorageSync('token', res.data.jwt);
+        Taro.switchTab({
+          url: '/pages/index/index'
+        })
+      }
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleSubmit = async () => {
+    if (validate()) {
+     if(isH5){
+      webLogin();
+     } else {
+      miniLogin()
+     }
+    }
+  };
+  const getCode = async (call) => {
+    
+    if(regExp.phone(form.phone.value)){
+      try {
+        const res = await httpRequest.post('phoenix-center-backend/sms/send',{ mobile: form.phone.value });
+        if (res?.code !== 0) {
+          showToast({
+            title: res.msg
+          })
+        }
+        call && call();
+        setSendStatus(false)
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setFormFieldError('phone', '请输入正确的手机号码');
+    }
+    
+  };
+  const handleListeners = () => {
+    setSendStatus(true)
+  };
+  return(
+    <View className={styles.login}>
+      <Logo />
+      <View className={styles.content}>
+      <FormItem
+        labelAlign='right'
+        errorMsg={form.phone.error}
+      >
+        <Input
+          placeholder='请输入手机号'
+          prefix={<IconFont name='call' size='20px' />}
+          value={form.phone.value}
+          onInput={(value) => setFormFieldValue('phone', value)}
+          error={!!form.phone.error}
+        />
+      </FormItem>
+      <FormItem
+        required
+        labelAlign='right'
+        errorMsg={form.sms.error}
+      >
+        <Input
+          placeholder='请输入验证码'
+          prefix={<IconFont name='safety' size='20px' />}
+          suffix={<VerifyCode className={styles.send} onClick={sendStatus && getCode} listeners={handleListeners} />}
+          value={form.sms.value}
+          onInput={(value) => setFormFieldValue('sms', value)}
+          error={!!form.sms.error}
+        />
+      </FormItem>
+      <View onClick={handleSubmit} className={styles['login-btn']}>
+        登录
+      </View>
+      </View>
+    </View>
+  )
+};
+export default Login;
