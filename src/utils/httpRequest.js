@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
 import Taro, { getAccountInfoSync } from '@tarojs/taro';
-// import axios from 'axios';
 
 import { storageKeys } from '@/constants';
 import { getStorageSync, removeStorageSync } from '@/utils';
@@ -9,7 +8,7 @@ import { getStorageSync, removeStorageSync } from '@/utils';
 export const getBaseUrl = async () => {
  
   if (process.env.NODE_ENV === 'development') {
-    return global.API_ENDPOINT;
+    return API_ENDPOINT;
   }
   let isProd = true;
   switch (process.env.TARO_ENV) {
@@ -28,54 +27,73 @@ export const getBaseUrl = async () => {
       break;
   }
 
-  return isProd ? global.API_ENDPOINT : global.API_ENDPOINT_UAT;
+  return isProd ? API_ENDPOINT : API_ENDPOINT_UAT;
 }
 
+const handleUnauthorized = () => {
+  removeStorageSync(storageKeys.TOKEN);
+  // TODO: 登录失效操作
+};
+
 const interceptor = async (chain) => {
-  const requestParams = chain.requestParams
+  const { requestParams } = chain
   const token = await getStorageSync(storageKeys.TOKEN);
+  const baseUrl = await getBaseUrl();
+  const isStaticUrl = requestParams?.url?.startsWith('https://') || requestParams?.url?.startsWith('http://');
+  if (!isStaticUrl) {
+    requestParams.url = `${baseUrl}${requestParams.url}`
+  }
   requestParams.header = {
     ...requestParams.header,
-    Authorization: 'Bearer ' + token //将token添加到头部
+    'X-User-Token': token,
   }
   return chain.proceed(requestParams).then(res => { return res })
 }
-const handleUnauthorized = () => {
-  removeStorageSync(storageKeys.TOKEN);
-};
 
 Taro.addInterceptor(interceptor);
-const request = async (method, url, params) => {
-  const contentType = params?.data ? 'application/json' : 'application/x-www-form-urlencoded';
-  if (params) contentType = params?.headers?.contentType || contentType;
-  const option = {
-    method,
-    isShowLoading: false,
-    url: 'http://xgn-inner-fat.fjf.com/phoenix-center-backend'+ url,
-    data: params && (params?.data || params?.params),
-    header: {
-      'content-type': contentType,
-    },
-    success(res) {
-      switch (res?.code) {
-        case 503: {
-          break;
-        }
-        case 401: {
+
+const defaultHeader = { 'content-type': 'application/json' };
+
+const request = (method, url, params) => new Promise(async (resolve, reject) => {
+  try {
+    await Taro.request({
+      method,
+      url,
+      data: params?.data,
+      isShowLoading: !!params?.isShowLoading,
+      header: {
+        ...defaultHeader,
+        ...(params?.headers || {}),
+      },
+      success: (res) => {
+        if (res?.data?.code === 10) {
           handleUnauthorized();
-          break;
         }
+        resolve(res.data);
+      },
+    });
+  } catch (err) {
+    if (err?.status) {
+      switch (err?.status) {
+        case 401:
+          handleUnauthorized();
+          reject('登录失效');
+          break;
+        case 404:
+          reject('找不到请求地址');
+          break;
+        case 503:
+          reject('服务器异常');
+          break;
+        // TODO(optional): 根据其他不同的网络状态码返回不同的error message
         default:
+          reject(err?.statusText);
           break;
       }
-    },
-    error(e) {
-      console.log('api', '请求接口出现问题', e);
     }
+    reject(err);
   }
-  const resp = await Taro.request(option);
-  return resp.data;//根据个人需要返回
-}
+});
 
 export default {
   get: (url, config) => {

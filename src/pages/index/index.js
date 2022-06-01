@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont } from '@/components';
+import { httpRequest } from '@/utils';
 
 import styles from  './Index.module.scss';
 import SwiperIndex from './components/swiper/index';
@@ -22,6 +23,23 @@ const Index = () => {
   const onTabClick = (index) => {
     setTabCurrent(index)
   };
+  
+  const getData = async () => {
+    // TODO: integrate with BE
+    try {
+      const res = await httpRequest.get('/123');
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+    } catch (err) {
+      // toast or console
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <View className={styles.container}>
       <SwiperIndex />

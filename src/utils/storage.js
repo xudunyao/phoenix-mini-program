@@ -1,4 +1,4 @@
-import * as Taro from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 
 export const getStorageSync = (key) => {
   switch (process.env.TARO_ENV) {
