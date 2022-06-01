@@ -8,6 +8,10 @@ $color-deepWhite:#F6F9FF;
 $color-MediumSlateBlue: #5482FF;
 $color-limeGreen: #00C802;
 $color-lime:#5DD95D;
+$color-orangeRed:#FF5E5E;
+$color-orange: #FFA050;
+$color-darkSlateBlue: #454D66;
+$color-MediumPurple:#F0F4FF;
 
 $text-primary: #061748;
 $text-darkSlateBlue: #454D66;
@@ -32,4 +36,5 @@ $text-shadow: 0px 2px 5px rgba(128, 162, 255, 0.35);
 $button-background:linear-gradient(222deg, $color-primary 0%, $color-MediumSlateBlue 100%);
 $button-background-lime:linear-gradient(222deg, $color-lime 0%, $color-limeGreen 100%);
 $background:linear-gradient(183deg, $color-plainWhite 0%, $color-deepWhite 100%);
+$background-orange:linear-gradient(183deg, $color-orange 0%, $color-orangeRed 100%);
 

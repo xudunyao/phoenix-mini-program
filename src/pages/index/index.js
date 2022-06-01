@@ -4,7 +4,7 @@ import { Tabs, TabsPanel, IconFont } from '@/components';
 import { httpRequest } from '@/utils';
 
 import styles from  './Index.module.scss';
-import SwiperIndex from './components/swiper/index';
+import SwiperIndex from '../components/swiper/index';
 import ListIndex from './components/list/index';
 
 const tabList = [{

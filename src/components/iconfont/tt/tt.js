@@ -1,6 +1,6 @@
 Component({
   properties: {
-    // call | safety | phone | wechat | exclamation | right | clock | location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
+    // blod-call | share | call | safety | phone | wechat | exclamation | right | clock | location | tabs_selected | radiounchecked | radiochecked | back | warning-circle-fill | clear | warning | close
     name: {
       type: String,
     },
