@@ -62,14 +62,14 @@ const Login = () => {
         if (res.code) {
           //发起网络请求
           try {
-            const resCallBack = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',{
-              data: {
+            const resCallBack = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',
+              {
                 mobile: form.phone.value,
                 smsCode: form.sms.value,
                 code: res.code,
                 channelCode: '',
               }
-            });
+            );
             if (resCallBack?.code !== 0) {
               showToast({
                 icon: 'none',
@@ -90,13 +90,13 @@ const Login = () => {
   };
   const webLogin = async () => {
     try {
-      const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',{
-        data: {
+      const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',
+        {
           mobile: form.phone.value,
           smsCode: form.sms.value,
           channelCode: '',
         }
-      });
+      );
       if (res?.code !== 0) {
         showToast({
           icon: 'none',
@@ -124,7 +124,7 @@ const Login = () => {
     const regex = new RegExp("^1[3-9]\\d{9}$")
     if(regex.test(form.phone.value)){
       try {
-        const res = await httpRequest.post('phoenix-center-backend/sms/send',{data: { mobile: form.phone.value }});
+        const res = await httpRequest.post('phoenix-center-backend/sms/send',{ mobile: form.phone.value });
         if (res?.code !== 0) {
           showToast({
             title: res.msg
