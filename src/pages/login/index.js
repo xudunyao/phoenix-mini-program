@@ -22,6 +22,7 @@ const initForm = {
 const Login = () => {
   const [form, setForm] = useState(initForm);
   const [sendStatus, setSendStatus] = useState(true);
+  const sourceChannel = Taro.getStorageSync('sourceChannelId')|| null;
 
   const isH5 = process.env.TARO_ENV === 'h5';
   const setFormFieldValue = (fieldName, value) => {
@@ -62,23 +63,30 @@ const Login = () => {
         if (res.code) {
           //发起网络请求
           try {
-            const resCallBack = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',
+            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',
               {
                 mobile: form.phone.value,
                 smsCode: form.sms.value,
                 code: res.code,
-                channelCode: '',
+                sourceChannelId: sourceChannel,
               }
             );
-            if (resCallBack?.code !== 0) {
+            if (resInfo?.code !== 0) {
               showToast({
                 icon: 'none',
-                title: resCallBack.msg
+                title: resInfo.msg
               })
+            } else {
+              Taro.setStorageSync('openId', resInfo.data.openId)
+              Taro.setStorageSync('unionId', resInfo.data.unionId)
+              Taro.setStorageSync('mobile', resInfo.data.mobile)
+              Taro.setStorageSync('userId', resInfo.data.userId)
+              Taro.setStorageSync('token', resInfo.data.jwt)
+              Taro.switchTab({
+                url: '/pages/index/index'
+              });
             }
-            Taro.switchTab({
-              url: '/pages/index/index'
-            })
+            
           } catch (err) {
             console.log(err);
           }
@@ -94,7 +102,7 @@ const Login = () => {
         {
           mobile: form.phone.value,
           smsCode: form.sms.value,
-          channelCode: '',
+          channelCode: sourceChannel,
         }
       );
       if (res?.code !== 0) {
@@ -102,10 +110,15 @@ const Login = () => {
           icon: 'none',
           title: resCallBack.msg
         })
+      } else {
+        Taro.setStorageSync('mobile', res.data.mobile);
+        Taro.setStorageSync('userId', res.data.userId);
+        Taro.setStorageSync('token', res.data.jwt);
+        Taro.switchTab({
+          url: '/pages/index/index'
+        })
       }
-      Taro.switchTab({
-        url: '/pages/index/index'
-      })
+      
     } catch (err) {
       console.log(err);
     }
