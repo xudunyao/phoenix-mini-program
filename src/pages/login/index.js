@@ -4,6 +4,7 @@ import { IconFont } from "@/components";
 import { View } from "@tarojs/components";
 import { FormItem, Input } from '@/components/form';
 import { httpRequest } from '@/utils';
+import { regExp } from '@/constants';
 import VerifyCode from '../components/verifyCode';
 
 import Logo from '../components/logo';
@@ -49,6 +50,10 @@ const Login = () => {
     // TODO: 根据业务需求来
     if (!form.phone.value ) {
       setFormFieldError('phone', '手机号不能为空！');
+      return false;
+    }
+    if(!regExp.phone(form.phone.value)){
+      setFormFieldError('phone', '手机号格式不正确！');
       return false;
     }
     if(!form.sms.value) {
@@ -134,8 +139,7 @@ const Login = () => {
   };
   const getCode = async (call) => {
     
-    const regex = new RegExp("^1[3-9]\\d{9}$")
-    if(regex.test(form.phone.value)){
+    if(regExp.phone(form.phone.value)){
       try {
         const res = await httpRequest.post('phoenix-center-backend/sms/send',{ mobile: form.phone.value });
         if (res?.code !== 0) {
