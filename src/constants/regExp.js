@@ -5,6 +5,15 @@ const phone = (val) => {
   }
   return false;
 };
+const idCard = (val) => {
+  const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+  if(!reg.test(val)){
+    return false;
+  }
+  return true;
+};
+
 export default {
-  phone
+  phone,
+  idCard
 }

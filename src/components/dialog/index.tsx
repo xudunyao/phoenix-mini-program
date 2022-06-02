@@ -1,13 +1,14 @@
 import React from 'react'
 import { View, Text } from '@tarojs/components';
-import { Props } from './types';
-
+import { Button } from '@/components';
 import styles from './Dialog.module.scss';
+import { Props } from './types';
 import './styles.scss';
 
 const Dialog: React.FC<Props> = ({
   onClose,
   maskClosable = false,
+  showButton = true,
   title,
   content,
   actions,
@@ -44,10 +45,10 @@ const Dialog: React.FC<Props> = ({
         </View>
         <View className='dialog-actions'>
           {
-            renderedActions.map(a => (
-              <View key={a.title} className='dialog-actions-item' onClick={a.onClick || onClose}>
-                <Text className={`dialog-actions-item-title dialog-actions-item-title__${a.type}`}>{a.title}</Text>
-              </View>
+           showButton && renderedActions.map(a => (
+              <View className='dialog-actions-item'>
+                <Button title={a.title}  onClick={a.onClick || onClose} />
+             </View>
             ))
           }
         </View>
@@ -55,5 +56,4 @@ const Dialog: React.FC<Props> = ({
     </View>
   )
 }
-
 export default Dialog

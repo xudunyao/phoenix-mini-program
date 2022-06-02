@@ -2,6 +2,7 @@ import { useGlobalIconFont } from './components/iconfont/helper';
 
 export default defineAppConfig({
   pages: [
+    'pages/auth/index',
     'pages/loginGuide/index',
     'pages/login/index',
     'pages/my/index',
