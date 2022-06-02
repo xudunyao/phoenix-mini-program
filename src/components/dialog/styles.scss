@@ -52,25 +52,13 @@
   }
   &-actions {
     display: flex;
-    border-top: 1Px solid #ddd;
+    padding:0Px 16Px;
+    justify-content: space-between;
+    margin-bottom: 26Px;
     &-item {
-      display: flex;
       flex: 1;
-      justify-content: center;
-      align-items: center;
-      height: 40px;
-      border-right: 1Px solid #ddd;
+      height: 44Px;
       text-align: center;
-      &:last-child {
-        border-right: 0
-      }
-      &-title {
-        font-size: 14px;
-        color: $text-tertiary;
-        &__primary {
-          color: $color-primary;
-        }
-      }
     }
   }
 }

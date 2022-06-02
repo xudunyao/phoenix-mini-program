@@ -11,15 +11,39 @@
     border-radius: 0;
   }
 }
+<<<<<<< HEAD
 
 .content{
   width: 307px;
   margin: 0 auto;
+=======
+.login-btn{
+  background: $button-background;
+  width: 307px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  font-size: 16px;
+  box-shadow: $box-shadow;
+  border-radius: 21px;
+  color: $color-white;
+  text-shadow: $text-shadow;
+  margin-top: 40px;
+}
+.content{
+  width: 307px;
+  margin: 0 auto;
+  
+>>>>>>> 39b641b7312e77047379b29548a264531969a461
 }
 
 
 .protocol{
+<<<<<<< HEAD
   color: $text-dark-slate-blue;
+=======
+  color: $text-darkSlateBlue;
+>>>>>>> 39b641b7312e77047379b29548a264531969a461
   font-size: 12px;
   padding-top: 48px;
   text-align: center;

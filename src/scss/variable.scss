@@ -3,6 +3,7 @@ $color-error: #E43700;
 $color-warning: #FF830B;
 $color-disabled: #F8F8F8;
 $color-white: #ffffff;
+<<<<<<< HEAD
 $color-plain-white: #FAFBFF;
 $color-deep-white:#F6F9FF;
 $color-medium-slateBlue: #5482FF;
@@ -19,6 +20,20 @@ $text-secondary: #666666;
 $text-tertiary: #999999;
 $text-disabled: #cdcdcd;
 $text-orange-red:#FF5E5E;
+=======
+$color-plainWhite: #FAFBFF;
+$color-deepWhite:#F6F9FF;
+$color-MediumSlateBlue: #5482FF;
+$color-limeGreen: #00C802;
+$color-lime:#5DD95D;
+
+$text-primary: #061748;
+$text-darkSlateBlue: #454D66;
+$text-secondary: #666666;
+$text-tertiary: #999999;
+$text-disabled: #cdcdcd;
+$text-orangeRed:#FF5E5E;
+>>>>>>> 39b641b7312e77047379b29548a264531969a461
 
 $text-wages: #FF5E5E;
 $text-tags: #FFA050;
@@ -33,8 +48,14 @@ $button-height: 44Px;
 $box-shadow: 0px 2px 5px 0px rgba(128, 162, 255, 0.35);
 $text-shadow: 0px 2px 5px rgba(128, 162, 255, 0.35);
 
+<<<<<<< HEAD
 $button-background:linear-gradient(222deg, $color-primary 0%, $color-medium-slateBlue 100%);
 $button-background-lime:linear-gradient(222deg, $color-lime 0%, $color-lime-green 100%);
 $background:linear-gradient(183deg, $color-plain-white 0%, $color-deep-white 100%);
 $background-orange:linear-gradient(183deg, $color-orange 0%, $color-orange-red 100%);
+=======
+$button-background:linear-gradient(222deg, $color-primary 0%, $color-MediumSlateBlue 100%);
+$button-background-lime:linear-gradient(222deg, $color-lime 0%, $color-limeGreen 100%);
+$background:linear-gradient(183deg, $color-plainWhite 0%, $color-deepWhite 100%);
+>>>>>>> 39b641b7312e77047379b29548a264531969a461
 

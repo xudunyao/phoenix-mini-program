@@ -9,6 +9,7 @@ export type Props = {
   maskClosable?: boolean;
   visible?: boolean;
   actions?: [ActionType];
+  showButton?: boolean;
   title?: string | JSX.Element;
   content?: string | JSX.Element;
   children?: JSX.Element;

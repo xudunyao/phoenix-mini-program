@@ -29,9 +29,9 @@ const Modal: React.FC<Props> = ({
               </Text>
             ) : title}
           </View>
-          <View className='modal-close' onClick={onClose}>
-            <IconFont name='close' />
-          </View>
+            <View className='modal-close' onClick={onClose}>
+              <IconFont name='close' />
+            </View>
         </View>
         <View className='modal-content'>
           {children}
