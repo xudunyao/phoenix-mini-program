@@ -2,149 +2,149 @@
 
 .position{
   background-color: #F7F7F7;
-  padding-bottom: 120px;
+  padding-bottom: 120PX;
 }
 .header{
   width: 100%;
   background-color: $color-white;
-  margin-bottom: 20px;
+  margin-bottom: 20PX;
 }
 .header-top {
-   border-bottom: 1Px solid #F7F7F7;
+   border-bottom: 1PX solid #F7F7F7;
    margin: 0 auto;
-   width: 351px;
-   padding: 10px 0;
+   width: 351PX;
+   padding: 10PX 0;
 }
 .header-bottom{
   margin: 0 auto;
-  width: 351px;
-  padding: 10px 0;
+  width: 351PX;
+  padding: 10PX 0;
 }
 .title{
-  font-size: 16px;
+  font-size: 16PX;
   font-weight: 600;
   color: $text-primary;
 }
 .money{
-  padding: 10px 0;
+  padding: 10PX 0;
   margin: 0;
-  font-size: 16px;
+  font-size: 16PX;
 }
 .price{
   color:$text-orange-red;
   font-weight: 600;
   &_count{
-    font-size: 16px;
+    font-size: 16PX;
   }
   &_unit{
-    font-size: 12px;
+    font-size: 12PX;
   }
 }
 .subsidy{
-  padding: 2px 5px;
+  padding: 2PX 5PX;
   background: $background-orange;
-  box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
-  border-radius: 100px 100px 100px 2px;
+  box-shadow: 0PX 2PX 11PX 0PX rgba(23, 43, 98, 0.07);
+  border-radius: 100PX 100PX 100PX 2PX;
   color:$color-white;
-  margin-left: 12px;
+  margin-left: 12PX;
   &_count{
-    font-size: 16px;
+    font-size: 16PX;
   }
   &_unit{
-    font-size: 10px;
+    font-size: 10PX;
   }
 }
 .tags{
   display: flex;
   justify-content: flex-start;
-  padding: 5px 0;
+  padding: 5PX 0;
   &-item{
     font-weight: 400;
     color: $color-orange;
-    line-height: 14px;
-    font-size: 12px;
-    text-shadow: 0px 2px 11px rgba(23, 43, 98, 0.07);
-    box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
-    border-radius: 2px;
-    border: 1px solid rgba(255, 160, 80, 0.36);
-    padding: 2px 5px;
-    margin-right: 5px;
+    line-height: 14PX;
+    font-size: 12PX;
+    text-shadow: 0PX 2PX 11PX rgba(23, 43, 98, 0.07);
+    box-shadow: 0PX 2PX 11PX 0PX rgba(23, 43, 98, 0.07);
+    border-radius: 2PX;
+    border: 1PX solid rgba(255, 160, 80, 0.36);
+    padding: 2PX 5PX;
+    margin-right: 5PX;
   }
 }
 .img{
-  width: 32px;
+  width: 32PX;
   vertical-align: middle;
 }
 .name {
-  font-size: 14px;
+  font-size: 14PX;
   font-weight: 400;
   color: $text-primary;
-  padding-left: 10px;
+  padding-left: 10PX;
 }
 .content{
   width: 100%;
   background-color: $color-white;
-  padding: 10px 0;
+  padding: 10PX 0;
 }
 
 .item{
-  width: 351px;
-  margin: 10px auto;
-  border-radius: 12px;
-  border: 1px solid $color-primary;
+  width: 351PX;
+  margin: 10PX auto;
+  border-radius: 12PX;
+  border: 1PX solid $color-primary;
   box-sizing: border-box;
 }
 .item-header{
   background: $color-medium-purple;
-  padding: 10px;
-  font-size: 16px;
+  padding: 10PX;
+  font-size: 16PX;
   font-weight: 600;
   box-sizing: border-box;
   border-top: $color-primary;
-  border-radius: 13px 13px 0 0;
+  border-radius: 13PX 13PX 0 0;
   position: relative;
   &:after {
     content: '';
-    width: 6px;
-    height: 12px;
+    width: 6PX;
+    height: 12PX;
     top: 50%;
-    margin-top: -6px;
+    margin-top: -6PX;
     position: absolute;
     left: 0;
     background-color: $color-primary;
   }
 }
 .item-body{
-  border-top: 1px solid $color-primary;
+  border-top: 1PX solid $color-primary;
   display: flex;
   background-color: $color-white;
   justify-content: flex-start;
   border-bottom:$color-primary; ;
 }
 .item-body:last-child{
-  border-radius: 0 0 13px 13px;
+  border-radius: 0 0 13PX 13PX;
 }
 .item-body-label{
-  width: 60px;
-  height: 20px;
-  padding: 10px 10px;
-  font-size: 14px;
+  width: 60PX;
+  height: 20PX;
+  padding: 10PX 10PX;
+  font-size: 14PX;
   font-weight: 500;
   color: $text-primary;
   
 }
 .item-body-text{
-  width: 260px;
-  padding: 10px;
-  font-size: 14px;
+  width: 260PX;
+  padding: 10PX;
+  font-size: 14PX;
   font-weight: 400;
-  border-left: 1px solid $color-primary;
+  border-left: 1PX solid $color-primary;
   color: $text-dark-slate-blue;
   word-break: break-all;
 }
 .bottom{
   width: 100%;
-  height: 58px;
+  height: 58PX;
   position: fixed;
   bottom: 0;
   z-index: 111;
@@ -156,21 +156,21 @@
 .bottom-btn{
   background: $button-background;
   box-shadow: $box-shadow;
-  width: 175px;
-  height: 42px;
-  line-height: 42px;
+  width: 175PX;
+  height: 42PX;
+  line-height: 42PX;
   text-align: center;
-  border-radius: 23px;
+  border-radius: 23PX;
   color: $color-white;
 }
 .icon {
-  width: 82px;
+  width: 82PX;
   color: $text-primary;
-  font-size: 12px;
+  font-size: 12PX;
   font-weight: 400;
   text-align: center;
 }
 .icon-item{
-  width: 32px;
+  width: 32PX;
   margin: 0 auto;
 }

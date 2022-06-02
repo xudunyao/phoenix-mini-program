@@ -59,7 +59,7 @@ const request = (method, url, params) => new Promise(async (resolve, reject) => 
     await Taro.request({
       method,
       url,
-      data: params,
+      data: params?.data,
       isShowLoading: !!params?.isShowLoading,
       header: {
         ...defaultHeader,

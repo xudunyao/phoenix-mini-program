@@ -10,8 +10,8 @@
   flex-shrink: 0;
   &-content{
     width: 100%;
-    height: 44Px;
-    line-height: 44px;
+    height: 44PX;
+    line-height: 44PX;
     text-align: center;
     display: flex;
     align-items:center;
@@ -19,11 +19,11 @@
       position: absolute;
       display: inline-block;
       display: flex;
-      padding: 12px;
+      padding: 12PX;
       align-items:center;
     }
     &-title{
-      font-size: 18px;
+      font-size: 18PX;
       font-weight: 500;
       width: 100%;
     }
