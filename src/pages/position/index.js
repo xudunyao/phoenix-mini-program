@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, Image } from '@tarojs/components';
 import { httpRequest } from '@/utils';
 import exampleImg from '@/assets/images/example.png';
-import { IconFont } from '@/components';
+import { IconFont, Button } from '@/components';
 import SwiperIndex from '../components/swiper/index';
 import styles from './Position.module.scss';
 
@@ -101,7 +101,7 @@ const Position = () => {
       <View className={styles.bottom}>
         <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='blod-call' size='32px' /></View>电话咨询</View>
         <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='share' size='32px' /></View>岗位分享</View>
-        <View className={styles['bottom-btn']}>立即报名</View>
+        <Button className={styles['bottom-btn']}>立即报名</Button>
       </View>
     </View>
   );
