@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { View, Text, Image ,Button } from "@tarojs/components";
-import { showToast } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { httpRequest } from '@/utils';
 import { IconFont ,Dialog } from "@/components";
 import { FormItem, Input } from '@/components/form';
 import { regExp } from '@/constants';
@@ -13,7 +14,7 @@ const initForm = {
     value: '',
     error: '',
   },
-  id: {
+  idNo: {
     value: '',
     error: '',
   },
@@ -43,34 +44,29 @@ const Auth = () => {
     })
   }
   const validate = () => {
-    // TODO: 根据业务需求来
     if (!form.name.value) {
       setFormFieldError('name', '姓名不能为空');
       return false;
     }
-    if (!regExp.idCard(form.id.value)) {
-      setFormFieldError('id', '身份证号格式不正确');
+    if (!regExp.idCard(form.idNo.value)) {
+      setFormFieldError('idNo', '身份证号格式不正确');
       return false;
     }
     return true;
   }
   const handleSubmit = () => {
     if (validate()) {
-      // TODO: submit
-      showToast({
-        icon: 'success',
-        title: '提交成功！'
-      })
+      handleUserAuth();
     }
   }
   const handleInputBlur = (value ,type) => {
-    if(!value && type === 'id'){
-      setFormFieldError('id', '身份证号码不能为空');
+    if(!value && type === 'idNo'){
+      setFormFieldError('idNo', '身份证号码不能为空');
     }
     if(!value && type === 'name'){
       setFormFieldError('name', '用户姓名不能为空');
     }
-    if(form.id.value && form.name.value && validate()){
+    if(form.idNo.value && form.name.value && validate()){
       setIsButtonActive(true);
     }
   }
@@ -80,6 +76,23 @@ const Auth = () => {
   const handleCloseClick = () => {
     setIsShow(false);
   };
+  const handleUserAuth = async () => {
+    try {
+      const res = await httpRequest.post('phoenix-center-backend/client/certification/twoElement',{
+        data: {
+          name: form.name.value,
+          idNo: form.idNo.value,
+        }
+      });
+      if(res?.code === 0){
+        setIsSuccessShow(true);
+      }else{
+        setIsFailShow(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <View className={styles.container}>
       {
@@ -112,15 +125,15 @@ const Auth = () => {
             <FormItem
               label='身份证号'
               labelAlign='left'
-              errorMsg={form.id.error}
+              errorMsg={form.idNo.error}
             >
               <Input
                 placeholder='请输入身份证号'
-                value={form.id.value}
-                onInput={(value) => setFormFieldValue('id', value)}
-                error={!!form.id.error}
-                onBlur={(value) => handleInputBlur(value,'id')}
-                onFocus={() =>{ handleInputFocus('id') }}
+                value={form.idNo.value}
+                onInput={(value) => setFormFieldValue('idNo', value)}
+                error={!!form.idNo.error}
+                onBlur={(value) => handleInputBlur(value,'idNo')}
+                onFocus={() =>{ handleInputFocus('idNo') }}
               />
             </FormItem>
             <View className={styles.tips}>
@@ -155,7 +168,13 @@ const Auth = () => {
           </View>
         }
         showButton={false}
-        onClose={() => { setIsSuccessShow(false) }}
+        onClose={() => { 
+          setIsSuccessShow(false);
+          Taro.navigateBack()
+          Taro.switchTab({
+            url: 'pages/my/index'
+          })
+        }}
       />
     </View>
   );
