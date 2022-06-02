@@ -1,28 +1,33 @@
 import { useState } from 'react';
 import { View } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont } from '@/components';
-
 import styles from  './Index.module.scss';
 import SwiperIndex from '../components/swiper/index';
 import ListIndex from './components/list/index';
 
 const tabList = [{
+  key: 'ALL',
   title: '全部',
 }, {
-  title: '有补贴',
+  key: 'HOURLY_WORKER',
+  title: '小时工',
 }, {
+  key: 'DAILY_WORKER',
   title: '正式工',
 }, {
+  key: 'HAVE_REWARD',
   title: '派遣工',
 }, {
+  key: 'FORMAL_WORKER',
   title: '兼职工',
 }];
+
 const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
   const onTabClick = (index) => {
     setTabCurrent(index)
   };
-  
+
   return (
     <View className={styles.container}>
       <SwiperIndex customStyle='height: 231px' />
@@ -33,9 +38,13 @@ const Index = () => {
           onTabClick={onTabClick}
           extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
         >
-          <TabsPanel>
-            <ListIndex />
-          </TabsPanel>
+          {
+            tabList.map((item) => (
+              <TabsPanel>
+                <ListIndex name={item.key} />
+              </TabsPanel>
+            ))
+          }
         </Tabs>
       </View>
     </View>

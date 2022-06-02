@@ -1,6 +1,9 @@
-import { ScrollView, View, Text, Button } from '@tarojs/components'
+import { ScrollView, View, Text, Button, } from '@tarojs/components'
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { Loading } from '@/components';
 import { Props, ResponseTypes, PaginationTypes  } from './types';
+
+
 
 import './styles.scss';
 
@@ -103,7 +106,7 @@ const InfiniteScroll: React.FC<Props> = ({
       {
         isLoading ? (
           <View className='infinite-scroll-container'>
-            <Text className='infinite-scroll-text'>Loading……</Text>
+            <Loading size='40px' color='#80A2FF' />
           </View>
         ) : (
           <>
@@ -128,7 +131,7 @@ const InfiniteScroll: React.FC<Props> = ({
             {list.length ? (
               <View>
                 {
-                  isLoadingMore ? (loadingMoreComponent || (<Text className='infinite-scroll-text'>数据加载中……</Text>)) : (
+                  isLoadingMore ? (loadingMoreComponent || (<Loading size='40px' color='80A2FF' />)) : (
                     hasMore ? (hasMoreComponent || (<Text className='infinite-scroll-text'>上拉加载更多数据</Text>)) : (noMoreComponent || (<Text className='infinite-scroll-text'>没有更多数据了</Text>))
                   )
                 }

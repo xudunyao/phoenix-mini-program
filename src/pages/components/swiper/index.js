@@ -21,13 +21,13 @@ const Swipers = ({
     setCurrent(e.detail.current);
   };
   return(
-    <View className='swiper'  >
+    <View className='swiper' style={customStyle} >
       <Swiper
         className='content'
         indicatorColor='#999'
         indicatorActiveColor='#333'
         circular
-        auto
+        auto={false}
         style={customStyle}
         current={current}
         onChange={onChange}

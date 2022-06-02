@@ -1,8 +1,12 @@
 @import '@/scss/variable.scss';
 
-
+.tabs{
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 .tab-content{
-  display: block;
+  overflow-y: hidden;
 }
 .tab-horizontal{
   display: inline-block;
