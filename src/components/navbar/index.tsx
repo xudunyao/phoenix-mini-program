@@ -10,7 +10,7 @@ import './styles.scss';
 const NavBar: React.FC<Props> = ({
   title='寻工鸟',
   customStyle,
-  showBack=true,
+  showBack,
 }) => {
   const [ statusHeight, setStatusHeight] = useState(0);
   const getNavHeight =() =>{

@@ -101,7 +101,7 @@ const Position = () => {
       <View className={styles.bottom}>
         <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='blod-call' size='32px' /></View>电话咨询</View>
         <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='share' size='32px' /></View>岗位分享</View>
-        <Button className={styles['bottom-btn']}>立即报名</Button>
+        <Button >立即报名</Button>
       </View>
     </View>
   );

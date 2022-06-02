@@ -8,9 +8,10 @@
   height: 44Px;
   line-height: 44Px;
   padding: 0 24Px;
+  box-shadow: $box-shadow;
   border-radius: $border-radius;
   border: 1Px solid $color-primary;
-  background-color: $color-primary;
+  background: $button-background;
   color: $color-white;
   font-size: 16Px;
   &-ghost {
