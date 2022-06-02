@@ -12,24 +12,32 @@ const swiperList = [{
 }, {
   url: exampleImg,
 }];
-const Swipers = () => {
+const Swipers = ({
+  customStyle,
+  list,
+}) => {
   const [current, setCurrent] = useState(0);
   const onChange = (e) => {
     setCurrent(e.detail.current);
   };
   return(
-    <View className='swiper' >
+    <View className='swiper'  >
       <Swiper
         className='content'
         indicatorColor='#999'
         indicatorActiveColor='#333'
         circular
         auto
+        style={customStyle}
         current={current}
         onChange={onChange}
       >
         {
-          swiperList.map((f) => (
+          list? list?.map((f) => (
+            <SwiperItem>
+              <Image mode='widthFix' className='img' src={f}></Image>
+            </SwiperItem>
+          )) : swiperList?.map((f) => (
             <SwiperItem>
               <Image mode='widthFix' className='img' src={f.url}></Image>
             </SwiperItem>

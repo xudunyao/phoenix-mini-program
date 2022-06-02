@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Taro, { showToast } from '@tarojs/taro';
-import { IconFont } from "@/components";
+import { IconFont, Button } from "@/components";
 import { View } from "@tarojs/components";
 import { FormItem, Input } from '@/components/form';
 import { httpRequest } from '@/utils';
-import { regExp } from '@/constants';
+import { regExp, storageKeys } from '@/constants';
 import VerifyCode from '../components/verifyCode';
-
 import Logo from '../components/logo';
+
 import styles from './Login.module.scss'
 
 const initForm = {
@@ -68,13 +68,15 @@ const Login = () => {
         if (res.code) {
           //发起网络请求
           try {
-            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',
-              {
+            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',{
+              data: {
                 mobile: form.phone.value,
                 smsCode: form.sms.value,
                 code: res.code,
                 sourceChannelId: sourceChannel,
               }
+            }
+              
             );
             if (resInfo?.code !== 0) {
               showToast({
@@ -82,11 +84,11 @@ const Login = () => {
                 title: resInfo.msg
               })
             } else {
-              Taro.setStorageSync('openId', resInfo.data.openId)
-              Taro.setStorageSync('unionId', resInfo.data.unionId)
-              Taro.setStorageSync('mobile', resInfo.data.mobile)
-              Taro.setStorageSync('userId', resInfo.data.userId)
-              Taro.setStorageSync('token', resInfo.data.jwt)
+              Taro.setStorageSync(storageKeys.OPENID, resInfo.data.openId);
+              Taro.setStorageSync(storageKeys.UNIONID, resInfo.data.unionId);
+              Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
+              Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
+              Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
               Taro.switchTab({
                 url: '/pages/index/index'
               });
@@ -103,12 +105,14 @@ const Login = () => {
   };
   const webLogin = async () => {
     try {
-      const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',
-        {
+      const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',{
+        data: {
           mobile: form.phone.value,
           smsCode: form.sms.value,
           channelCode: sourceChannel,
         }
+      }
+        
       );
       if (res?.code !== 0) {
         showToast({
@@ -116,9 +120,9 @@ const Login = () => {
           title: resCallBack.msg
         })
       } else {
-        Taro.setStorageSync('mobile', res.data.mobile);
-        Taro.setStorageSync('userId', res.data.userId);
-        Taro.setStorageSync('token', res.data.jwt);
+        Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
+        Taro.setStorageSync(storageKeys.USERID, res.data.userId);
+        Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
         Taro.switchTab({
           url: '/pages/index/index'
         })
@@ -137,17 +141,21 @@ const Login = () => {
      }
     }
   };
-  const getCode = async (call) => {
+  const getCode = async (cb) => {
     
     if(regExp.phone(form.phone.value)){
       try {
-        const res = await httpRequest.post('phoenix-center-backend/sms/send',{ mobile: form.phone.value });
+        const res = await httpRequest.post('phoenix-center-backend/sms/send',{
+          data: {
+            mobile: form.phone.value
+          }
+        });
         if (res?.code !== 0) {
           showToast({
             title: res.msg
           })
         }
-        call && call();
+        cb && cb();
         setSendStatus(false)
       } catch (err) {
         console.log(err);
@@ -190,9 +198,9 @@ const Login = () => {
           error={!!form.sms.error}
         />
       </FormItem>
-      <View onClick={handleSubmit} className={styles['login-btn']}>
+      <Button onClick={handleSubmit}>
         登录
-      </View>
+      </Button>
       </View>
     </View>
   )

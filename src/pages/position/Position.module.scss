@@ -2,10 +2,7 @@
 
 .position{
   background-color: #F7F7F7;
-  height: 100%;
-  :global(.swiper){
-    height: 216px;
-  }
+  padding-bottom: 120px;
 }
 .header{
   width: 100%;
@@ -34,7 +31,7 @@
   font-size: 16px;
 }
 .price{
-  color:$text-orangeRed;
+  color:$text-orange-red;
   font-weight: 600;
   &_count{
     font-size: 16px;
@@ -87,7 +84,7 @@
 .content{
   width: 100%;
   background-color: $color-white;
-  padding: 10px 0 50px 0;
+  padding: 10px 0;
 }
 
 .item{
@@ -98,7 +95,7 @@
   box-sizing: border-box;
 }
 .item-header{
-  background: $color-MediumPurple;
+  background: $color-medium-purple;
   padding: 10px;
   box-sizing: border-box;
   border-top: $color-primary;
@@ -135,12 +132,13 @@
   
 }
 .item-body-text{
-  width: 210px;
+  width: 260px;
   padding: 10px;
   font-size: 14px;
   font-weight: 400;
   border-left: 1px solid $color-primary;
-  color: $text-darkSlateBlue;
+  color: $text-dark-slate-blue;
+  word-break: break-all;
 }
 .bottom{
   width: 100%;
