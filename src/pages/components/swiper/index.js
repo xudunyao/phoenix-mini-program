@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Swiper, SwiperItem, Image } from '@tarojs/components';
 import exampleImg from '@/assets/images/example.png';
 import exampleImg1 from '@/assets/images/example1.png';
-import styles from  './Swiper.module.scss';
+import './swiper.scss';
 
 
 const swiperList = [{
@@ -12,34 +12,42 @@ const swiperList = [{
 }, {
   url: exampleImg,
 }];
-const Swipers = () => {
+const Swipers = ({
+  customStyle,
+  list,
+}) => {
   const [current, setCurrent] = useState(0);
   const onChange = (e) => {
     setCurrent(e.detail.current);
   };
   return(
-    <View className={styles.swiper} >
+    <View className='swiper'  >
       <Swiper
-        className={styles.content}
+        className='content'
         indicatorColor='#999'
         indicatorActiveColor='#333'
         circular
         auto
+        style={customStyle}
         current={current}
         onChange={onChange}
       >
         {
-          swiperList.map((f) => (
+          list? list?.map((f) => (
             <SwiperItem>
-              <Image mode='widthFix' className={styles.img} src={f.url}></Image>
+              <Image mode='widthFix' className='img' src={f}></Image>
+            </SwiperItem>
+          )) : swiperList?.map((f) => (
+            <SwiperItem>
+              <Image mode='widthFix' className='img' src={f.url}></Image>
             </SwiperItem>
           ))
         }
       </Swiper>
-      <View className={styles.dots}>
+      <View className='dots'>
         {
           swiperList.map((f,index) => (
-            <View className={`${current===index ? styles['dots-dot'] : styles['dots-dot_active']}`}></View> 
+            <View className={`${current===index ? 'dots-dot' : 'dots-dot_active'}`}></View> 
           ))
         }
         

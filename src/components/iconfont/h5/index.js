@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 import React from 'react';
+import IconBlodCall from './IconBlodCall';
+import IconShare from './IconShare';
 import IconCall from './IconCall';
 import IconSafety from './IconSafety';
 import IconPhone from './IconPhone';
@@ -17,6 +19,8 @@ import IconWarningCircleFill from './IconWarningCircleFill';
 import IconClear from './IconClear';
 import IconWarning from './IconWarning';
 import IconClose from './IconClose';
+export { default as IconBlodCall } from './IconBlodCall';
+export { default as IconShare } from './IconShare';
 export { default as IconCall } from './IconCall';
 export { default as IconSafety } from './IconSafety';
 export { default as IconPhone } from './IconPhone';
@@ -36,6 +40,10 @@ export { default as IconClose } from './IconClose';
 
 const IconFont = ({ name, ...rest }) => {
   switch (name) {
+    case 'blod-call':
+      return <IconBlodCall {...rest} />;
+    case 'share':
+      return <IconShare {...rest} />;
     case 'call':
       return <IconCall {...rest} />;
     case 'safety':

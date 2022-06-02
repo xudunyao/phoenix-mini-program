@@ -1,6 +1,7 @@
 import Taro, { showToast } from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
 import { IconFont } from "@/components";
+import { storageKeys } from '@/constants';
 import { httpRequest } from "@/utils";
 
 import Logo from '../components/logo';
@@ -21,13 +22,14 @@ const LoginGuide = () => {
         if (res.code) {
           //发起网络请求
           try {
-            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',
-              {
+            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',{
+              data: {
                 encryptedData,
                 iv,
                 code: res.code,
                 sourceChannelId: sourceChannel,
               }
+            }
             );
             if (resInfo?.code !== 0) {
               showToast({
@@ -35,11 +37,11 @@ const LoginGuide = () => {
                 title: resInfo.msg
               })
             } else {
-              Taro.setStorageSync('openId', resInfo.data.openId)
-              Taro.setStorageSync('unionId', resInfo.data.unionId)
-              Taro.setStorageSync('mobile', resInfo.data.mobile)
-              Taro.setStorageSync('userId', resInfo.data.userId)
-              Taro.setStorageSync('token', resInfo.data.jwt)
+              Taro.setStorageSync(storageKeys.OPENID, resInfo.data.openId);
+              Taro.setStorageSync(storageKeys.UNIONID, resInfo.data.unionId);
+              Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
+              Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
+              Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
               Taro.switchTab({
                 url: '/pages/index/index'
               });
