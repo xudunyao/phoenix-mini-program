@@ -2,17 +2,20 @@ import { useGlobalIconFont } from './components/iconfont/helper';
 
 export default defineAppConfig({
   pages: [
+    'pages/index/index',
+    'pages/messageAccount/index',
+    'pages/messageSystem/index',
+    'pages/messageWork/index',
+    'pages/message/index',
     'pages/my/index',
     'pages/loginGuide/index',
     'pages/auth/index',
-    'pages/index/index',
     'pages/login/index',
     'pages/position/index',
     'pages/example/index',
     'pages/registration/index',
     'pages/form/index',
     'pages/result/index',
-    'pages/message/index',
   ],
   window: {
     backgroundTextStyle: 'light',

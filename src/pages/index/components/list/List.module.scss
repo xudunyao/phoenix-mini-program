@@ -4,13 +4,13 @@
   box-shadow: 0px 2px 11px 0px rgba(153, 153, 153, 0.07);
   border-radius: 12px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   padding: 16px 0;
   width: 351px;
   margin: 10px auto;
 }
 .content {
-  width: 210px;
+  width: 230px;
   position: relative;
 }
 .title{
@@ -75,6 +75,7 @@
   justify-content: flex-start;
 }
 .img {
+  margin: 0 12px 0 12px;
   width: 106px;
   height: 106px;
   border-radius: 8px;

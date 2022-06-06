@@ -117,7 +117,7 @@ const Login = () => {
       if (res?.code !== 0) {
         showToast({
           icon: 'none',
-          title: resCallBack.msg
+          title: res.msg
         })
       } else {
         Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
