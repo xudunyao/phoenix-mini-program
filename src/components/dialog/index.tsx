@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text } from '@tarojs/components';
 import { Button } from '@/components';
-import styles from './Dialog.module.scss';
 import { Props } from './types';
 import './styles.scss';
 
@@ -13,13 +12,13 @@ const Dialog: React.FC<Props> = ({
   content,
   actions,
   visible = false,
+  buttonWrapperStyle,
 }) => {
   const handleMaskClick = () => {
     if (maskClosable) {
       onClose();
     }
   }
-
   const renderedActions = actions?.length ? actions : [{
     title: '好的',
     onClick: onClose,
@@ -43,11 +42,11 @@ const Dialog: React.FC<Props> = ({
             </Text>
           ) : content}
         </View>
-        <View className='dialog-actions'>
+        <View className='dialog-actions' style={buttonWrapperStyle}>
           {
-           showButton && renderedActions.map(a => (
+           showButton && renderedActions.map(item => (
               <View className='dialog-actions-item'>
-                <Button title={a.title}  onClick={a.onClick || onClose} />
+                <Button title={item.title}  onClick={item.onClick || onClose} {...item} />
              </View>
             ))
           }

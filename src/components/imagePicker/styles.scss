@@ -1,0 +1,44 @@
+.wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  &-img-item{
+    position: relative;
+    width: 75Px;
+    height: 75Px;
+    margin-right: 9Px;
+    &-img{
+      position: absolute;
+      width: 75Px;
+      height: 75Px;
+      border-radius: 4Px;
+    }
+    &-close{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 20Px;
+      height:20Px;
+      background: #000000;
+      border-radius: 100Px;
+      opacity: 0.3;
+      right:-5Px;
+      top:-5Px;
+      z-index: 1;
+    }
+  }
+  &-upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75Px;
+    height: 75Px;
+    background: #F5F5F5;
+    &-img-add{
+      width: 75Px;
+      height: 75Px;
+      border-radius: 4Px;
+    }
+  }
+}
+

@@ -1,0 +1,133 @@
+@import '@/scss/variable.scss';
+
+.container{
+  height:100%;
+  padding:24Px;
+  box-sizing: border-box;
+  :global(.textarea-wrapper){
+    border:none;
+  }
+  :global(.dialog-actions-item){
+    width: calc(50% - 5Px);
+    flex: 0 1 auto;
+  }
+}
+.title{
+  font-size: 18Px;
+  font-weight: 500;
+  color: #333333;
+  line-height: 18Px;
+  margin-bottom: 24Px;
+}
+.options{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  &::after{
+    content: '';
+    display: block;
+    width: calc(33% - 8Px);
+  }
+}
+.option{
+  width: calc(33% - 8Px);
+  height: 38Px;
+  line-height: 38Px;
+  background: $border-primary;
+  border-radius: 4Px;
+  border: 1Px solid #E6E6E6;
+  font-size: 14Px;
+  color: #222222;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 12Px;
+}
+.active{
+  background: $button-background;
+  box-shadow:$box-shadow;
+}
+.textarea{
+  width: 100%;
+}
+.tips{
+  font-size: 14Px;
+  color: #CCCCCC;
+  line-height: 14Px;
+  text-align: right;
+  padding-bottom: 8Px;
+  border-bottom: 1Px solid #EDEDED;
+}
+.wrapper-img{
+  display: flex;
+  flex-wrap: wrap;
+}
+.img-item{
+  position: relative;
+  width: 75Px;
+  height: 75Px;
+  margin-right: 9Px;
+}
+.img{
+  position: absolute;
+  width: 75Px;
+  height: 75Px;
+  border-radius: 4Px;
+}
+.close{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 20Px;
+  height:20Px;
+  background: #000000;
+  border-radius: 100Px;
+  opacity: 0.3;
+  right:-5Px;
+  top:-5Px;
+  z-index: 1;
+}
+.upload{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75Px;
+  height: 75Px;
+  background: #F5F5F5;
+}
+.submit{
+  margin-top: 32Px;
+  height:50Px;
+}
+.dialog-title{
+  font-size: 18Px;
+  font-weight: 500;
+  color: #333333;
+  line-height: 25Px;
+  text-align: center;
+  margin-top:26Px;
+}
+.dialog-tips{
+  height: 40Px;
+  font-size: 14Px;
+  color: $text-tertiary;
+  line-height: 20Px;
+  text-align: center;
+}
+.dialog-img{
+  width: 50Px;
+  height:50Px;
+  margin-top:23Px;
+}
+.dialog-subtitle{
+  font-size: 18px;
+  color: #333333;
+  line-height: 18px;
+  margin-top:12Px;
+}
+.dialog-content{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+}

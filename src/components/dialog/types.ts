@@ -1,7 +1,13 @@
 export type ActionType = {
   title: string;
   onClick?: () => void;
-  type?: 'primary' | 'default'; 
+  type?: 'primary' | 'default';
+  round?: boolean;
+  ghost?: boolean;
+  disabled?: boolean;
+  customStyles?: string | object;
+  loading?: false;
+  size?: 'mini' | 'default';
 }
 
 export type Props = {
@@ -13,4 +19,5 @@ export type Props = {
   title?: string | JSX.Element;
   content?: string | JSX.Element;
   children?: JSX.Element;
+  buttonWrapperStyle?: string | object;
 };

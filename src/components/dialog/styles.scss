@@ -6,6 +6,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 2;
   &-mask {
     position: absolute;
     top: 0;
@@ -53,7 +54,7 @@
   &-actions {
     display: flex;
     padding:0Px 16Px;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 26Px;
     &-item {
       flex: 1;

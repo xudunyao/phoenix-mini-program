@@ -1,6 +1,5 @@
 import { useEffect , useState } from 'react';
 import { View } from '@tarojs/components';
-import {NavBar} from '@/components'
 import { httpRequest } from '@/utils';
 import {Auth,Wallet,Workbench} from "./components"
 import styles from  './My.module.scss';
@@ -29,12 +28,13 @@ const My = () => {
     getUserInfo();
   }, [])
   return  (
-    <View className={styles.my}>
-      <NavBar title='我的' />
+    <>
+      <View className={styles.my}>
       <Auth validation={isValidation} />
       <Wallet onClick={handleWalletClick} />
       <Workbench />
     </View>
+    </>
   )
   }
 
