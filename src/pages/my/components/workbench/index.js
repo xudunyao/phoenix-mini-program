@@ -1,7 +1,7 @@
 import { View ,Text, Image} from '@tarojs/components';
 import { IconFont } from '@/components';
+import Taro from '@tarojs/taro';
 import styles from  './Workbench.module.scss';
-import  bill from './img/bill.png';
 import  idea from './img/idea.png';
 import real_name from './img/real_name.png';
 import setting from './img/setting.png';
@@ -11,22 +11,17 @@ const workbenchList = [
   {
     title: '实名认证',
     icon: real_name,
-    url: '',
+    url: 'pages/auth/index',
   },
   {
     title: '我的报名',
     icon: sing_up,
-    url: '',
-  },
-  {
-    title: '账单明细',
-    icon: bill,
-    url: '',
+    url: 'pages/registration/index',
   },
   {
     title: '意见反馈',
     icon: idea,
-    url: '',
+    url: 'pages/suggestion/index',
   },
   {
     title: '设置',
@@ -34,6 +29,13 @@ const workbenchList = [
     url: '',
   },
 ]
+const handleClick = (item) => {
+  if (item.url) {
+    Taro.navigateTo({
+      url: "/" + item.url
+    })
+  }
+}
 const Workbench = () => {
   return (
     <View className={styles.workbench}>
@@ -42,7 +44,7 @@ const Workbench = () => {
         workbenchList.map((item, index) => {
           return (
             <>
-            <View className={styles.workbenchItem}>
+            <View className={styles.workbenchItem} onClick={() => { handleClick(item)}}>
               <View className={styles.center}>
                   <View className={styles.iconWrapper}>
                     <Image src={item.icon} className={styles.icon} />

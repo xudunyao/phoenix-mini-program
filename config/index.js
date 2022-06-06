@@ -14,6 +14,9 @@ const config = {
   sourceRoot: 'src',
   outputRoot: `dist/${process.env.TARO_ENV}`,
   plugins: [],
+  env: {
+    APP_ENV: `"${process.env.APP_ENV}"`,
+  },
   defineConstants: {
   },
   copy: {
