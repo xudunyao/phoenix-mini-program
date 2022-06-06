@@ -1,16 +1,19 @@
 import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
+import PropTypes from 'prop-types';
 import { httpRequest } from '@/utils';
 import { IconFont, InfiniteScroll } from '@/components';
 
 import styles from  './List.module.scss';
 
-const List = () => {
+const List = ({
+  name
+}) => {
   const getData = async (search) => {
     try {
       const res = await httpRequest.post('phoenix-manager-backend/client/noauth/positionOrders/inquiry',{
         data: {
-          searchEnum: 'ALL',
+          searchEnum: name,
           ...search,
         }
       });
@@ -19,7 +22,6 @@ const List = () => {
       }
       return res.data;
     } catch (err) {
-      // toast or console
       console.log(err);
     }
   };
@@ -34,6 +36,7 @@ const List = () => {
       pageSize={20}
       renderItem={(item) => (
         <View className={styles.list} onClick={() => toPage(item.id)} >
+          
           <Image className={styles.img} src={item.positionImage}></Image>
           <View className={styles.content}>
             <View className={styles.title}>{item.jobName}</View>
@@ -68,4 +71,11 @@ const List = () => {
     </InfiniteScroll>
   );
 }
+List.propTypes = {
+  name: PropTypes.string,
+};
+
+List.defaultProps = {
+  name: '',
+};
 export default List;

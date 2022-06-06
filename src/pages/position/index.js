@@ -10,7 +10,7 @@ const Position = () => {
   const [positionObj, setPositionObj] = useState();
   const getData = async () => {
     try {
-      const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/62981afc9973bc572d1a5d1e`);
+      const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/62981afc9973bc572d1a5d1e`,{isShowLoading: true});
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }

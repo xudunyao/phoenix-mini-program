@@ -35,7 +35,7 @@ export default defineAppConfig({
       selectedIconPath:"assets/images/iconMessage_active.png",
     }, {
       pagePath: 'pages/my/index',
-      text: '消息',
+      text: '我的',
       iconPath:"assets/images/iconMy.png",
       selectedIconPath:"assets/images/iconMy_active.png",
     }],
