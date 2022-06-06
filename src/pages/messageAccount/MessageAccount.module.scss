@@ -1,0 +1,48 @@
+@import '@/scss/variable.scss';
+.content{
+  background-color: $color-gary;
+  height: 100vh;
+}
+.item {
+  width: 313px;
+  margin: 20px auto;
+  background-color: $color-white;
+  border-radius: 8px;
+  padding: 15px;
+}
+.type {
+  text-align: center;
+  line-height: 35px;
+  color: $text-dark-slate-blue;
+}
+.price {
+  text-align: center;
+  color: $text-primary;
+  padding-bottom: 15px;
+}
+.unit {
+  font-size: 19px;
+  vertical-align: text-bottom;
+}
+.money {
+  font-size: 36px;
+  font-weight: 600;
+}
+.title {
+  color: $text-primary;
+}
+.list {
+  display: flex;
+  line-height: 30px;
+  justify-content: flex-start;
+}
+.label {
+  color: $text-dark-slate-blue;
+  width: 60px;
+  font-size: 14px;
+}
+.text {
+  padding-left: 20px;
+  color: $text-primary;
+  font-size: 14px;
+}

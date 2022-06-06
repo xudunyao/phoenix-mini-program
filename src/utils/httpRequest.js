@@ -32,6 +32,9 @@ export const getBaseUrl = async () => {
 
 const handleUnauthorized = () => {
   removeStorageSync(storageKeys.TOKEN);
+  Taro.redirectTo({
+    url: '../loginGuide/index'
+  });
   // TODO: 登录失效操作
 };
 

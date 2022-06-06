@@ -1,16 +1,25 @@
+import Taro, { useRouter } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { View, Text, Image } from '@tarojs/components';
 import { httpRequest } from '@/utils';
+import { storageKeys } from '@/constants';
 import exampleImg from '@/assets/images/example.png';
 import { IconFont, Button } from '@/components';
 import SwiperIndex from '../components/swiper/index';
 import styles from './Position.module.scss';
 
 const Position = () => {
+  const router = useRouter();
+  console.log(router)
+  const {positionId} = router.params;
   const [positionObj, setPositionObj] = useState();
+  const [tmplIds, setTmplIds] = useState([]);
+  const mobile = Taro.getStorageSync(storageKeys.MOBILE);
+  const platform = process.env.TARO_ENV;
+
   const getData = async () => {
     try {
-      const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/62981afc9973bc572d1a5d1e`,{isShowLoading: true});
+      const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/${positionId}`,{isShowLoading: true});
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
@@ -20,9 +29,63 @@ const Position = () => {
       console.log(err);
     }
   };
+  const getMessage = async () => {
+    try {
+      const res = await httpRequest.get('phoenix-center-backend/client/message/templateId');
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setTmplIds(res.data);
+    } catch (err) {
+      // toast or console
+      console.log(err);
+    }
+  };
+  const handleSignUp = async() => {
+    // Taro.requestSubscribeMessage({
+    //   tmplIds: tmplIds,
+    //   success: function (res) { }
+    // })
+    try {
+      const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
+        data: {
+          mobile,
+          platform,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      Taro.requestSubscribeMessage({
+        tmplIds: tmplIds,
+        success: function (rs) {
+          console.log(rs)
+        }
+      })
+    } catch (err) {
+      // toast or console
+      console.log(err);
+    }
+  };
+  const handleCall = (phone) => {
+    Taro.makePhoneCall({
+      phoneNumber: phone,
+    })
+  };
   useEffect(() => {
     getData();
+    getMessage();
   }, []);
+  Taro.useShareAppMessage(res => {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '岗位分享',
+      path: `${router.path}?positionId=${positionId}`
+    }
+})
   return (
     <View className={styles.position}>
       <SwiperIndex customStyle='height: 216px' list={positionObj?.companyImages} />
@@ -99,9 +162,9 @@ const Position = () => {
       </View>
       
       <View className={styles.bottom}>
-        <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='blod-call' size='32px' /></View>电话咨询</View>
+        <View className={styles.icon} onClick={() => handleCall()}><View className={styles['icon-item']}><IconFont name='blod-call' size='32px' /></View>电话咨询</View>
         <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='share' size='32px' /></View>岗位分享</View>
-        <Button >立即报名</Button>
+        <Button onClick={handleSignUp}>立即报名</Button>
       </View>
     </View>
   );
