@@ -169,8 +169,17 @@
   font-size: 12PX;
   font-weight: 400;
   text-align: center;
+  position: relative;
 }
 .icon-item{
   width: 32PX;
   margin: 0 auto;
+}
+.share{
+  opacity: 0;
+  position: absolute;
+  top:0;
+  width:100%;
+  z-index:1111;
+  height:100%;
 }

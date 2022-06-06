@@ -1,10 +1,10 @@
-import Taro, { useRouter } from '@tarojs/taro';
+import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
-import { View, Text, Image } from '@tarojs/components';
+import { View, Text, Image, Button } from '@tarojs/components';
 import { httpRequest } from '@/utils';
 import { storageKeys } from '@/constants';
 import exampleImg from '@/assets/images/example.png';
-import { IconFont, Button } from '@/components';
+import { IconFont, Button as MyButton } from '@/components';
 import SwiperIndex from '../components/swiper/index';
 import styles from './Position.module.scss';
 
@@ -36,26 +36,6 @@ const Position = () => {
         throw new Error(res.msg);
       }
       setTmplIds(res.data);
-    } catch (err) {
-      // toast or console
-      console.log(err);
-    }
-  };
-  const handleSignUp = async() => {
-    // Taro.requestSubscribeMessage({
-    //   tmplIds: tmplIds,
-    //   success: function (res) { }
-    // })
-    try {
-      const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
-        data: {
-          mobile,
-          platform,
-        }
-      });
-      if (res?.code !== 0) {
-        throw new Error(res.msg);
-      }
       Taro.requestSubscribeMessage({
         tmplIds: tmplIds,
         success: function (rs) {
@@ -67,25 +47,46 @@ const Position = () => {
       console.log(err);
     }
   };
-  const handleCall = (phone) => {
+  const handleSignUp = async() => {
+    try {
+      const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
+        data: {
+          mobile,
+          platform,
+        }
+      });
+      if (res?.code !== 0) {
+        showToast({
+          icon: 'none',
+          title: res.msg
+        })
+      } else {
+        getMessage();
+        Taro.navigateTo({
+          url: '../result/index'
+        })
+      }
+      
+    } catch (err) {
+      // toast or console
+      console.log(err);
+    }
+  };
+  const handleCall = () => {
     Taro.makePhoneCall({
-      phoneNumber: phone,
+      phoneNumber: '17665329244',
     })
   };
-  useEffect(() => {
-    getData();
-    getMessage();
-  }, []);
-  Taro.useShareAppMessage(res => {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  useShareAppMessage(() => {
     return {
-      title: '岗位分享',
+      title: '岗位详情',
       path: `${router.path}?positionId=${positionId}`
     }
-})
+  });
+  useEffect(() => {
+    getData();
+  }, []);
+ 
   return (
     <View className={styles.position}>
       <SwiperIndex customStyle='height: 216px' list={positionObj?.companyImages} />
@@ -163,8 +164,8 @@ const Position = () => {
       
       <View className={styles.bottom}>
         <View className={styles.icon} onClick={() => handleCall()}><View className={styles['icon-item']}><IconFont name='blod-call' size='32px' /></View>电话咨询</View>
-        <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='share' size='32px' /></View>岗位分享</View>
-        <Button onClick={handleSignUp}>立即报名</Button>
+        <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='share' size='32px' /></View>岗位分享 <Button className={styles.share} openType='share' /></View>
+        <MyButton onClick={handleSignUp}>立即报名</MyButton>
       </View>
     </View>
   );
