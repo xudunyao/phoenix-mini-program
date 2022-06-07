@@ -13,16 +13,13 @@ const tabList = [{
   key: 'ALL',
   title: '全部',
 }, {
-  key: 'HOURLY_WORKER',
-  title: '小时工',
-}, {
-  key: 'DAILY_WORKER',
+  key: 'FORMAL_WORKER',
   title: '正式工',
 }, {
-  key: 'HAVE_REWARD',
+  key: 'DISPATCH_WORKER',
   title: '派遣工',
 }, {
-  key: 'FORMAL_WORKER',
+  key: 'PRAT_TIME_WORKER',
   title: '兼职工',
 }];
 const swiperList = [
@@ -56,8 +53,8 @@ const Index = () => {
           extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
         >
           {
-            tabList.map((item, index) => (
-              <TabsPanel key={index}>
+            tabList.map((item) => (
+              <TabsPanel key={item.key}>
                 <ListIndex name={item.key} closeDialog={closeDialog}  />
               </TabsPanel>
             ))

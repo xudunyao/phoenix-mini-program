@@ -15,7 +15,7 @@ const Button: React.FC<Props> = ({
   loading,
   children,
   size = 'default',
-  type = 'default'
+  type = 'primary'
 }) => {
   const handleClick = () => {
     if (!loading && !disabled && onClick) {
