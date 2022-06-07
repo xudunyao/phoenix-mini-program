@@ -21,7 +21,7 @@ const Registration = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   return (
    <View className={styles.container}>
       <InfiniteScroll

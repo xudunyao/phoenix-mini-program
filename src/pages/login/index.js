@@ -79,10 +79,7 @@ const Login = () => {
               
             );
             if (resInfo?.code !== 0) {
-              showToast({
-                icon: 'none',
-                title: resInfo.msg
-              })
+              throw new Error(resInfo.msg);
             } else {
               Taro.setStorageSync(storageKeys.OPENID, resInfo.data.openId);
               Taro.setStorageSync(storageKeys.UNIONID, resInfo.data.unionId);
@@ -95,10 +92,16 @@ const Login = () => {
             }
             
           } catch (err) {
-            console.log(err);
+            showToast({
+              icon: 'none',
+              title: err
+            })
           }
         } else {
-          console.log('登录失败！' + res.errMsg)
+          showToast({
+            icon: 'none',
+            title: res.errMsg
+          })
         }
       }
     })
@@ -115,10 +118,7 @@ const Login = () => {
         
       );
       if (res?.code !== 0) {
-        showToast({
-          icon: 'none',
-          title: res.msg
-        })
+        throw new Error(res.msg);
       } else {
         Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
@@ -129,7 +129,10 @@ const Login = () => {
       }
       
     } catch (err) {
-      console.log(err);
+      showToast({
+        icon: 'none',
+        title: err
+      })
     }
   };
   const handleSubmit = async () => {
@@ -198,7 +201,7 @@ const Login = () => {
           error={!!form.sms.error}
         />
       </FormItem>
-      <Button onClick={handleSubmit}>
+      <Button type='primary' onClick={handleSubmit}>
         登录
       </Button>
       </View>

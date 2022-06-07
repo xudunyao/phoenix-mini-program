@@ -84,7 +84,7 @@ const Position = () => {
  
   return (
     <View className={styles.position}>
-      <SwiperIndex customStyle='height: 216px' list={positionObj?.companyImages} />
+      <SwiperIndex list={positionObj?.companyImages} />
       <View className={styles.header}>
         <View className={styles['header-top']}>
           <View className={styles.title}>{positionObj?.jobName}</View>

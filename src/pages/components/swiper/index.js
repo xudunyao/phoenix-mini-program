@@ -25,7 +25,7 @@ const Swipers = ({
       >
         {
           list?.map((f) => (
-            <SwiperItem>
+            <SwiperItem key={f}>
               <Image mode='widthFix' className='img' src={f}></Image>
             </SwiperItem>
           ))
@@ -33,12 +33,10 @@ const Swipers = ({
       </Swiper>
       <View className={`dots ${position}`}>
         {
-
-          list?.map((f,index) => (
-            <View className={`${current===index ? 'dots-dot' : 'dots-dot_active'}`}></View> 
+          list?.map((f, index) => (
+            <View key={f} className={`${current===index ? 'dots-dot' : 'dots-dot_active'}`}></View> 
           ))
         }
-        
       </View>
     </View>
   )

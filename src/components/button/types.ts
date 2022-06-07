@@ -7,4 +7,5 @@ export type Props = {
   customStyles?: string | object;
   loading?: false;
   size?: 'mini' | 'default';
+  type?: 'primary' | 'default';
 };

@@ -1,13 +1,16 @@
-import Taro from '@tarojs/taro';
+import Taro, { showToast } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import PropTypes from 'prop-types';
 import { httpRequest } from '@/utils';
 import { IconFont, InfiniteScroll } from '@/components';
+import { storageKeys } from '@/constants';
 
 import styles from  './List.module.scss';
 
+
 const List = ({
-  name
+  name,
+  closeDialog,
 }) => {
   const getData = async (search) => {
     try {
@@ -29,13 +32,44 @@ const List = ({
     Taro.navigateTo({
       url: `/pages/position/index?positionId=${id}`,
     });
-  }
+  };
+  const handleSignUp = async(positionId) => {
+    const token = Taro.getStorageSync(storageKeys.TOKEN);
+    const mobile = Taro.getStorageSync(storageKeys.MOBILE);
+    const platform = process.env.TARO_ENV;
+    if(token) {
+      try {
+        const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
+          data: {
+            mobile,
+            platform,
+          }
+        });
+        if (res?.code !== 0) {
+          throw new Error(res.msg);
+          
+        } else {
+          // getMessage();
+          closeDialog()
+        }
+        
+      } catch (err) {
+        showToast({
+          icon: 'none',
+          title: err
+        })
+      }
+    } else {
+      closeDialog(true)
+    }
+    
+  };
   return (
     <InfiniteScroll
       getData={getData}
       pageSize={20}
       renderItem={(item) => (
-        <View className={styles.list} onClick={() => toPage(item.id)} >
+        <View key={item.id} className={styles.list} onClick={() => toPage(item.id)}>
           
           <Image className={styles.img} src={item.positionImage}></Image>
           <View className={styles.content}>
@@ -63,7 +97,7 @@ const List = ({
               <IconFont name='location' />
               {item.city}{item.area}
             </View>
-            <View className={styles.sign}>立即报名</View>
+            <View className={styles.sign} onClick={(e)=>{e.stopPropagation();handleSignUp(item.id)}}>立即报名</View>
           </View>
         </View>
       )}
