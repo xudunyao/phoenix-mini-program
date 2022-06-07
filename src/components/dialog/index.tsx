@@ -42,7 +42,7 @@ const Dialog: React.FC<Props> = ({
             </Text>
           ) : content}
         </View>
-        <View className='dialog-actions' style={buttonWrapperStyle}>
+        <View className={`dialog-actions ${renderedActions.length > 1 ? 'double':' single'}`} style={buttonWrapperStyle}>
           {
            showButton && renderedActions.map(item => (
               <View className='dialog-actions-item'>

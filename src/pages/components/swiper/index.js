@@ -24,8 +24,8 @@ const Swipers = ({
         onChange={onChange}
       >
         {
-          list?.map((f) => (
-            <SwiperItem>
+          list?.map((f, index) => (
+            <SwiperItem key={index}>
               <Image mode='widthFix' className='img' src={f}></Image>
             </SwiperItem>
           ))
@@ -34,8 +34,8 @@ const Swipers = ({
       <View className={`dots ${position}`}>
         {
 
-          list?.map((f,index) => (
-            <View className={`${current===index ? 'dots-dot' : 'dots-dot_active'}`}></View> 
+          list?.map((f, index) => (
+            <View key={index} className={`${current===index ? 'dots-dot' : 'dots-dot_active'}`}></View> 
           ))
         }
         

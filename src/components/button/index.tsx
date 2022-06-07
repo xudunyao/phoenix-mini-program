@@ -15,6 +15,7 @@ const Button: React.FC<Props> = ({
   loading,
   children,
   size = 'default',
+  type = 'default'
 }) => {
   const handleClick = () => {
     if (!loading && !disabled && onClick) {
@@ -28,6 +29,7 @@ const Button: React.FC<Props> = ({
         ${ghost && 'button-ghost'}
         ${(disabled || loading) && 'button-disabled'}
         ${round && 'button-round'}
+        ${`button-${type}`}
         ${`button-${size}`}
       `}
       onClick={handleClick}
