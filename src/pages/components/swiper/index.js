@@ -1,20 +1,11 @@
 import { useState } from 'react';
 import { View, Swiper, SwiperItem, Image } from '@tarojs/components';
-import exampleImg from '@/assets/images/example.png';
-import exampleImg1 from '@/assets/images/example1.png';
 import './swiper.scss';
 
-
-const swiperList = [{
-  url: exampleImg,
-}, {
-  url: exampleImg1,
-}, {
-  url: exampleImg,
-}];
 const Swipers = ({
   customStyle,
   list,
+  position
 }) => {
   const [current, setCurrent] = useState(0);
   const onChange = (e) => {
@@ -27,26 +18,23 @@ const Swipers = ({
         indicatorColor='#999'
         indicatorActiveColor='#333'
         circular
-        auto={false}
+        autoplay
         style={customStyle}
         current={current}
         onChange={onChange}
       >
         {
-          list? list?.map((f) => (
+          list?.map((f) => (
             <SwiperItem>
               <Image mode='widthFix' className='img' src={f}></Image>
-            </SwiperItem>
-          )) : swiperList?.map((f) => (
-            <SwiperItem>
-              <Image mode='widthFix' className='img' src={f.url}></Image>
             </SwiperItem>
           ))
         }
       </Swiper>
-      <View className='dots'>
+      <View className={`dots ${position}`}>
         {
-          swiperList.map((f,index) => (
+
+          list?.map((f,index) => (
             <View className={`${current===index ? 'dots-dot' : 'dots-dot_active'}`}></View> 
           ))
         }

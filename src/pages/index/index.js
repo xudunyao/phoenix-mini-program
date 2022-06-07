@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { View } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont } from '@/components';
+import exampleImg from '@/assets/images/example.png';
+import exampleImg1 from '@/assets/images/example1.png';
 import styles from  './Index.module.scss';
 import SwiperIndex from '../components/swiper/index';
 import ListIndex from './components/list/index';
@@ -21,7 +23,10 @@ const tabList = [{
   key: 'FORMAL_WORKER',
   title: '兼职工',
 }];
-
+const swiperList = [
+  exampleImg,
+  exampleImg1,
+];
 const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
   const onTabClick = (index) => {
@@ -30,7 +35,7 @@ const Index = () => {
 
   return (
     <View className={styles.container}>
-      <SwiperIndex customStyle='height: 231px' />
+      <SwiperIndex customStyle='height: 231px' list={swiperList} position='left' />
       <View className={styles.list}>
         <Tabs 
           tabList={tabList}

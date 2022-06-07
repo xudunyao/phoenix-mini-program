@@ -2,9 +2,9 @@ import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { httpRequest } from '@/utils';
-import { storageKeys } from '@/constants';
+import { storageKeys, resultImg } from '@/constants';
 import exampleImg from '@/assets/images/example.png';
-import { IconFont, Button as MyButton } from '@/components';
+import { IconFont, Button as MyButton, Dialog } from '@/components';
 import SwiperIndex from '../components/swiper/index';
 import styles from './Position.module.scss';
 
@@ -14,6 +14,7 @@ const Position = () => {
   const {positionId} = router.params;
   const [positionObj, setPositionObj] = useState();
   const [tmplIds, setTmplIds] = useState([]);
+  const [visible, setVisible] = useState(false);
   const mobile = Taro.getStorageSync(storageKeys.MOBILE);
   const platform = process.env.TARO_ENV;
   const getData = async () => {
@@ -24,7 +25,6 @@ const Position = () => {
       }
       setPositionObj(res.data)
     } catch (err) {
-      // toast or console
       console.log(err);
     }
   };
@@ -42,7 +42,6 @@ const Position = () => {
         }
       })
     } catch (err) {
-      // toast or console
       console.log(err);
     }
   };
@@ -61,13 +60,10 @@ const Position = () => {
         })
       } else {
         getMessage();
-        Taro.navigateTo({
-          url: '../result/index'
-        })
+        setVisible(true)
       }
       
     } catch (err) {
-      // toast or console
       console.log(err);
     }
   };
@@ -182,6 +178,19 @@ const Position = () => {
         
         <MyButton onClick={handleSignUp}>立即报名</MyButton>
       </View>
+      <Dialog 
+        maskClosable
+        visible={visible}
+        content={
+          <View className={styles['dialog-content']}>
+            <Image mode='widthFix' src={resultImg.success} className={styles['dialog-img']} />
+            <View className={styles['dialog-subtitle']}>恭喜您，报名成功</View>
+          </View>
+        }
+        onClose={() => { 
+          setVisible(false);
+        }}
+      />
     </View>
   );
 };
