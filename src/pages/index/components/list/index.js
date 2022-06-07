@@ -46,17 +46,18 @@ const List = ({
           }
         });
         if (res?.code !== 0) {
-          showToast({
-            icon: 'none',
-            title: res.msg
-          })
+          throw new Error(res.msg);
+          
         } else {
           // getMessage();
           closeDialog()
         }
         
       } catch (err) {
-        console.log(err);
+        showToast({
+          icon: 'none',
+          title: err
+        })
       }
     } else {
       closeDialog(true)
