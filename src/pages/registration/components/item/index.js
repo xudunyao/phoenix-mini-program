@@ -1,5 +1,7 @@
 import { View ,Text, Image } from '@tarojs/components';
+import moment from 'moment';
 import { IconFont } from '@/components';
+import { datetimeFormat } from '@/constants';
 import enroll_success from './img/enroll_success.png';
 import styles from "./Item.modules.scss";
 
@@ -13,13 +15,13 @@ const Item = (
     <View className={styles.item}>
         <View className={styles.content}>
             <View>
-              <View className={styles.title}>{data.title}</View>
+              <View className={styles.title}>{data.jobName}</View>
               <View className={styles.wrapper}>
                 <View className={styles.wages}>
-                  <Text className={styles.money}>{data.wages}</Text><Text>元/时</Text>
+                  <Text className={styles.money}>{data.salaryStart + '-' + data.salaryEnd}</Text><Text>元/时</Text>
                 </View>
                 <View className={styles.subsidy}>
-                  <Text className={styles.money}>{data.subsidy}</Text> <Text>元/时补贴</Text>
+                  <Text className={styles.money}>1</Text> <Text>元/时补贴</Text>
                 </View>
               </View>
               <View className={styles.tags}>
@@ -39,11 +41,11 @@ const Item = (
         <View className={styles.root}>
             <View className={`${styles.map} ${styles.center} ${styles['root-text']}`}>
                <IconFont name='location' color='#ccc' style={{marginRight:'4px'}} />
-               <Text>{data.map}</Text>
+               <Text>{data.city + data.area}</Text>
             </View>
             <View className={`${styles['root-text']} ${styles.center}`}>
                <IconFont name='clock' color='#ccc' style={{marginRight:'4px'}} />
-               <Text>{data.date}</Text>
+               <Text>{ moment(data?.signUpTime).format(datetimeFormat.dateTime)}</Text>
             </View>
         </View>
     </View>
