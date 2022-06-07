@@ -14,7 +14,7 @@ const Button: React.FC<Props> = ({
   customStyles,
   loading,
   children,
-  size = 'default',
+  size,
   type = 'primary'
 }) => {
   const handleClick = () => {
@@ -30,7 +30,7 @@ const Button: React.FC<Props> = ({
         ${(disabled || loading) && 'button-disabled'}
         ${round && 'button-round'}
         ${`button-${type}`}
-        ${`button-${size}`}
+        ${size && `button-${size}`}
       `}
       onClick={handleClick}
       style={customStyles}
