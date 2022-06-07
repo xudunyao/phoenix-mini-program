@@ -9,11 +9,19 @@ import Logo from '../components/logo';
 import styles from './LoginGuide.module.scss'
 
 const LoginGuide = () => {
-  const sourceChannel = Taro.getStorageSync('sourceChannelId');
-  const toPage = () => {
-    Taro.navigateTo({
-      url: '/pages/login/index',
-    });
+  const isH5 = process.env.TARO_ENV ==='h5';
+  const sourceChannel = Taro.getStorageSync(storageKeys.sourceChannelId);
+  const toPage = (page) => {
+    if(page === 'index'){
+      Taro.switchTab({
+        url: `/pages/${page}/index`,
+      });
+    } else {
+      Taro.navigateTo({
+        url: `/pages/${page}/index`,
+      });
+    }
+    
   };
   const getPhoneNumber = (e) => {
     const { iv, encryptedData } = e.detail;
@@ -60,18 +68,23 @@ const LoginGuide = () => {
     <View className={styles.login}>
       <Logo />
       <View className={styles.content}>
-        <Button className={`${styles['login-btn']} ${styles.wechat}`} openType='getPhoneNumber' onGetPhoneNumber={getPhoneNumber} >
-          <View className={styles['btn-icon']}>
-            <IconFont name='wechat'  size='24px' />
-          </View>
-          微信一键登录
-        </Button>
-        <Button className={`${styles['login-btn']} ${styles.phone}`} onClick={toPage}>
+        {
+          !isH5 ? (
+            <Button className={`${styles['login-btn']} ${styles.wechat}`} openType='getPhoneNumber' onGetPhoneNumber={getPhoneNumber} >
+              <View className={styles['btn-icon']}>
+                <IconFont name='wechat'  size='24px' />
+              </View>
+              微信一键登录
+            </Button>
+          ) : null
+        }
+        <Button className={`${styles['login-btn']} ${styles.phone}`} onClick={() => toPage('login')}>
           <View className={styles['btn-icon']}>
             <IconFont name='phone'  size='24px' />
           </View>
           手机验证码登录
         </Button>
+        <View className={styles.back} onClick={() =>toPage('index')}>回到首页</View>
         <View className={styles.protocol}>
           登录即代表您同意寻工鸟<Text className={styles['protocol-text']}>《用户协议》</Text>和<Text className={styles['protocol-text']}>《隐私协议》</Text>
         </View>

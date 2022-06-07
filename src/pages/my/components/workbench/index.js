@@ -26,7 +26,7 @@ const workbenchList = [
   {
     title: '设置',
     icon: setting,
-    url: '',
+    url: 'pages/setting/index',
   },
 ]
 const handleClick = (item,validation) => {

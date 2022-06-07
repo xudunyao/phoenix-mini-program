@@ -3,6 +3,7 @@ import { useGlobalIconFont } from './components/iconfont/helper';
 export default defineAppConfig({
   pages: [
     'pages/index/index',
+    'pages/setting/index',
     'pages/messageAccount/index',
     'pages/messageSystem/index',
     'pages/messageWork/index',

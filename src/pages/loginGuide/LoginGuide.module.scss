@@ -40,10 +40,16 @@
 .protocol{
   color: $text-dark-slate-blue;
   font-size: 12px;
-  padding-top: 48px;
+  padding-top: 30px;
   text-align: center;
   font-weight: 400;
 }
 .protocol-text{
   color: $color-primary;
+}
+.back {
+  text-align: center;
+  padding-top: 15px;
+  font-size: 16px;
+  color: $text-dark-slate-blue;
 }

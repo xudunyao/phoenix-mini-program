@@ -22,10 +22,12 @@ const Message = () =>{
       const res = await httpRequest.get('phoenix-center-backend/client/message/overview');
       if(res.code === 0) {
         setList(res.data.messageVOS)
-        Taro.setTabBarBadge({
-          index: 1,
-          text: (res.data.unReadCount).toString()
-        })
+        if(res.data.unReadCount !== 0){
+          Taro.setTabBarBadge({
+            index: 1,
+            text: (res.data.unReadCount).toString()
+          })
+        }
       } else {
         showToast({
           icon: 'none',
@@ -59,7 +61,7 @@ const Message = () =>{
               
             </View>
             <View className={styles['item-right']}>
-              <View className={styles.type}>{message.type[v?.messageType]}<Text className={styles.time}>{moment(v?.sendTime).format(datetimeFormat.dateTime)}</Text></View>
+              <View className={styles.type}>{message.type[v?.messageType]}<Text className={styles.time}>{v?.sendTime ? moment(v?.sendTime).format(datetimeFormat.dateTime) : null}</Text></View>
               <View className={styles.message}>{v?.messageContent ?? '暂无通知'}</View>
             </View>
           </View>
