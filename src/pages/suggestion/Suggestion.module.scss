@@ -15,7 +15,7 @@
 .title{
   font-size: 18Px;
   font-weight: 500;
-  color: #333333;
+  color: $text-dark-slate-blue;
   line-height: 18Px;
   margin-bottom: 24Px;
 }
@@ -35,9 +35,9 @@
   line-height: 38Px;
   background: $border-primary;
   border-radius: 4Px;
-  border: 1Px solid #E6E6E6;
+  border: 1Px solid $border-primary;
   font-size: 14Px;
-  color: #222222;
+  color: $text-dark-slate-blue;
   box-sizing: border-box;
   text-align: center;
   margin-bottom: 12Px;
@@ -51,11 +51,11 @@
 }
 .tips{
   font-size: 14Px;
-  color: #CCCCCC;
+  color: $text-dark-slate-blue;
   line-height: 14Px;
   text-align: right;
   padding-bottom: 8Px;
-  border-bottom: 1Px solid #EDEDED;
+  border-bottom: 1Px solid $border-primary;
 }
 .wrapper-img{
   display: flex;
@@ -80,7 +80,7 @@
   position: absolute;
   width: 20Px;
   height:20Px;
-  background: #000000;
+  background: $text-primary;
   border-radius: 100Px;
   opacity: 0.3;
   right:-5Px;
@@ -93,7 +93,7 @@
   align-items: center;
   width: 75Px;
   height: 75Px;
-  background: #F5F5F5;
+  background: $color-gary;
 }
 .submit{
   margin-top: 32Px;
@@ -102,7 +102,7 @@
 .dialog-title{
   font-size: 18Px;
   font-weight: 500;
-  color: #333333;
+  color: $text-primary;
   line-height: 25Px;
   text-align: center;
   margin-top:26Px;
@@ -121,13 +121,13 @@
 }
 .dialog-subtitle{
   font-size: 18px;
-  color: #333333;
+  color: $text-dark-slate-blue;
   line-height: 18px;
   margin-top:12Px;
 }
 .dialog-content{
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   flex-direction: column;
 }

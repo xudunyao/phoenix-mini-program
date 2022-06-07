@@ -28,7 +28,17 @@ export default defineAppConfig({
   /* eslint-disable */
   usingComponents: Object.assign(useGlobalIconFont()),
   tabBar: {
-    list: [{
+    list: process.env.TARO_ENV === 'h5' ? [{
+      pagePath: 'pages/index/index',
+      text: '首页',
+      iconPath:"assets/images/iconIndex.png",
+      selectedIconPath:"assets/images/iconIndex_active.png",
+    }, {
+      pagePath: 'pages/my/index',
+      text: '我的',
+      iconPath:"assets/images/iconMy.png",
+      selectedIconPath:"assets/images/iconMy_active.png",
+    }] : [{
       pagePath: 'pages/index/index',
       text: '首页',
       iconPath:"assets/images/iconIndex.png",
