@@ -6,9 +6,6 @@ import styles from  './My.module.scss';
 
 const My = () => {
   const [isValidation,setIsValidation] = useState(false);
-  const handleWalletClick = () => {
-    //TODO
-  }
   const getUserInfo = async () => {
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/certification/info');
@@ -31,8 +28,8 @@ const My = () => {
     <>
       <View className={styles.my}>
       <Auth validation={isValidation} />
-      <Wallet onClick={handleWalletClick} />
-      <Workbench />
+      <Wallet />
+      <Workbench validation={isValidation} />
     </View>
     </>
   )

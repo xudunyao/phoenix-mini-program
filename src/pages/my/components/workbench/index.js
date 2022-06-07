@@ -1,6 +1,6 @@
 import { View ,Text, Image} from '@tarojs/components';
 import { IconFont } from '@/components';
-import Taro from '@tarojs/taro';
+import Taro , {showToast} from '@tarojs/taro';
 import styles from  './Workbench.module.scss';
 import  idea from './img/idea.png';
 import real_name from './img/real_name.png';
@@ -29,14 +29,25 @@ const workbenchList = [
     url: '',
   },
 ]
-const handleClick = (item) => {
+const handleClick = (item,validation) => {
+  if(item.title === '实名认证' && validation) {
+    showToast({
+      icon: 'none',
+      title: '您已经实名认证，无需再次认证'
+    })
+    return ;
+  }
   if (item.url) {
     Taro.navigateTo({
       url: "/" + item.url
     })
   }
 }
-const Workbench = () => {
+const Workbench = (
+  {
+    validation
+  }
+) => {
   return (
     <View className={styles.workbench}>
       <View className={styles.title}>工作台</View>
@@ -44,7 +55,7 @@ const Workbench = () => {
         workbenchList.map((item, index) => {
           return (
             <>
-            <View className={styles.workbenchItem} onClick={() => { handleClick(item)}}>
+            <View className={styles.workbenchItem} onClick={() => { handleClick(item,validation)}}>
               <View className={styles.center}>
                   <View className={styles.iconWrapper}>
                     <Image src={item.icon} className={styles.icon} />

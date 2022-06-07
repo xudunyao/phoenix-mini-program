@@ -16,7 +16,6 @@ export default defineAppConfig({
     'pages/registration/index',
     'pages/form/index',
     'pages/result/index',
-    'pages/message/index',
     'pages/suggestion/index',
   ],
   window: {
