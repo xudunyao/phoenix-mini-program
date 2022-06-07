@@ -16,7 +16,6 @@ const Position = () => {
   const [tmplIds, setTmplIds] = useState([]);
   const mobile = Taro.getStorageSync(storageKeys.MOBILE);
   const platform = process.env.TARO_ENV;
-
   const getData = async () => {
     try {
       const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/${positionId}`,{isShowLoading: true});
@@ -163,8 +162,24 @@ const Position = () => {
       </View>
       
       <View className={styles.bottom}>
-        <View className={styles.icon} onClick={() => handleCall()}><View className={styles['icon-item']}><IconFont name='blod-call' size='32px' /></View>电话咨询</View>
-        <View className={styles.icon}><View className={styles['icon-item']}><IconFont name='share' size='32px' /></View>岗位分享 <Button className={styles.share} openType='share' /></View>
+        <View className={styles.icon} onClick={() => handleCall()}>
+          <View className={styles['icon-item']}>
+            <IconFont name='blod-call' size='32px' />
+          </View>
+          电话咨询
+        </View>
+        {
+          platform !=='h5' ? (
+            <View className={styles.icon}>
+              <View className={styles['icon-item']}>
+                <IconFont name='share' size='32px' />
+              </View>
+              岗位分享
+              <Button className={styles.share} openType='share' />
+            </View>
+          ) : null
+        }
+        
         <MyButton onClick={handleSignUp}>立即报名</MyButton>
       </View>
     </View>
