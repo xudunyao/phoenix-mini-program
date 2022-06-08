@@ -1,8 +1,9 @@
 import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { View, Text, Image, Button } from '@tarojs/components';
-import { httpRequest } from '@/utils';
-import { storageKeys, resultImg } from '@/constants';
+import { httpRequest, templateIdQuery } from '@/utils';
+import { resultImg } from '@/constants';
+import auth from '@/stores/auth';
 import exampleImg from '@/assets/images/example.png';
 import { IconFont, Button as MyButton, Dialog } from '@/components';
 import SwiperIndex from '../components/swiper/index';
@@ -12,10 +13,12 @@ const Position = () => {
   const router = useRouter();
   console.log(router)
   const {positionId} = router.params;
-  const [positionObj, setPositionObj] = useState();
-  const [tmplIds, setTmplIds] = useState([]);
+  const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
-  const mobile = Taro.getStorageSync(storageKeys.MOBILE);
+  const [loginVisible, setLoginVisible] = useState(false);
+  console.log(auth.token,'auth.token;')
+  const mobile = auth.mobile;
+  const token = auth.token;
   const platform = process.env.TARO_ENV;
   const getData = async () => {
     try {
@@ -24,23 +27,6 @@ const Position = () => {
         throw new Error(res.msg);
       }
       setPositionObj(res.data)
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const getMessage = async () => {
-    try {
-      const res = await httpRequest.get('phoenix-center-backend/client/message/templateId');
-      if (res?.code !== 0) {
-        throw new Error(res.msg);
-      }
-      setTmplIds(res.data);
-      Taro.requestSubscribeMessage({
-        tmplIds: tmplIds,
-        success: function (rs) {
-          console.log(rs)
-        }
-      })
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +45,7 @@ const Position = () => {
           title: res.msg
         })
       } else {
-        getMessage();
+        templateIdQuery()
         setVisible(true)
       }
       
@@ -69,7 +55,7 @@ const Position = () => {
   };
   const handleCall = () => {
     Taro.makePhoneCall({
-      phoneNumber: '17665329244',
+      phoneNumber: '15203910705',
     })
   };
   useShareAppMessage(() => {
@@ -84,7 +70,7 @@ const Position = () => {
  
   return (
     <View className={styles.position}>
-      <SwiperIndex list={positionObj?.companyImages} />
+      <SwiperIndex customStyle='height: 216px' list={positionObj?.companyImages} />
       <View className={styles.header}>
         <View className={styles['header-top']}>
           <View className={styles.title}>{positionObj?.jobName}</View>
@@ -101,7 +87,7 @@ const Position = () => {
           </View>
           <View className={styles.tags}>
             {
-              positionObj?.tags.map((item) => (
+              positionObj?.tags?.map((item) => (
                 <Text className={styles['tags-item']}>{item}</Text>
               ))
             }
@@ -129,7 +115,7 @@ const Position = () => {
         <View className={styles.item}>
           <View className={styles['item-header']}>我的福利</View>
             {
-              positionObj?.positionDescribe.map((v) => (
+              positionObj?.positionDescribe?.map((v) => (
                 <View className={styles['item-body']}>
                   <View className={styles['item-body-label']}>{v.name}</View>
                   <View className={styles['item-body-text']}>{v.value}</View>
@@ -140,7 +126,7 @@ const Position = () => {
         <View className={styles.item}>
           <View className={styles['item-header']}>我的工作</View>
           {
-              positionObj?.jobRequest.map((v) => (
+              positionObj?.jobRequest?.map((v) => (
                 <View className={styles['item-body']}>
                   <View className={styles['item-body-label']}>{v.name}</View>
                   <View className={styles['item-body-text']}>{v.value}</View>
@@ -171,7 +157,14 @@ const Position = () => {
                 <IconFont name='share' size='32px' />
               </View>
               岗位分享
-              <Button className={styles.share} openType='share' />
+              {
+                token ? (
+                  <Button className={styles.share} openType='share' />
+                ) : (
+                  <Button className={styles.share} onClick={() => setLoginVisible(true)} />
+                )
+              }
+              
             </View>
           ) : null
         }
@@ -190,6 +183,29 @@ const Position = () => {
         onClose={() => { 
           setVisible(false);
         }}
+      />
+      <Dialog 
+        maskClosable
+        visible={loginVisible}
+        content='您还未登录'
+        actions={
+          [{
+            title: '下次再说',
+            onClick: () =>{ setLoginVisible(false) },
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '去登录',
+            onClick: () =>{
+              setLoginVisible(false)
+              Taro.navigateTo({
+                url: '../loginGuide/index'
+              })
+            },
+            type: 'primary',
+            size: 'mini'
+          }]
+        }
       />
     </View>
   );

@@ -3,6 +3,7 @@ import { View, Text, Button } from "@tarojs/components";
 import { IconFont } from "@/components";
 import { storageKeys } from '@/constants';
 import { httpRequest } from "@/utils";
+import auth from '@/stores/auth';
 
 import Logo from '../components/logo';
 
@@ -24,12 +25,13 @@ const LoginGuide = () => {
     
   };
   const getPhoneNumber = (e) => {
-    const { iv, encryptedData } = e.detail;
+   
     Taro.login({
       success: async (res) => {
         if (res.code) {
           //发起网络请求
           try {
+            const { iv, encryptedData } = e.detail;
             const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',{
               data: {
                 encryptedData,
@@ -47,15 +49,16 @@ const LoginGuide = () => {
               Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              Taro.switchTab({
-                url: '/pages/index/index'
-              });
+              auth.setInfo(resInfo.data)
+              Taro.navigateBack({
+                delta: 1
+              })
             }
             
           } catch (err) {
             showToast({
               icon: 'none',
-              title: err
+              title: `${err}`
             })
           }
         } else {

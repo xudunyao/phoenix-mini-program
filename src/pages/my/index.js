@@ -1,4 +1,5 @@
-import { useEffect , useState } from 'react';
+import { useDidShow } from '@tarojs/taro';
+import { useState } from 'react';
 import { View } from '@tarojs/components';
 import { httpRequest } from '@/utils';
 import {Auth,Wallet,Workbench} from "./components"
@@ -20,10 +21,10 @@ const My = () => {
     } catch (err) {
       console.log(err);
     }
-  }
-  useEffect(() => {
+  };
+  useDidShow(() => {
     getUserInfo();
-  }, [])
+  });
   return  (
     <>
       <View className={styles.my}>

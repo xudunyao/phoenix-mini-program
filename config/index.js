@@ -34,6 +34,7 @@ const config = {
     '@/stores' : path.resolve(__dirname, '..', 'src/stores'),
     '@/utils' : path.resolve(__dirname, '..', 'src/utils'),
     '@/scss' : path.resolve(__dirname, '..', 'src/scss'),
+    '@/hooks' : path.resolve(__dirname, '..', 'src/hooks'),
   },
   mini: {
     postcss: {

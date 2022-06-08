@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import moment from 'moment';
-import Taro, { showToast } from '@tarojs/taro';
+import Taro, { showToast, useDidShow } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import { httpRequest } from '@/utils';
 import { message, datetimeFormat } from '@/constants';
@@ -43,11 +43,10 @@ const Message = () =>{
       url:`../${message.page[type]}/index`,
     })
   };
-  
-  useEffect(() => {
+  useDidShow(() => {
     getData();
-    
-  },[])
+  })
+
   return(
     <View className={styles.content}>
       {

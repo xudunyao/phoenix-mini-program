@@ -1,7 +1,7 @@
 import Taro, { showToast } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import PropTypes from 'prop-types';
-import { httpRequest } from '@/utils';
+import { httpRequest, templateIdQuery } from '@/utils';
 import { IconFont, InfiniteScroll } from '@/components';
 import { storageKeys } from '@/constants';
 
@@ -37,6 +37,7 @@ const List = ({
     const token = Taro.getStorageSync(storageKeys.TOKEN);
     const mobile = Taro.getStorageSync(storageKeys.MOBILE);
     const platform = process.env.TARO_ENV;
+    
     if(token) {
       try {
         const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
@@ -47,20 +48,18 @@ const List = ({
         });
         if (res?.code !== 0) {
           throw new Error(res.msg);
-          
         } else {
-          // getMessage();
-          closeDialog()
+          templateIdQuery();
+          closeDialog('success')
         }
-        
       } catch (err) {
         showToast({
           icon: 'none',
-          title: err
+          title: `${err}`
         })
       }
     } else {
-      closeDialog(true)
+      closeDialog('login')
     }
     
   };
@@ -76,14 +75,18 @@ const List = ({
             <View className={styles.title}>{item.jobName}</View>
             <View className={styles.money}>
               <Text className={styles.price}>
-                <Text className={styles['price_count']}>{item.salaryStart}-{item.salaryEnd}</Text>
-                <Text className={styles['price_unit']}>元/时</Text>
+                <Text className={styles['price_count']}>{item.orderPriceStart}{item.orderPriceEnd && `-${item.orderPriceEnd}`}</Text>
+                <Text className={styles['price_unit']}>{item.orderPriceType}</Text>
               </Text>
-            
-              <Text className={styles.subsidy}>
-                <Text className={styles['subsidy_count']}>+1</Text>
-                <Text className={styles['subsidy_unit']}>元/小时补贴</Text>
-              </Text> 
+              {
+                item.subsidyAmount && (
+                  <Text className={styles.subsidy}>
+                    <Text className={styles['subsidy_count']}>{`+${item.subsidyAmount}`}</Text>
+                    <Text className={styles['subsidy_unit']}>元/小时补贴</Text>
+                  </Text> 
+                )
+              }
+              
             </View>
             
             <View className={styles.tags}>

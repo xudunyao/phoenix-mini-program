@@ -17,7 +17,6 @@ const Swipers = ({
         className='content'
         indicatorColor='#999'
         indicatorActiveColor='#333'
-        circular
         autoplay
         style={customStyle}
         current={current}
