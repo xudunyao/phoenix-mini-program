@@ -1,8 +1,9 @@
 import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { View, Text, Image, Button } from '@tarojs/components';
-import { httpRequest, common } from '@/utils';
-import { storageKeys, resultImg } from '@/constants';
+import { httpRequest, templateIdQuery } from '@/utils';
+import { resultImg } from '@/constants';
+import auth from '@/stores/auth';
 import exampleImg from '@/assets/images/example.png';
 import { IconFont, Button as MyButton, Dialog } from '@/components';
 import SwiperIndex from '../components/swiper/index';
@@ -15,8 +16,9 @@ const Position = () => {
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
-  const mobile = Taro.getStorageSync(storageKeys.MOBILE);
-  const token = Taro.getStorageSync(storageKeys.TOKEN);
+  console.log(auth.token,'auth.token;')
+  const mobile = auth.mobile;
+  const token = auth.token;
   const platform = process.env.TARO_ENV;
   const getData = async () => {
     try {
@@ -43,7 +45,7 @@ const Position = () => {
           title: res.msg
         })
       } else {
-        common.templateIdQuery()
+        templateIdQuery()
         setVisible(true)
       }
       
@@ -68,7 +70,7 @@ const Position = () => {
  
   return (
     <View className={styles.position}>
-      <SwiperIndex customStyle='height: 216px' imgageH='216px' list={positionObj?.companyImages} />
+      <SwiperIndex customStyle='height: 216px' list={positionObj?.companyImages} />
       <View className={styles.header}>
         <View className={styles['header-top']}>
           <View className={styles.title}>{positionObj?.jobName}</View>

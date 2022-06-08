@@ -1,7 +1,7 @@
 import Taro, { showToast } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import PropTypes from 'prop-types';
-import { httpRequest, common } from '@/utils';
+import { httpRequest, templateIdQuery } from '@/utils';
 import { IconFont, InfiniteScroll } from '@/components';
 import { storageKeys } from '@/constants';
 
@@ -49,7 +49,7 @@ const List = ({
         if (res?.code !== 0) {
           throw new Error(res.msg);
         } else {
-          common.templateIdQuery();
+          templateIdQuery();
           closeDialog('success')
         }
       } catch (err) {

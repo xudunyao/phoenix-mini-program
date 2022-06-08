@@ -1,7 +1,7 @@
 import { httpRequest } from '@/utils';
 import Taro from '@tarojs/taro';
 
-const templateIdQuery = async () => {
+export const templateIdQuery = async () => {
   try{
     const res = await httpRequest.get('phoenix-center-backend/client/message/templateId');
     if (res?.code !== 0) {
@@ -18,6 +18,3 @@ const templateIdQuery = async () => {
     console.log(err);
   }
 };
-export default {
-  templateIdQuery
-}

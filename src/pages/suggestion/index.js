@@ -34,7 +34,7 @@ const Suggestion = () => {
   const getSuggestionList= async () =>{
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/member/feedback/categories/inquiry');
-      if( res.code ===　0){
+      if( res.code === 0){
         setCategories(res.data);
       }else{
         showToast({

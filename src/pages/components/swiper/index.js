@@ -5,7 +5,6 @@ import './swiper.scss';
 const Swipers = ({
   customStyle,
   list,
-  imgageH,
   position
 }) => {
   const [current, setCurrent] = useState(0);
@@ -26,7 +25,7 @@ const Swipers = ({
         {
           list?.map((f) => (
             <SwiperItem key={f}>
-              <Image mode='widthFix' style={{height: `${imgageH}`}} className='img' src={f}></Image>
+              <Image mode='widthFix' className='img' src={f}></Image>
             </SwiperItem>
           ))
         }
