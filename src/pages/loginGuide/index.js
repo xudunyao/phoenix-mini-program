@@ -47,15 +47,18 @@ const LoginGuide = () => {
               Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              Taro.switchTab({
-                url: '/pages/index/index'
-              });
+              Taro.navigateBack({
+                delta: 1
+              })
+              // Taro.switchTab({
+              //   url: '/pages/index/index'
+              // });
             }
             
           } catch (err) {
             showToast({
               icon: 'none',
-              title: err
+              title: `${err}`
             })
           }
         } else {

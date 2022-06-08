@@ -13,7 +13,7 @@ const Wallet = () => {
     <View className={styles.wallet}>
         <View>
           <View className={styles.title}>钱包(元)</View>
-          <Text className={styles.money}>{numeral(1234).format('0,0.00')}</Text>
+          <Text className={styles.money}>{numeral(0).format('0,0.00')}</Text>
         </View>
         <View className={styles.button} onClick={handleClick}>
           去提现

@@ -5,6 +5,7 @@ import './swiper.scss';
 const Swipers = ({
   customStyle,
   list,
+  imgageH,
   position
 }) => {
   const [current, setCurrent] = useState(0);
@@ -17,7 +18,6 @@ const Swipers = ({
         className='content'
         indicatorColor='#999'
         indicatorActiveColor='#333'
-        circular
         autoplay
         style={customStyle}
         current={current}
@@ -26,7 +26,7 @@ const Swipers = ({
         {
           list?.map((f) => (
             <SwiperItem key={f}>
-              <Image mode='widthFix' className='img' src={f}></Image>
+              <Image mode='widthFix' style={{height: `${imgageH}`}} className='img' src={f}></Image>
             </SwiperItem>
           ))
         }

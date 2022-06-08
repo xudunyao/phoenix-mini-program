@@ -86,15 +86,18 @@ const Login = () => {
               Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              Taro.switchTab({
-                url: '/pages/index/index'
-              });
+              // Taro.switchTab({
+              //   url: '/pages/index/index'
+              // });
+              Taro.navigateBack({
+                delta: 2
+              })
             }
             
           } catch (err) {
             showToast({
               icon: 'none',
-              title: err
+              title: `${err}`
             })
           }
         } else {
@@ -123,15 +126,16 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
-        Taro.switchTab({
-          url: '/pages/index/index'
+        // 
+        Taro.navigateBack({
+          delta: 2
         })
       }
       
     } catch (err) {
       showToast({
         icon: 'none',
-        title: err
+        title: `${err}`
       })
     }
   };

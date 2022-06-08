@@ -35,7 +35,12 @@ const Index = () => {
   };
   const closeDialog = (v) => {
     if(v){
-      setLoginVisible(true);
+      if(v==='login'){
+        setLoginVisible(true);
+      }else {
+        setVisible(true);
+      }
+     
     } else {
       setLoginVisible(false);
       setVisible(false);
