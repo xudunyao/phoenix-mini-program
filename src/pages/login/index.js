@@ -87,7 +87,7 @@ const Login = () => {
               Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              auth.setInfo(resInfo.data.jwt, resInfo.data.mobile, resInfo.data.openId, resInfo.data.userId, resInfo.data.unionId)
+              auth.setInfo(resInfo.data)
               // Taro.switchTab({
               //   url: '/pages/index/index'
               // });
@@ -128,7 +128,7 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
-        auth.setInfo(res.data.jwt, res.data.mobile, '', res.data.userId, '')
+        auth.setInfo(res.data)
         Taro.navigateBack({
           delta: 2
         })

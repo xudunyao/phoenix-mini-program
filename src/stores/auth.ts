@@ -11,12 +11,12 @@ const authStore = observable({
     unionid: Taro.getStorageSync(storageKeys.UNIONID),
   },
 
-  setInfo(token, mobile, openid, userid, unionid) {
-    this.info.token = token;
-    this.info.mobile = mobile;
-    this.info.openid = openid;
-    this.info.userid = userid;
-    this.info.unionid = unionid;
+  setInfo(obj) {
+    this.info.token = obj?.token;
+    this.info.mobile = obj?.mobile;
+    this.info.openid = obj?.openid;
+    this.info.userid = obj?.userid;
+    this.info.unionid = obj?.unionid;
   },
 
   clearInfo() {

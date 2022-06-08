@@ -49,7 +49,7 @@ const LoginGuide = () => {
               Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              auth.setInfo(resInfo.data.jwt, resInfo.data.mobile, resInfo.data.openId, resInfo.data.userId, resInfo.data.unionId)
+              auth.setInfo(resInfo.data)
               Taro.navigateBack({
                 delta: 1
               })
