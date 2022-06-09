@@ -18,6 +18,7 @@ const Suggestion = () => {
   const [imgKeys, setImgKeys] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [selected, setSelected] = useState('');
+  const [fontCount, setFontCount] = useState(0);
   const [key, setKey] = useState(0);
   const [categories, setCategories] = useState([]);
   const [isTipsShow,setIsTipsShow] = useState(false);
@@ -176,10 +177,14 @@ const Suggestion = () => {
             <TextArea
               clearable={false}
               placeholder='请补充说明您遇到的问题'
+              maxlength={500}
               value={form.textarea.value}
-              onInput={(value) => setFormFieldValue('textarea', value)}
+              onInput={(value) => {
+                setFormFieldValue('textarea', value);
+                setFontCount(value.length);
+              }}
             />
-          <View className={styles.tips}>0/500</View>
+          <View className={styles.tips}>{fontCount}/500</View>
         </FormItem>
         </View>
         <ImagePicker
