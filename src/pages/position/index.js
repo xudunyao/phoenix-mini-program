@@ -2,7 +2,7 @@ import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { httpRequest, templateIdQuery } from '@/utils';
-import { resultImg } from '@/constants';
+import { resultImg, storageKeys } from '@/constants';
 import auth from '@/stores/auth';
 import exampleImg from '@/assets/images/example.png';
 import { IconFont, Button as MyButton, Dialog } from '@/components';
@@ -12,7 +12,9 @@ import styles from './Position.module.scss';
 const Position = () => {
   const router = useRouter();
   console.log(router)
-  const {positionId} = router.params;
+  const {positionId,sourceChannelId,recommendId} = router.params;
+  Taro.setStorageSync(storageKeys.sourceChannelId, sourceChannelId);
+  Taro.setStorageSync(storageKeys.recommendId, recommendId);
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
@@ -60,7 +62,7 @@ const Position = () => {
   useShareAppMessage(() => {
     return {
       title: '岗位详情',
-      path: `${router.path}?positionId=${positionId}`
+      path: `${router.path}?positionId=${positionId}&sourceChannelId=62a04327e2238323a92c2dbd&recommendId=${auth.info.userid}`
     }
   });
   useEffect(() => {

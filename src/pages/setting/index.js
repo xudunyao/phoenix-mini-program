@@ -16,6 +16,8 @@ const Setting = () => {
         Taro.removeStorageSync(storageKeys.OPENID);
         Taro.removeStorageSync(storageKeys.UNIONID);
         Taro.removeStorageSync(storageKeys.USERID);
+        Taro.removeStorageSync(storageKeys.recommendId);
+        Taro.removeStorageSync(storageKeys.sourceChannelId);
         auth.clearInfo()
         Taro.reLaunch({
           url: '../index/index',

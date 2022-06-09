@@ -5,4 +5,5 @@ export default {
   USERID: 'USERID',
   MOBILE: 'MOBILE',
   sourceChannelId: 'sourceChannelId',
+  recommendId: 'recommendId',
 }

@@ -12,6 +12,7 @@ import styles from './LoginGuide.module.scss'
 const LoginGuide = () => {
   const isH5 = process.env.TARO_ENV ==='h5';
   const sourceChannel = Taro.getStorageSync(storageKeys.sourceChannelId);
+  const recommendId = Taro.getStorageSync('recommendId') || null;
   const toPage = (page) => {
     if(page === 'index'){
       Taro.switchTab({
@@ -41,6 +42,7 @@ const LoginGuide = () => {
                 iv,
                 code: res.code,
                 sourceChannelId: sourceChannel,
+                recommendId,
               }
             }
             );
@@ -92,7 +94,7 @@ const LoginGuide = () => {
         </Button>
         <View className={styles.back} onClick={() =>toPage('index')}>回到首页</View>
         <View className={styles.protocol}>
-          登录即代表您同意寻工鸟<Text className={styles['protocol-text']}>《用户协议》</Text>和<Text className={styles['protocol-text']}>《隐私协议》</Text>
+          登录即代表您同意寻工鸟<Text onClick={() => toPage('protocol')} className={styles['protocol-text']}>《用户协议》</Text>和<Text onClick={() => toPage('protocol')} className={styles['protocol-text']}>《隐私协议》</Text>
         </View>
       </View>
     </View>

@@ -1,0 +1,32 @@
+@import '@/scss/variable.scss';
+.container{
+  background: $background;
+  padding: 30px;
+  line-height: 1.6;
+  text-align: justify;
+  color: $text-primary;
+  font-size: 14px;
+}
+.text1 {
+  font-weight: bold;
+}
+.bold-underline {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.mt {
+  margin-top: 20px;
+}
+.mt1 {
+  margin-top: 40px;
+}
+.p_txt {
+  margin-top: 20px;
+}
+.p_txt view {
+  text-indent: 20px;
+}
+.p_title {
+  font-size: 16px;
+  font-weight: bold;
+}
