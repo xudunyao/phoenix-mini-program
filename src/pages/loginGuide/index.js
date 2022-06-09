@@ -25,13 +25,12 @@ const LoginGuide = () => {
     
   };
   const getPhoneNumber = (e) => {
-   
+    const { iv, encryptedData } = e.detail;
     Taro.login({
       success: async (res) => {
         if (res.code) {
           //发起网络请求
           try {
-            const { iv, encryptedData } = e.detail;
             const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',{
               data: {
                 encryptedData,
