@@ -25,6 +25,7 @@ const Login = () => {
   const [form, setForm] = useState(initForm);
   const [sendStatus, setSendStatus] = useState(true);
   const sourceChannel = Taro.getStorageSync('sourceChannelId')|| null;
+  const recommendId = Taro.getStorageSync('recommendId') || null;
 
   const isH5 = process.env.TARO_ENV === 'h5';
   const setFormFieldValue = (fieldName, value) => {
@@ -75,6 +76,7 @@ const Login = () => {
                 smsCode: form.sms.value,
                 code: res.code,
                 sourceChannelId: sourceChannel,
+                recommendId,
               }
             }
               
@@ -118,6 +120,7 @@ const Login = () => {
           mobile: form.phone.value,
           smsCode: form.sms.value,
           channelCode: sourceChannel,
+          recommendId,
         }
       }
         
@@ -125,10 +128,11 @@ const Login = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       } else {
+        console.log(res.data.mobile)
         Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
-        auth.setInfo(res.data)
+        // auth.setInfo(res.data)
         Taro.navigateBack({
           delta: 2
         })

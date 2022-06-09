@@ -18,7 +18,6 @@ const authStore = observable({
     this.info.userid = obj?.userid;
     this.info.unionid = obj?.unionid;
   },
-
   clearInfo() {
     this.info = {
       token: '',
