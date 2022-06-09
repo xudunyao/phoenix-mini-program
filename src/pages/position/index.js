@@ -20,7 +20,6 @@ const Position = () => {
   const [loginVisible, setLoginVisible] = useState(false);
   const mobile = auth.info.mobile;
   const token = auth.info.token;
-  console.log(auth.info.token,'---------------------------')
   const platform = process.env.TARO_ENV;
   const getData = async () => {
     try {
