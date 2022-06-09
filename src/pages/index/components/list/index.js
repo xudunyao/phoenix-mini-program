@@ -2,8 +2,8 @@ import Taro, { showToast } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import PropTypes from 'prop-types';
 import { httpRequest, templateIdQuery } from '@/utils';
-import { IconFont, InfiniteScroll } from '@/components';
-import { storageKeys } from '@/constants';
+import { IconFont, InfiniteScroll, Result } from '@/components';
+import { storageKeys, resultImg } from '@/constants';
 
 import styles from  './List.module.scss';
 
@@ -12,6 +12,11 @@ const List = ({
   name,
   closeDialog,
 }) => {
+  const icon = {
+    src:resultImg.empty,
+    width: 120,
+    height: 120,
+  }
   const getData = async (search) => {
     try {
       const res = await httpRequest.post('phoenix-manager-backend/client/noauth/positionOrders/inquiry',{
@@ -67,6 +72,12 @@ const List = ({
     <InfiniteScroll
       getData={getData}
       pageSize={20}
+      noDataComponent={
+        <Result
+          icon={icon}
+          subTitle='暂无更多数据' 
+        />
+      }
       renderItem={(item) => (
         <View key={item.id} className={styles.list} onClick={() => toPage(item.id)}>
           
