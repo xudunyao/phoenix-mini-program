@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { showToast } from '@tarojs/taro';
-import { InfiniteScroll } from '@/components';
+import { InfiniteScroll, Result } from '@/components';
 import { View, Text } from '@tarojs/components';
 import { httpRequest } from '@/utils';
+import { resultImg } from '@/constants';
 import styles from './MessageSystem.module.scss'
 
 const MessageSystem = () => {
+  const icon = {
+    src:resultImg.empty,
+  }
   const getData = async(search) => {
     try{
       const res = await httpRequest.post('phoenix-center-backend/client/message/detail/inquiry', {
@@ -33,6 +37,12 @@ const MessageSystem = () => {
       <InfiniteScroll
         getData={getData}
         pageSize={20}
+        noDataComponent={
+          <Result
+            icon={icon}
+            subTitle='暂无更多数据' 
+          />
+        }
         renderItem={(item) => (
           <View className={styles.item}>
             <View className={styles.title}>

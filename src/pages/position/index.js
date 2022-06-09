@@ -16,9 +16,8 @@ const Position = () => {
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
-  console.log(auth.token,'auth.token;')
-  const mobile = auth.mobile;
-  const token = auth.token;
+  const mobile = auth.info.mobile;
+  const token = auth.info.token;
   const platform = process.env.TARO_ENV;
   const getData = async () => {
     try {
