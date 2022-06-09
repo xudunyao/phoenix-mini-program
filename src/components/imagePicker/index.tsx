@@ -26,9 +26,8 @@ const ImagePicker: React.FC<Props> = ({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const tempFilePaths = res.tempFilePaths;
-        console.log('res',res)
         setShowImgList([...showImgList, { url: tempFilePaths[0] }]);
-        onChange({ url: tempFilePaths[0] });
+        onChange({ url: tempFilePaths[0],file:res.tempFiles[0].originalFileObj});
       },
       fail: function (err) {
         onFail(err);

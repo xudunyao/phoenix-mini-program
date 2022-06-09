@@ -2,9 +2,9 @@ import { useState ,useEffect} from "react";
 import { FormItem,TextArea } from '@/components/form';
 import { View } from "@tarojs/components";
 import { ImagePicker ,Button ,Dialog} from "@/components";
-import { httpRequest , getStorageSync } from "@/utils";
+import { httpRequest , getBaseUrl } from "@/utils";
 import Taro , { showToast } from "@tarojs/taro";
-import { storageKeys } from '@/constants';
+import  authStore  from  '@/stores/auth'
 import styles from "./Suggestion.module.scss";
 
 const initForm = {
@@ -52,14 +52,10 @@ const Suggestion = () => {
   const handleClick = (item) => {
     setSelected(item.categoryId);
   }
-  const handleUpload = async (files) => {
-    if(imgKeys.some(item => item.key === files.url)){
-      setImgKeys(imgKeys.filter(item => item.key !== files.url));
-      return ;
-    }
-    const token = await getStorageSync(storageKeys.TOKEN);
+  const uploadFile = async(files,token) => {
+    const baseUrl = await getBaseUrl()
     Taro.uploadFile({
-      url: 'https://xgn-gateway-uat.fuzfu.net/phoenix-center-backend/client/member/feedback/image', 
+      url: baseUrl+ 'phoenix-center-backend/client/member/feedback/image', 
       filePath: files?.url,
       name: 'file',
       header:{
@@ -67,7 +63,6 @@ const Suggestion = () => {
       },
       success (res){
         const data = JSON.parse(res?.data);
-        console.log('data',data)
         if(data.code === 0){
           setImgKeys([...imgKeys, { ...data.data, key: files?.url }]);
           setFileList(files);
@@ -86,6 +81,47 @@ const Suggestion = () => {
       }
     })
   }
+  const uploadFileH5 = async (files,token) => {
+    const baseUrl = await getBaseUrl()
+    var xhr = null ;
+    if(window.XMLHttpRequest){
+      xhr = new XMLHttpRequest();
+    }else{
+      xhr = new ActiveXObject("Microsoft.XMLHttp");
+    }
+    const formData = new FormData();
+    formData.append('file',files.file)
+    xhr.open("POST",baseUrl+ 'phoenix-center-backend/client/member/feedback/image');
+    xhr.setRequestHeader("contentType",'multipart/form-data');
+    xhr.setRequestHeader('X-User-Token',token);
+    xhr.send(formData);
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === 4 && xhr.status === 200){
+        const res = JSON.parse(xhr.response);
+        if(res.code !== 0){
+          showToast({
+            icon: 'fail',
+            title: res.msg || '上传图片错误'
+          })
+        }
+        setImgKeys([...imgKeys, { ...res.data, key: files?.url }]);
+        setFileList(files);
+      }
+    }       
+  }
+  const handleUpload = async (files) => {
+    if(imgKeys.some(item => item.key === files.url)){
+      setImgKeys(imgKeys.filter(item => item.key !== files.url));
+      return ;
+    }
+    const token = authStore.info.token;
+    if(process.env.TARO_ENV ==='h5'){
+      uploadFileH5(files,token);
+    }else{
+      uploadFile(files,token);
+    }
+    
+  }
   const handleSubmit = async () =>{
     try {
       const res = await httpRequest.post('phoenix-center-backend/client/member/feedback/submit',{
@@ -95,7 +131,7 @@ const Suggestion = () => {
           imgKeys: imgKeys.map(item => item.fileKey),
         }
       });
-      if( res.code ===　1){
+      if( res.code === 1){
         showToast({
           icon: 'fail',
           title: res.msg
@@ -149,6 +185,7 @@ const Suggestion = () => {
         <ImagePicker
           files={fileList}
           key={key}
+          size={3}
           onChange={async (files) => {
             handleUpload(files);
           }}
