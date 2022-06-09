@@ -1,10 +1,14 @@
 import { showToast } from '@tarojs/taro';
-import { InfiniteScroll } from '@/components';
+import { InfiniteScroll, Result } from '@/components';
 import { View, Text } from '@tarojs/components';
 import { httpRequest } from '@/utils';
+import { resultImg } from '@/constants';
 import styles from './MessageAccount.module.scss'
 
 const MessageAccount = () => {
+  const icon = {
+    src:resultImg.empty,
+  }
   const getData = async(search) => {
     try{
       const res = await httpRequest.post('phoenix-center-backend/client/message/detail/inquiry', {
@@ -29,6 +33,12 @@ const MessageAccount = () => {
       <InfiniteScroll
         getData={getData}
         pageSize={20}
+        noDataComponent={
+          <Result
+            icon={icon}
+            subTitle='暂无更多数据' 
+          />
+        }
         renderItem={() => (
           <View className={styles.item}>
             <View className={styles.title}>钱包提现到账</View>

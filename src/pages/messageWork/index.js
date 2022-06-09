@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import { showToast } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import { InfiniteScroll } from '@/components';
+import { InfiniteScroll, Result } from '@/components';
 import { httpRequest } from '@/utils';
-import { datetimeFormat } from '@/constants';
+import { datetimeFormat, resultImg } from '@/constants';
 import styles from './MessageWork.module.scss';
 
 const MessageWork = () => {
+  const icon = {
+    src:resultImg.empty,
+  }
   const getData = async(search) => {
     try{
       const res = await httpRequest.post('phoenix-center-backend/client/message/detail/inquiry', {
@@ -46,6 +49,12 @@ const MessageWork = () => {
       <InfiniteScroll
         getData={getData}
         pageSize={20}
+        noDataComponent={
+          <Result
+            icon={icon}
+            subTitle='暂无更多数据' 
+          />
+        }
         renderItem={(item) => (
           <View className={styles.item} onClick={() =>handleRead(item.messageId)}>
             <View className={styles.title}>
