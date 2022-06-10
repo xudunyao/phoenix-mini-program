@@ -80,11 +80,15 @@ const Position = () => {
               <Text className={styles['price_count']}>{positionObj?.salaryStart}-{positionObj?.salaryEnd}</Text>
               <Text className={styles['price_unit']}>元/时</Text>
             </Text>
-          
-            <Text className={styles.subsidy}>
-              <Text className={styles['subsidy_count']}>+1</Text>
-              <Text className={styles['subsidy_unit']}>元/小时补贴</Text>
-            </Text> 
+            {
+              positionObj?.subsidyAmount && (
+                <Text className={styles.subsidy}>
+                  <Text className={styles['subsidy_count']}>+{positionObj?.subsidyAmount}</Text>
+                  <Text className={styles['subsidy_unit']}>元/小时补贴</Text>
+                </Text> 
+              )
+            }
+            
           </View>
           <View className={styles.tags}>
             {
@@ -170,7 +174,7 @@ const Position = () => {
           ) : null
         }
         
-        <MyButton onClick={handleSignUp}>立即报名</MyButton>
+        <MyButton customStyles='width: 175px' onClick={handleSignUp}>立即报名</MyButton>
       </View>
       <Dialog 
         maskClosable

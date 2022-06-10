@@ -64,7 +64,7 @@ const MessageWork = () => {
                   !item.hasRead ? (<Text className={styles.badge} />) : null
                 }
               </Text>
-              <Text className={styles.time}>{moment(item.sendTime).format(datetimeFormat.dateTime)}</Text>
+              <Text className={styles.time}>{moment(item.time).format(datetimeFormat.dateTime)}</Text>
             </View>
             <View className={styles.text}>{item.content}</View>
           </View>

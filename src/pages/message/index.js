@@ -60,7 +60,7 @@ const Message = () =>{
               
             </View>
             <View className={styles['item-right']}>
-              <View className={styles.type}>{message.type[v?.messageType]}<Text className={styles.time}>{v?.sendTime ? moment(v?.sendTime).format(datetimeFormat.dateTime) : null}</Text></View>
+              <View className={styles.type}>{message.type[v?.messageType]}<Text className={styles.time}>{v?.sendTime ? moment(v?.sendTime).format(datetimeFormat.dateHourMin) : null}</Text></View>
               <View className={styles.message}>{v?.messageContent ?? '暂无通知'}</View>
             </View>
           </View>

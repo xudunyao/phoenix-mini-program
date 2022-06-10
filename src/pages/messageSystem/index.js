@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
+import moment from 'moment';
 import { showToast } from '@tarojs/taro';
 import { InfiniteScroll, Result } from '@/components';
 import { View, Text } from '@tarojs/components';
 import { httpRequest } from '@/utils';
-import { resultImg } from '@/constants';
+import { resultImg, datetimeFormat } from '@/constants';
 import styles from './MessageSystem.module.scss'
 
 const MessageSystem = () => {
@@ -52,7 +53,7 @@ const MessageSystem = () => {
                   !item.hasRead ? (<Text className={styles.badge} />) : null
                 }
               </Text>
-              <Text className={styles.time}>今天 18：00</Text>
+              <Text className={styles.time}>{moment(item?.time).format(datetimeFormat.dateHourMin)}</Text>
             </View>
             <View className={styles.text}>{item.content}</View>
           </View>
