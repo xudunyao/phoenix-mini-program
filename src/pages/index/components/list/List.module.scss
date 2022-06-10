@@ -1,7 +1,7 @@
 @import '@/scss/variable.scss';
 .list {
   background: $color-white;
-  box-shadow: 0px 2px 11px 0px rgba(153, 153, 153, 0.07);
+  box-shadow: 0px 2px 8px 0px rgba(69, 77, 102, 0.1);
   border-radius: 12px;
   display: flex;
   justify-content: flex-start;
@@ -36,7 +36,6 @@
 .subsidy{
   padding: 2px 5px;
   background: linear-gradient(227deg, #FFA050 0%, #FF5E5E 100%);
-  box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
   border-radius: 100px 100px 100px 2px;
   color:$color-white;
   margin-left: 12px;
@@ -56,23 +55,22 @@
     color: #FFA050;
     line-height: 14px;
     font-size: 10px;
-    text-shadow: 0px 2px 11px rgba(23, 43, 98, 0.07);
-    box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07);
     border-radius: 2px;
     border: 1px solid rgba(255, 160, 80, 0.36);
-    padding: 0 2px;
+    padding: 1px 3px;
     margin-right: 5px;
   }
 }
 .location{
   font-size: 12px;
   font-weight: 400;
-  color: #8F929D;
+  color: $text-subTitle;
   padding-top: 10px;
   line-height: 17px;
-  text-shadow: 0px 2px 11px rgba(23, 43, 98, 0.07);
   display: flex;
   justify-content: flex-start;
+  position: absolute;
+  bottom: 0;
 }
 .img {
   margin: 0 12px 0 12px;
@@ -86,11 +84,11 @@
   text-align: center;
   line-height: 24px;
   position: absolute;
-  right: 0;
+  right: 12px;
   bottom: 1px;
   font-size: 12px;
   font-weight: 500;
-  color: #FFFFFF;
+  color: $color-white;
   text-shadow: 0PX 2PX 11PX rgba(23, 43, 98, 0.07), 0PX 2PX 5PX rgba(128, 162, 255, 0.35);
   background: $button-background;
   box-shadow: 0px 2px 11px 0px rgba(23, 43, 98, 0.07), 0px 2px 5px 0px rgba(128, 162, 255, 0.35);
