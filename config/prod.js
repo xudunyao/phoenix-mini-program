@@ -32,7 +32,7 @@ module.exports = {
         .plugin('prerender')
         .use(new Prerender({
           staticDir,
-          routes: [ '/pages/index/index' ],
+          routes: [ '/pages/jobList/jobList' ],
           postProcess: (context) => ({ ...context, outputPath: path.join(staticDir, 'index.html') })
         }))
     }

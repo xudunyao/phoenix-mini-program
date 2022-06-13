@@ -20,7 +20,7 @@ const Setting = () => {
         Taro.removeStorageSync(storageKeys.sourceChannelId);
         auth.clearInfo()
         Taro.reLaunch({
-          url: '../index/index',
+          url: '../jobList/jobList',
         });
       }else{
         showToast({

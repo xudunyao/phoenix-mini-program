@@ -60,7 +60,7 @@ const List = ({
       } catch (err) {
         showToast({
           icon: 'none',
-          title: `${err}`
+          title: `${err.message}`
         })
       }
     } else {

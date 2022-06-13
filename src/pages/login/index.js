@@ -90,9 +90,6 @@ const Login = () => {
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
               auth.setInfo(resInfo.data)
-              // Taro.switchTab({
-              //   url: '/pages/index/index'
-              // });
               Taro.navigateBack({
                 delta: 2
               })
@@ -101,7 +98,7 @@ const Login = () => {
           } catch (err) {
             showToast({
               icon: 'none',
-              title: `${err}`
+              title: `${err.message}`
             })
           }
         } else {
