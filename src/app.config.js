@@ -2,7 +2,7 @@ import { useGlobalIconFont } from './components/iconfont/helper';
 
 export default defineAppConfig({
   pages: [
-    'pages/index/index',
+    'pages/jobList/jobList',
     'pages/privacyProtocol/index',
     'pages/setting/index',
     'pages/messageAccount/index',
@@ -29,7 +29,7 @@ export default defineAppConfig({
   usingComponents: Object.assign(useGlobalIconFont()),
   tabBar: {
     list: process.env.TARO_ENV === 'h5' ? [{
-      pagePath: 'pages/index/index',
+      pagePath: 'pages/jobList/jobList',
       text: '首页',
       iconPath:"assets/images/iconIndex.png",
       selectedIconPath:"assets/images/iconIndex_active.png",
@@ -39,7 +39,7 @@ export default defineAppConfig({
       iconPath:"assets/images/iconMy.png",
       selectedIconPath:"assets/images/iconMy_active.png",
     }] : [{
-      pagePath: 'pages/index/index',
+      pagePath: 'pages/jobList/jobList',
       text: '首页',
       iconPath:"assets/images/iconIndex.png",
       selectedIconPath:"assets/images/iconIndex_active.png",
@@ -55,7 +55,7 @@ export default defineAppConfig({
       selectedIconPath:"assets/images/iconMy_active.png",
     }],
     backgroundColor: '#ffffff',
-    color: '#666666',
+    color: '#454D66',
     selectedColor: '#80A2FF',
   },
 })
