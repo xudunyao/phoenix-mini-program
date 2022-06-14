@@ -1,10 +1,14 @@
-import { InfiniteScroll} from '@/components';
+import { InfiniteScroll, Result} from '@/components';
 import { View } from '@tarojs/components';
+import { resultImg } from '@/constants';
 import { httpRequest } from '@/utils';
 import { Item } from "./components";
 import styles from  './Registration.module.scss';
 
 const Registration = () => {
+  const icon = {
+    src:resultImg.empty,
+  }
   const getData = async (search) =>{
     try {
       const res = await httpRequest.post('phoenix-manager-backend/client/signUp/info',{
@@ -27,6 +31,12 @@ const Registration = () => {
       <InfiniteScroll
         getData={getData}
         pageSize={10}
+        noDataComponent={
+          <Result
+            icon={icon}
+            subTitle='暂无更多数据' 
+          />
+        }
         renderItem={(item) => (
         <Item data={item} />
       )}

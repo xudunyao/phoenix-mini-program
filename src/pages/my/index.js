@@ -1,5 +1,6 @@
 import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { View } from '@tarojs/components';
 import { Dialog } from '@/components';
 import { httpRequest } from '@/utils';
@@ -10,7 +11,6 @@ import styles from  './My.module.scss';
 const My = () => {
   const [isValidation,setIsValidation] = useState(false);
   const [visible, setVisible] = useState(false);
-  console.log(auth.info.token)
   const getUserInfo = async () => {
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/certification/info');
@@ -71,4 +71,4 @@ const My = () => {
   )
   }
 
-export default My;
+export default observer(My);

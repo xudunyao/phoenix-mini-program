@@ -32,7 +32,9 @@ const Index = () => {
   const [loginVisible, setLoginVisible] =useState(false);
   const router = useRouter();
   const {channelCode} = router.params;
-  Taro.setStorageSync(storageKeys.channelCode, channelCode);
+  if(channelCode){
+    Taro.setStorageSync(storageKeys.channelCode, channelCode);
+  }
   const onTabClick = (index) => {
     setTabCurrent(index)
   };

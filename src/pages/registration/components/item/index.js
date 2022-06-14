@@ -26,7 +26,7 @@ const Item = (
               </View>
               <View className={styles.tags}>
                 {
-                  data.tags.map((item, index) => {
+                  data.tags.slice(0,3).map((item, index) => {
                     return (
                       <View className={styles.tag} key={index}>{item}</View>
                     )
