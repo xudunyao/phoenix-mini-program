@@ -1,6 +1,7 @@
 import { View ,Text, Image} from '@tarojs/components';
 import { IconFont } from '@/components';
-import Taro , {showToast} from '@tarojs/taro';
+import { observer } from 'mobx-react-lite';
+import Taro , {showToast } from '@tarojs/taro';
 import auth from '@/stores/auth';
 import styles from  './Workbench.module.scss';
 import  idea from './img/idea.png';
@@ -37,8 +38,8 @@ const Workbench = (
     notLogin,
   }
 ) => {
-  
   const handleClick = (item) => {
+    console.log(auth.info.token,'auth.info.token')
     if(!auth.info.token){
       notLogin();
       return;
@@ -88,4 +89,4 @@ const Workbench = (
   )
 };
 
-export default Workbench
+export default observer(Workbench)

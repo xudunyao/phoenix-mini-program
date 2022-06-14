@@ -4,6 +4,6 @@ export default {
   UNIONID: 'UNIONID',
   USERID: 'USERID',
   MOBILE: 'MOBILE',
-  sourceChannelId: 'sourceChannelId',
+  channelCode: 'channelCode',
   recommendId: 'recommendId',
 }

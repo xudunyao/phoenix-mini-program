@@ -12,7 +12,10 @@ import styles from './Position.module.scss';
 const Position = () => {
   const router = useRouter();
   const {positionId,channelCode,recommendId} = router.params;
-  Taro.setStorageSync(storageKeys.channelCode, channelCode);
+  if(channelCode) {
+    Taro.setStorageSync(storageKeys.channelCode, channelCode);
+  }
+ 
   Taro.setStorageSync(storageKeys.recommendId, recommendId);
   const [shareCode, setShareCode] = useState();
   const [positionObj, setPositionObj] = useState({});
@@ -67,10 +70,20 @@ const Position = () => {
     }
   };
   const handleCall = () => {
+    
     Taro.makePhoneCall({
       phoneNumber: '15203910705',
     })
   };
+  const toMap = () => {
+    const {latitude, longitude} = positionObj?.gpsAddress;
+    Taro.openLocation({
+      latitude,
+      longitude,
+      name: positionObj?.addressDetail,
+      scale: 18
+    })
+  }
   useShareAppMessage(() => {
     return {
       title: '岗位详情',
@@ -131,7 +144,7 @@ const Position = () => {
           </View>
         </View>
         <View className={styles.item}>
-          <View className={styles['item-header']}>我的福利</View>
+          <View className={styles['item-header']}>岗位描述</View>
             {
               positionObj?.positionDescribe?.map((v) => (
                 <View className={styles['item-body']}>
@@ -142,7 +155,7 @@ const Position = () => {
             }
         </View>
         <View className={styles.item}>
-          <View className={styles['item-header']}>我的工作</View>
+          <View className={styles['item-header']}>薪资待遇</View>
           {
               positionObj?.jobRequest?.map((v) => (
                 <View className={styles['item-body']}>
@@ -156,7 +169,7 @@ const Position = () => {
           <View className={styles['item-header']}>工厂地址</View>
             <View className={styles['item-body']}>
               <View className={styles['item-body-label']}>{positionObj?.area}</View>
-              <View className={styles['item-body-text']}>{positionObj?.city}{positionObj?.area}{positionObj?.addressDetail}</View>
+              <View className={`${styles['item-body-text']} ${styles.location}`} onClick={toMap}><IconFont name='location' color='#80A2FF' />{positionObj?.city}{positionObj?.area}{positionObj?.addressDetail}</View>
             </View>
         </View>
       </View>

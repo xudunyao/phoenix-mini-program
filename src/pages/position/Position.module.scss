@@ -139,6 +139,12 @@
   border-left: 1px solid $color-primary;
   color: $text-dark-slate-blue;
   word-break: break-all;
+  display: flex;
+  justify-content: flex-start;
+  
+}
+.location{
+  color: $color-primary;
 }
 .bottom{
   width: 100%;

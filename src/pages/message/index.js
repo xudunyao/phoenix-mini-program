@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import Taro, { showToast, useDidShow } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
@@ -31,6 +32,8 @@ const Message = () =>{
             index: 1,
             text: (res.data.unReadCount).toString()
           })
+        } else {
+          Taro.removeTabBarBadge()
         }
       } else {
         showToast({
@@ -53,11 +56,12 @@ const Message = () =>{
     })
   }
   useDidShow(() => {
+    console.log(auth.info.token)
     if(auth.info.token) {
       getData();
     }
-    
-  })
+
+  });
 
   return(
     <View className={styles.content}>
@@ -90,4 +94,4 @@ const Message = () =>{
   );
 } 
 
-export default Message;
+export default observer(Message);

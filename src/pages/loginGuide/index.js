@@ -3,7 +3,7 @@ import { View, Text, Button } from "@tarojs/components";
 import { IconFont } from "@/components";
 import { storageKeys } from '@/constants';
 import { httpRequest } from "@/utils";
-import auth from '@/stores/auth';
+import auth from "@/stores/auth";
 
 import Logo from '../components/logo';
 
@@ -32,7 +32,6 @@ const LoginGuide = () => {
     Taro.login({
       success: async (res) => {
         if (res.code) {
-          //发起网络请求
           try {
            
             const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',{
