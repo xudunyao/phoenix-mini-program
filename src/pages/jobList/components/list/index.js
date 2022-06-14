@@ -102,7 +102,7 @@ const List = ({
             
             <View className={styles.tags}>
               {
-                item.tags.map((v) => (
+                item.tags.slice(0,3).map((v) => (
                   <Text className={styles['tags-item']}>{v}</Text>
                 ))
               }

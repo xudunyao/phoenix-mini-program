@@ -11,10 +11,10 @@ import styles from './Position.module.scss';
 
 const Position = () => {
   const router = useRouter();
-  console.log(router)
-  const {positionId,sourceChannelId,recommendId} = router.params;
-  Taro.setStorageSync(storageKeys.sourceChannelId, sourceChannelId);
+  const {positionId,channelCode,recommendId} = router.params;
+  Taro.setStorageSync(storageKeys.channelCode, channelCode);
   Taro.setStorageSync(storageKeys.recommendId, recommendId);
+  const [shareCode, setShareCode] = useState();
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
@@ -23,7 +23,7 @@ const Position = () => {
   const platform = process.env.TARO_ENV;
   const getData = async () => {
     try {
-      const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/${positionId}`,{isShowLoading: true});
+      const res = await httpRequest.get(`phoenix-manager-backend/client/noauth/positionOrders/${positionId}`);
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
@@ -32,6 +32,18 @@ const Position = () => {
       console.log(err);
     }
   };
+  const getShareCode = async () => {
+    try {
+      const res = await httpRequest.get('phoenix-center-backend/client/member/jobShareCode');
+      if(res?.code !== 0){
+        throw new Error(res.msg);
+      }
+      setShareCode(res.data);
+    } catch (error) {
+      console.log(err);
+    }
+    
+  }
   const handleSignUp = async() => {
     try {
       const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
@@ -62,11 +74,12 @@ const Position = () => {
   useShareAppMessage(() => {
     return {
       title: '岗位详情',
-      path: `${router.path}?positionId=${positionId}&sourceChannelId=62a04327e2238323a92c2dbd&recommendId=${auth.info.userid}`
+      path: `${router.path}?positionId=${positionId}&channelCode=${shareCode}&recommendId=${auth.info.userid}`
     }
   });
   useEffect(() => {
     getData();
+    getShareCode();
   }, []);
  
   return (

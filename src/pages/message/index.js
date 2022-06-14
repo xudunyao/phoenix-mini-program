@@ -2,8 +2,10 @@ import { useState } from 'react';
 import moment from 'moment';
 import Taro, { showToast, useDidShow } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
+import { Result } from '@/components';
 import { httpRequest } from '@/utils';
-import { message, datetimeFormat } from '@/constants';
+import auth from '@/stores/auth';
+import { message, datetimeFormat, resultImg } from '@/constants';
 import styles from './Message.module.scss';
 import jobImg from './images/icon_message_work.png';
 import systemImg from './images/icon_message_system.png';
@@ -16,7 +18,9 @@ const typeList = {
 };
 const Message = () =>{
   const [list, setList] = useState([]);
-  console.log()
+  const icon = {
+    src:resultImg.empty,
+  }
   const getData = async() => {
     try{
       const res = await httpRequest.get('phoenix-center-backend/client/message/overview');
@@ -43,14 +47,22 @@ const Message = () =>{
       url:`../${message.page[type]}/index`,
     })
   };
+  const toLogin = () => {
+    Taro.navigateTo({
+      url:`../loginGuide/index`,
+    })
+  }
   useDidShow(() => {
-    getData();
+    if(auth.info.token) {
+      getData();
+    }
+    
   })
 
   return(
     <View className={styles.content}>
       {
-        list?.map((v) => (
+       list.length > 0 ? list?.map((v) => (
           <View className={styles.item} onClick={()=>toPage(v?.messageType)}>
             <View className={styles['item-left']}>
               <Image className={styles.img} src={typeList[v?.messageType]} mode='widthFix' />
@@ -64,7 +76,14 @@ const Message = () =>{
               <View className={styles.message}>{v?.messageContent ?? '暂无通知'}</View>
             </View>
           </View>
-        ))
+        )) :(
+          <Result
+            customStyles='position: absolute;top:50%;left:50%;transform:translate(-50%,-50%);' 
+            icon={icon} subTitle='未登录无法查看消息'
+            extra='去登录'
+            onClick={toLogin}
+          />
+        ) 
       }
       
     </View>

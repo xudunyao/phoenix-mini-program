@@ -30,6 +30,16 @@ const MessageSystem = () => {
       console.log(err);
     }
   };
+  const handleRead = async (messageId) => {
+    try{
+      const res = await httpRequest.put(`phoenix-center-backend/client/message/${messageId}`);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
     getData()
   },[])
@@ -45,7 +55,7 @@ const MessageSystem = () => {
           />
         }
         renderItem={(item) => (
-          <View className={styles.item}>
+          <View className={styles.item} onClick={() =>handleRead(item.messageId)}>
             <View className={styles.title}>
               <Text className={styles.name}>
                 {item.messageEventType}

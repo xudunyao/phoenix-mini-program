@@ -11,7 +11,7 @@ import styles from './LoginGuide.module.scss'
 
 const LoginGuide = () => {
   const isH5 = process.env.TARO_ENV ==='h5';
-  const sourceChannel = Taro.getStorageSync(storageKeys.sourceChannelId);
+  const channelCode = Taro.getStorageSync(storageKeys.channelCode);
   const recommendId = Taro.getStorageSync('recommendId') || null;
   const toPage = (page) => {
     if(page === 'jobList'){
@@ -41,7 +41,7 @@ const LoginGuide = () => {
                 encryptedData,
                 iv,
                 code: res.code,
-                sourceChannelId: sourceChannel,
+                channelCode,
                 recommendId,
               }
             }

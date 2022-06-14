@@ -1,8 +1,8 @@
-import Taro from '@tarojs/taro';
+import Taro, {useRouter} from '@tarojs/taro';
 import { useState } from 'react';
 import { View, Image  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
-import { resultImg } from '@/constants';
+import { resultImg, storageKeys } from '@/constants';
 import exampleImg from '@/assets/images/example.png';
 import exampleImg1 from '@/assets/images/example1.png';
 import styles from  './Index.module.scss';
@@ -30,6 +30,9 @@ const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] =useState(false);
+  const router = useRouter();
+  const {channelCode} = router.params;
+  Taro.setStorageSync(storageKeys.channelCode, channelCode);
   const onTabClick = (index) => {
     setTabCurrent(index)
   };
