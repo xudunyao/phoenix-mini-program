@@ -1,5 +1,6 @@
 import { View ,Image,Text} from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import auth from '@/stores/auth';
 import styles from  './Auth.module.scss';
 import inactive_auth from './img/inactive_auth.png';
 import active_auth from './img/active_auth.png';
@@ -7,10 +8,15 @@ import avatar from './img/avatar.png';
 
 const Auth = (
   {
-    validation
+    validation,
+    notLogin,
   }
 ) => {
   const handleAuthClick = () => {
+    if(!auth.info.token){
+      notLogin();
+      return;
+    }
     Taro.navigateTo({
       url: '/pages/auth/index'
     })

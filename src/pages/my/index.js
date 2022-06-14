@@ -1,12 +1,16 @@
-import { useDidShow } from '@tarojs/taro';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
 import { View } from '@tarojs/components';
+import { Dialog } from '@/components';
 import { httpRequest } from '@/utils';
-import {Auth,Wallet,Workbench} from "./components"
+import auth from '@/stores/auth';
+import { Auth, Wallet, Workbench } from "./components"
 import styles from  './My.module.scss';
 
 const My = () => {
   const [isValidation,setIsValidation] = useState(false);
+  const [visible, setVisible] = useState(false);
+  console.log(auth.info.token)
   const getUserInfo = async () => {
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/certification/info');
@@ -22,16 +26,47 @@ const My = () => {
       console.log(err);
     }
   };
+  const notLogin = () => {
+    if(!auth.info.token){
+      setVisible(true);
+      return;
+    }
+  }
   useDidShow(() => {
-    getUserInfo();
+    if(auth.info.token) {
+      getUserInfo();
+    }
   });
   return  (
     <>
       <View className={styles.my}>
-      <Auth validation={isValidation} />
-      <Wallet />
-      <Workbench validation={isValidation} />
-    </View>
+        <Auth validation={isValidation} notLogin={notLogin} />
+        <Wallet />
+        <Workbench validation={isValidation} notLogin={notLogin} />
+      </View>
+      <Dialog 
+        maskClosable
+        visible={visible}
+        content='您还未登录'
+        actions={
+          [{
+            title: '下次再说',
+            onClick: () =>{ setVisible(false) },
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '去登录',
+            onClick: () =>{
+              setVisible(false)
+              Taro.navigateTo({
+                url: '../loginGuide/index'
+              })
+            },
+            type: 'primary',
+            size: 'mini'
+          }]
+        }
+      />
     </>
   )
   }

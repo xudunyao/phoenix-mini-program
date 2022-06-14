@@ -15,4 +15,6 @@ export type Props = {
   status?: string;
   subTitle?: string | JSX.Element;
   extra?:string | JSX.Element;
+  customStyles?: string | object;
+  onClick: () => void;
 };

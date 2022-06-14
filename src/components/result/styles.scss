@@ -1,3 +1,5 @@
+@import '@/scss/variable.scss';
+
 .result {
   text-align: center;
   padding-top: 14px;
@@ -8,17 +10,12 @@
 .result-title {
   font-size: 18px;
   font-weight: 600;
-  color: #061748;
+  color: $text-primary;
 }
 
 .result-subTitle {
   font-size: 16px;
   font-weight: 400;
-  color: #8F929D;
-  padding: 0 48px;
-}
-.result-btn {
-  width: 180px;
-  height: 42px;
-  margin: 0 auto;
+  color: $text-dark-slate-blue;
+  text-align: center;
 }
