@@ -56,7 +56,7 @@ const Suggestion = () => {
   const uploadFile = async(files,token) => {
     const baseUrl = await getBaseUrl()
     Taro.uploadFile({
-      url: baseUrl+ 'phoenix-center-backend/client/member/feedback/image', 
+      url: baseUrl+ 'phoenix-center-backend/client/file/image/upload', 
       filePath: files?.url,
       name: 'file',
       header:{
@@ -92,7 +92,7 @@ const Suggestion = () => {
     }
     const formData = new FormData();
     formData.append('file',files.file)
-    xhr.open("POST",baseUrl+ 'phoenix-center-backend/client/member/feedback/image');
+    xhr.open("POST",baseUrl+ 'phoenix-center-backend/client/file/image/upload');
     xhr.setRequestHeader("contentType",'multipart/form-data');
     xhr.setRequestHeader('X-User-Token',token);
     xhr.send(formData);

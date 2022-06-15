@@ -2,20 +2,21 @@
 
 .container{
   :global(.input-wrapper){
-    border:none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: none;
+    border-radius: 0Px;
+    padding:20Px 0Px;
+    line-height: 22Px;
   }
   :global(.form-item){
-    height:22Px;
     box-sizing: border-box;
+    margin-bottom: 0Px;
   }
   :global(.form-item-label){
-    margin-right:10Px;
     width: auto !important;
     word-spacing: 28Px;
-  }
-  :global(.form-item-extra){
-    bottom: -10Px;
-    left:10Px;
   }
   :global(.modal-body){
     width: auto ;
@@ -45,12 +46,19 @@
 }
 .form{
   padding: 0Px 16Px 16Px 16Px;;
-  margin-top:20Px;
 }
 .tips{
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-top:8Px;
+}
+.label-text{
+  width: 64Px;
+  font-size: 16Px;
+  color: $text-lable;
+  line-height: 22Px;
+  text-align-last: justify;
 }
 .tips-text{
   margin-left:8Px;
@@ -85,11 +93,11 @@
   margin-top:26Px;
 }
 .dialog-tips{
-  height: 40Px;
   font-size: 14Px;
   color: $text-tertiary;
   line-height: 20Px;
   text-align: center;
+
 }
 .dialog-img{
   width: 50Px;

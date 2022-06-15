@@ -1,4 +1,4 @@
-import Taro, { useDidShow } from '@tarojs/taro';
+import Taro, { useDidShow,showToast } from '@tarojs/taro';
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View } from '@tarojs/components';
@@ -14,16 +14,15 @@ const My = () => {
   const getUserInfo = async () => {
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/certification/info');
-      if(res?.code === 0){
-        setIsValidation(res?.data?.validation);
-      }else{
-        showToast({
-          icon: 'fail',
-          title: res?.msg
-        })
+      if(res?.code !== 0){
+       throw new Error(res?.msg);
       }
+      setIsValidation(res?.data?.validation);
     } catch (err) {
-      console.log(err);
+      showToast({
+        icon: 'none',
+        title: `${err}`
+      })
     }
   };
   const notLogin = () => {

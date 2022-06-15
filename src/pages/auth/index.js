@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { View, Text, Image ,Button } from "@tarojs/components";
 import Taro from '@tarojs/taro';
 import { httpRequest } from '@/utils';
@@ -7,7 +7,6 @@ import { FormItem, Input } from '@/components/form';
 import { regExp } from '@/constants';
 import styles from "./Auth.module.scss";
 import close from "./img/close.png";
-import success from './img/success.png';
 
 const initForm = {
   name: {
@@ -20,11 +19,11 @@ const initForm = {
   },
 }
 const Auth = () => {
-  const [isShow, setIsShow] = useState(true);
+  const [isTipsShow,setIsTipsShow] = useState(true);
+  const [isMove,setIsMove] = useState(false);
   const [form, setForm] = useState(initForm);
-  const [isButtonActive, setIsButtonActive] = useState(false);
-  const [isFailShow,setIsFailShow] = useState(false);
-  const [isSuccessShow,setIsSuccessShow] = useState(false);
+  const [isDialogShow,setIsDialogShow] = useState(false);
+  const [authInfo,setAuthInfo] = useState({});
   const setFormFieldValue = (fieldName, value) => {
     setForm({
       ...form,
@@ -44,37 +43,23 @@ const Auth = () => {
     })
   }
   const validate = () => {
-    if (!form.name.value) {
-      setFormFieldError('name', '姓名不能为空');
+    if (!regExp.name(form.name.value)) {
+      setFormFieldError('name', '用户姓名格式不正确');
       return false;
     }
     if (!regExp.idCard(form.idNo.value)) {
-      setFormFieldError('idNo', '身份证号格式不正确');
+      setFormFieldError('idNo', '身份证号码格式不正确');
+      setIsMove(true)
       return false;
     }
+    setIsMove(false);
     return true;
-  }
-  const handleSubmit = () => {
-    if (validate()) {
-      handleUserAuth();
-    }
-  }
-  const handleInputBlur = (value ,type) => {
-    if(!value && type === 'idNo'){
-      setFormFieldError('idNo', '身份证号码不能为空');
-    }
-    if(!value && type === 'name'){
-      setFormFieldError('name', '用户姓名不能为空');
-    }
-    if(form.idNo.value && form.name.value && validate()){
-      setIsButtonActive(true);
-    }
   }
   const handleInputFocus = (type) =>{
     setFormFieldError(type,'');
   }
   const handleCloseClick = () => {
-    setIsShow(false);
+    setIsTipsShow(false);
   };
   const handleUserAuth = async () => {
     try {
@@ -84,19 +69,22 @@ const Auth = () => {
           idNo: form.idNo.value,
         }
       });
-      if(res?.code === 0){
-        setIsSuccessShow(true);
-      }else{
-        setIsFailShow(true);
-      }
+      setAuthInfo(res);
+      setIsDialogShow(true);
     } catch (err) {
-      console.log(err);
+      setIsDialogShow(false);
     }
   }
+  const handleSubmit = () => {
+    if (validate()) {
+      handleUserAuth();
+    }
+  }
+  const isButtonActive = useMemo(() => !!(regExp.idCard(form.idNo.value) && regExp.name(form.name.value)), [form]);
   return (
     <View className={styles.container}>
       {
-        isShow ? (
+        isTipsShow ? (
           <View className={styles.prompt}>
             <Text>为了您的资金安全，提现需实名认证</Text>
             <Image
@@ -109,72 +97,57 @@ const Auth = () => {
       }
       <View className={styles.form}>
             <FormItem
-              label={<Text>姓&nbsp;名</Text>}
-              labelAlign='left'
               errorMsg={form.name.error}
             >
               <Input
+                prefix={<View className={styles['label-text']}>姓名</View>}
                 placeholder='请输入你的姓名'
                 value={form.name.value}
                 onInput={(value) => setFormFieldValue('name', value)}
                 error={!!form.name.error}
-                onBlur={(value) => handleInputBlur(value,'name')}
                 onFocus={() =>{ handleInputFocus('name') }}
               />
             </FormItem>
             <FormItem
-              label='身份证号'
-              labelAlign='left'
               errorMsg={form.idNo.error}
             >
               <Input
+                prefix={<View className={styles['label-text']}>身份证号</View>}
                 placeholder='请输入身份证号'
                 value={form.idNo.value}
-                onInput={(value) => setFormFieldValue('idNo', value)}
+                maxlength={18}
+                onInput={(value) => { setFormFieldValue('idNo', value) }}
                 error={!!form.idNo.error}
-                onBlur={(value) => handleInputBlur(value,'idNo')}
                 onFocus={() =>{ handleInputFocus('idNo') }}
               />
             </FormItem>
-            <View className={styles.tips}>
+            <View className={styles.tips} style={isMove && {marginTop:'22px'}}>
               <IconFont name='exclamation' size='16'  />
               <Text className={styles['tips-text']}>确认填写本人真实信息，认证后不能修改</Text>
             </View>
             <View style='display: flex; justify-content: center'>
-              <Button className={`${styles.button} ${isButtonActive ? styles.active : styles.inactive}`} onClick={handleSubmit}>开始认证</Button>
+              <Button className={`${styles.button} ${isButtonActive ? styles.active : styles.inactive}`} onClick={isButtonActive && handleSubmit}>开始认证</Button>
             </View>
       </View>
-      <Dialog 
-        title={<View className={styles['dialog-title']}>验证失败</View>}
+      <Dialog
+        title={<View className={styles['dialog-title']}>{authInfo?.code === 1 ? '验证失败' : '验证成功'}</View>}
+        visible={isDialogShow}
         maskClosable
-        visible={isFailShow}
-        content={<View className={styles['dialog-tips']}>姓名和身份证号码不一致，请核查后重新输入。</View>}
-        onClose={() => { setIsFailShow(false) }}
+        content={<View className={styles['dialog-tips']}>{authInfo?.msg}</View>}
+        onClose={() => {
+          setIsDialogShow(false);
+          authInfo?.code !== 1 && Taro.switchTab({url: '../my/index'})
+        }}
         actions={[
           {
             title: '确定',
-            onClick: ()=>{ setIsFailShow(false) },
+            onClick: ()=>{
+              setIsDialogShow(false);
+              authInfo?.code !== 1 && Taro.switchTab({url: '../my/index'})
+            },
             type: 'primary'
-          }
+          },
         ]}
-      />
-      <Dialog 
-        maskClosable
-        visible={isSuccessShow}
-        content={
-          <View className={styles['dialog-content']}>
-            <Image src={success} className={styles['dialog-img']} />
-            <View className={styles['dialog-subtitle']}>认证成功</View>
-          </View>
-        }
-        showButton={false}
-        onClose={() => { 
-          setIsSuccessShow(false);
-          Taro.navigateBack()
-          Taro.switchTab({
-            url: 'pages/my/index'
-          })
-        }}
       />
     </View>
   );

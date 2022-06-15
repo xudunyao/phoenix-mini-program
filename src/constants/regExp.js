@@ -1,19 +1,17 @@
 const phone = (val) => {
-  const regex = new RegExp("^1[3-9]\\d{9}$");
-  if(regex.test(val)){
-    return true;
-  }
-  return false;
+  const reg = new RegExp("^1[3-9]\\d{9}$");
+  return reg.test(val);
 };
 const idCard = (val) => {
   const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-  if(!reg.test(val)){
-    return false;
-  }
-  return true;
+  return reg.test(val);
 };
-
+const name = (val) => {
+  const reg = /^[\u4E00-\u9FA5]+(\.?[\u4e00-\u9fa5])+$/;
+  return reg.test(val);
+}
 export default {
   phone,
-  idCard
+  idCard,
+  name
 }
