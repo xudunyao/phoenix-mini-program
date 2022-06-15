@@ -55,16 +55,9 @@
   &-actions {
     display: flex;
     padding:0Px 16Px;
-   
     margin-bottom: 26Px;
-    &.single{
-      justify-content: center;
-    }
-    &.double {
-      justify-content: space-around;
-    }
+    justify-content: space-between;
     &-item {
-      width: 120px;
       height: 44Px;
       text-align: center;
     }
