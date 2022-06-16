@@ -51,7 +51,6 @@ const InfiniteScroll: React.FC<Props> = ({
     })
   }
   const refresh = async (isInitLoading) => {
-    console.log('refresh')
     if (isRefreshing || isLoadingMore) {
       return;
     }
@@ -66,7 +65,6 @@ const InfiniteScroll: React.FC<Props> = ({
     }
   };
   const loadMore = async () => {
-    console.log('loadMore')
     if (isRefreshing || isLoadingMore || !hasMore) {
       return;
     }
