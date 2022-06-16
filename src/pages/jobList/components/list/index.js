@@ -71,7 +71,7 @@ const List = ({
   return (
     <InfiniteScroll
       getData={getData}
-      pageSize={20}
+      pageSize={15}
       noDataComponent={
         <Result
           icon={icon}
@@ -81,7 +81,7 @@ const List = ({
       renderItem={(item) => (
         <View key={item.id} className={styles.list} onClick={() => toPage(item.id)}>
           
-          <Image className={styles.img} src={item.positionImage}></Image>
+          <Image className={styles.img} src={item.positionImage} mode='aspectFill'></Image>
           <View className={styles.content}>
             <View className={styles.title}>{item.jobName}</View>
             <View className={styles.money}>

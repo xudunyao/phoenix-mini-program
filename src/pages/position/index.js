@@ -103,7 +103,7 @@ const Position = () => {
           <View className={styles.title}>{positionObj?.jobName}</View>
           <View className={styles.money}>
             <Text className={styles.price}>
-              <Text className={styles['price_count']}>{positionObj?.salaryStart}-{positionObj?.salaryEnd}</Text>
+              <Text className={styles['price_count']}>{positionObj?.orderPriceStart}-{positionObj?.orderPriceEnd}</Text>
               <Text className={styles['price_unit']}>元/时</Text>
             </Text>
             {
@@ -134,8 +134,8 @@ const Position = () => {
           <View className={styles['item-header']}>我的收入</View>
         
           <View className={styles['item-body']}>
-            <View className={styles['item-body-label']}>综合收入</View>
-            <View className={styles['item-body-text']}>{positionObj?.salaryStart}-{positionObj?.salaryEnd}元</View>
+            <View className={styles['item-body-label']}>工价</View>
+            <View className={styles['item-body-text']}>{positionObj?.orderPriceStart} {item.orderPriceEnd && `-${item.orderPriceEnd}`}元</View>
           </View>
           
           <View className={styles['item-body']}>

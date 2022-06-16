@@ -18,11 +18,16 @@ const Item = (
               <View className={styles.title}>{data.jobName}</View>
               <View className={styles.wrapper}>
                 <View className={styles.wages}>
-                  <Text className={styles.money}>{data.salaryStart + '-' + data.salaryEnd}</Text><Text>元/时</Text>
+                  <Text className={styles.money}>{data.orderPriceStart}{data.orderPriceEnd && `-${data.orderPriceEnd}`}</Text><Text>元/时</Text>
                 </View>
-                <View className={styles.subsidy}>
-                  <Text className={styles.money}>1</Text> <Text>元/时补贴</Text>
-                </View>
+                {
+                  data?.subsidyAmount ? (
+                    <View className={styles.subsidy} >
+                      <Text className={styles.money}>{data?.subsidyAmount}</Text> <Text>元/时补贴</Text>
+                    </View>
+                  ) : null
+                }
+                
               </View>
               <View className={styles.tags}>
                 {

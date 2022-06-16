@@ -66,6 +66,7 @@ const InfiniteScroll: React.FC<Props> = ({
     }
   };
   const loadMore = async () => {
+  
     if (isRefreshing || isLoadingMore || !hasMore) {
       return;
     }
@@ -97,7 +98,7 @@ const InfiniteScroll: React.FC<Props> = ({
       className='infinite-scroll'
       scrollY
       scrollWithAnimation
-      upperThreshold={50}
+      upperThreshold={0}
       lowerThreshold={threshold}
       enableBackToTop
       onScrollToUpper={() => refresh(false)}
