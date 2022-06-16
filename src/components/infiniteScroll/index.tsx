@@ -23,7 +23,6 @@ const InfiniteScroll: React.FC<Props> = ({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
-  const isH5 = process.env.TARO_ENV === 'h5';
   const [pagination, setPagination] = useState({
     pageNumber: 0,
     pageSize,
@@ -101,7 +100,7 @@ const InfiniteScroll: React.FC<Props> = ({
       upperThreshold={50}
       lowerThreshold={threshold}
       enableBackToTop
-      onScrollToUpper={() => !isH5 && refresh(false)}
+      onScrollToUpper={() => list.length > 5 && refresh(false)}
       onScrollToLower={loadMore}
     >
       {

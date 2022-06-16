@@ -71,7 +71,7 @@ const List = ({
   return (
     <InfiniteScroll
       getData={getData}
-      pageSize={3}
+      pageSize={15}
       noDataComponent={
         <Result
           icon={icon}
