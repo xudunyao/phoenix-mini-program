@@ -9,8 +9,9 @@ import './styles.scss';
 
 const InfiniteScroll: React.FC<Props> = ({
   renderItem,
-  pageSize = 3,
+  pageSize = 15,
   threshold = 50,
+  refreshComponent,
   noDataComponent,
   hasMoreComponent,
   loadingMoreComponent,
@@ -22,6 +23,7 @@ const InfiniteScroll: React.FC<Props> = ({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
+  const isH5 = process.env.TARO_ENV === 'h5';
   const [pagination, setPagination] = useState({
     pageNumber: 0,
     pageSize,
@@ -96,12 +98,10 @@ const InfiniteScroll: React.FC<Props> = ({
       className='infinite-scroll'
       scrollY
       scrollWithAnimation
+      upperThreshold={50}
       lowerThreshold={threshold}
       enableBackToTop
-      refresherEnabled
-      refresherThreshold={threshold}
-      refresherTriggered={isRefreshing}
-      onRefresherRefresh={() => refresh(false)}
+      onScrollToUpper={() => !isH5 && refresh(false)}
       onScrollToLower={loadMore}
     >
       {
@@ -111,6 +111,9 @@ const InfiniteScroll: React.FC<Props> = ({
           </View>
         ) : (
           <>
+            <View>
+              {isRefreshing && (refreshComponent || <Text className='infinite-scroll-text'>刷新中……</Text>)}
+            </View>
             {
               list?.length
                 ? list.map((i, index) => renderItem(i, index))
