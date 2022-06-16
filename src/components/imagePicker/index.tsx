@@ -2,54 +2,72 @@ import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro';
 import { IconFont } from "@/components";
 import { useState , useEffect } from 'react';
+import { storageKeys } from '@/constants';
 import { Props } from './types';
 import img_add from "./img/img_add.png";
 import './styles.scss';
 
 const ImagePicker: React.FC<Props> = ({
-  files=[],
   onChange,
   size=4,
   onFail=()=>{},
-  onImageClick=()=>{},
+  uploadUrl='',
 }) => {
-  const [showImgList, setShowImgList] = useState(files);
+  const [imageList,setImageList] = useState<Object[]>([]);
   const handleDelete = (item) => {
-    setShowImgList(showImgList.filter(img => img.url !== item.url));
-    onChange(item);
+    setImageList(imageList.filter((img:any) => img.key !== item.key));
   }
   const handleUpload = () => {
-    onImageClick(showImgList);
     Taro.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: function (res) {
-        const tempFilePaths = res.tempFilePaths;
-        setShowImgList([...showImgList, { url: tempFilePaths[0] }]);
-        onChange({ url: tempFilePaths[0],file:res.tempFiles[0].originalFileObj});
+        const url = res.tempFilePaths[0];
+        const name = res?.tempFiles[0]?.originalFileObj?.name;
+        const token = Taro.getStorageSync(storageKeys.TOKEN);
+        uploadUrl && Taro.uploadFile({
+          url: uploadUrl,
+          filePath: url,
+          name: 'file',
+          fileName:name,
+          header:{
+            'X-User-Token': token,
+          },
+          success (result){
+            const mid = JSON.parse(result?.data);
+            setImageList([...imageList,{url:mid.data?.url,key:mid.data?.fileKey}]);
+          },
+          fail(result){
+            onFail(result);
+          }
+        })
       },
       fail: function (err) {
         onFail(err);
       }
     })
   }
+  useEffect(()=>{
+    const keyList = imageList.map((item:any)=>item.key);
+    onChange(keyList)
+  },[imageList])
   return (
     <View className='wrapper'>
     {
-      showImgList.map(item => {
+      imageList.map((item:any) => {
         return (
-          <View className='wrapper-img-item'>
+          <View className='wrapper-img-item' key={item.key}>
             <Image src={item?.url} className='wrapper-img-item-img' />
-            <View className='wrapper-img-item-close' onClick={()=>{ handleDelete(item)}} >
-              <IconFont name='close' size={10} color='#ccc' />
-            </View>
+              <View className='wrapper-img-item-close' onClick={()=>{ handleDelete(item)}} >
+                <IconFont name='close' size={10} color='#ccc' />
+              </View>
           </View>
         )
       })
     }
     {
-      showImgList.length < Number(size) ? (<View className='wrapper-upload' onClick={handleUpload}>
+      imageList.length < Number(size) ? (<View className='wrapper-upload' onClick={handleUpload}>
         <Image src={img_add} style={{width:'32px',height:'32px'}} />
       </View>) : null
     }
