@@ -2,9 +2,8 @@ import { useState ,useEffect} from "react";
 import { FormItem,TextArea } from '@/components/form';
 import { View } from "@tarojs/components";
 import { ImagePicker ,Button ,Dialog} from "@/components";
-import { httpRequest , getBaseUrl } from "@/utils";
-import Taro , { showToast } from "@tarojs/taro";
-import  authStore  from  '@/stores/auth'
+import { httpRequest,getBaseUrl  } from "@/utils";
+import { showToast,useDidShow } from "@tarojs/taro";
 import styles from "./Suggestion.module.scss";
 
 const initForm = {
@@ -14,13 +13,13 @@ const initForm = {
   },
 }
 const Suggestion = () => {
+  const [key, setKey] = useState(0);
   const [form, setForm] = useState(initForm);
   const [imgKeys, setImgKeys] = useState([]);
-  const [fileList, setFileList] = useState([]);
+  const [baseUrl, setBaseUrl] = useState('');
   const [selected, setSelected] = useState('');
   const [fontCount, setFontCount] = useState(0);
-  const [key, setKey] = useState(0);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([{categoryName: '提建议', categoryId: '619b37da8274cc691d296802'}]);
   const [isTipsShow,setIsTipsShow] = useState(false);
   const [isSuccessShow,setIsSuccessShow] = useState(false);
   const setFormFieldValue = (fieldName, value) => {
@@ -35,93 +34,16 @@ const Suggestion = () => {
   const getSuggestionList= async () =>{
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/member/feedback/categories/inquiry');
-      if( res.code === 0){
-        setCategories(res.data);
-      }else{
-        showToast({
-          icon: 'fail',
-          title: res.msg
-        })
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
       }
+      setCategories(res.data);
     } catch (err) {
-      showToast({
-        icon: 'fail',
-        title: err.msg
-      })
+      console.log(err);
     }
   }
   const handleClick = (item) => {
     setSelected(item.categoryId);
-  }
-  const uploadFile = async(files,token) => {
-    const baseUrl = await getBaseUrl()
-    Taro.uploadFile({
-      url: baseUrl+ 'phoenix-center-backend/client/file/image/upload', 
-      filePath: files?.url,
-      name: 'file',
-      header:{
-        'X-User-Token': token,
-      },
-      success (res){
-        const data = JSON.parse(res?.data);
-        if(data.code === 0){
-          setImgKeys([...imgKeys, { ...data.data, key: files?.url }]);
-          setFileList(files);
-        }else{
-          showToast({
-            icon: 'fail',
-            title: data.msg || '上传图片错误'
-          })
-        }
-      },
-      fail(res){
-        showToast({
-          icon: 'fail',
-          title: res.msg || '上传图片错误'
-        })
-      }
-    })
-  }
-  const uploadFileH5 = async (files,token) => {
-    const baseUrl = await getBaseUrl()
-    var xhr = null ;
-    if(window.XMLHttpRequest){
-      xhr = new XMLHttpRequest();
-    }else{
-      xhr = new ActiveXObject("Microsoft.XMLHttp");
-    }
-    const formData = new FormData();
-    formData.append('file',files.file)
-    xhr.open("POST",baseUrl+ 'phoenix-center-backend/client/file/image/upload');
-    xhr.setRequestHeader("contentType",'multipart/form-data');
-    xhr.setRequestHeader('X-User-Token',token);
-    xhr.send(formData);
-    xhr.onreadystatechange = function () {
-      if(xhr.readyState === 4 && xhr.status === 200){
-        const res = JSON.parse(xhr.response);
-        if(res.code !== 0){
-          showToast({
-            icon: 'fail',
-            title: res.msg || '上传图片错误'
-          })
-        }
-        setImgKeys([...imgKeys, { ...res.data, key: files?.url }]);
-        setFileList(files);
-      }
-    }       
-  }
-  const handleUpload = async (files) => {
-    if(imgKeys.some(item => item.key === files.url)){
-      setImgKeys(imgKeys.filter(item => item.key !== files.url));
-      return ;
-    }
-    const token = authStore.info.token;
-    if(process.env.TARO_ENV ==='h5'){
-      uploadFileH5(files,token);
-    }else{
-      uploadFile(files,token);
-    }
-    
   }
   const handleSubmit = async () =>{
     try {
@@ -129,24 +51,23 @@ const Suggestion = () => {
         data: {
           content: form.textarea.value,
           categoryId: selected,
-          imgKeys: imgKeys.map(item => item.fileKey),
+          imgKeys: imgKeys
         }
       });
-      if( res.code === 1){
-        showToast({
-          icon: 'fail',
-          title: res.msg
-        })
-      }else{
-        setIsSuccessShow(true);
+      if( res.code !== 0){
+        throw new Error(res.msg);
       }
+      setIsSuccessShow(true);
     } catch (err) {
-      console.log(err);
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
     }
   }
   const handlePreSubmit =  () => {
       if(!form.textarea.value || imgKeys.length <= 0 || !selected){
-        setIsTipsShow(true)
+        setIsTipsShow(true);
         return ;
       }
       handleSubmit();
@@ -155,13 +76,19 @@ const Suggestion = () => {
     setIsSuccessShow(false);
     setForm(initForm);
     setImgKeys([]);
-    setFileList([]);
     setSelected('');
     setKey(prev => prev + 1);
+  }
+  const getUploadBaseUrl = async () => {
+    const base = await getBaseUrl();
+    setBaseUrl(base);
   }
   useEffect(()=>{
     getSuggestionList();
   },[])
+  useDidShow(() => {
+    getUploadBaseUrl();
+  })
   return (
     <View className={styles.container}>
         <View className={styles.title}>请选择您在哪些地方遇到了问题？</View>
@@ -188,11 +115,11 @@ const Suggestion = () => {
         </FormItem>
         </View>
         <ImagePicker
-          files={fileList}
           key={key}
-          size={3}
-          onChange={async (files) => {
-            handleUpload(files);
+          size={4}
+          uploadUrl={`${baseUrl}phoenix-center-backend/file/image/upload`}
+          onChange={(fileKeys) => {
+            setImgKeys(fileKeys)
           }}
           onFail={(msg) => {
             showToast({
@@ -212,17 +139,17 @@ const Suggestion = () => {
           onClose={() => { setIsTipsShow(false) }}
           actions={[{ title: '确定', onClick: () => { setIsTipsShow(false) } }]}
         />
-      <Dialog
-        maskClosable
-        visible={isSuccessShow}
-        title={<View className={styles['dialog-title']}>提示</View>}
-        content={<View className={styles['dialog-tips']}>感谢你的支持,我们会做的更好</View>}
-        onClose={() => {
-          setIsSuccessShow(false);
-        }}
-        actions={[{ title: '确定', onClick: () => {resetView()} }]}
+        <Dialog
+          maskClosable
+          visible={isSuccessShow}
+          title={<View className={styles['dialog-title']}>提示</View>}
+          content={<View className={styles['dialog-tips']}>感谢你的支持,我们会做的更好</View>}
+          onClose={() => {
+            setIsSuccessShow(false);
+          }}
+          actions={[{ title: '确定', onClick: resetView }]}
 
-      />
+        />
     </View>
   );
 };
