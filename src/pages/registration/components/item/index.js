@@ -18,7 +18,7 @@ const Item = (
               <View className={styles.title}>{data.jobName}</View>
               <View className={styles.wrapper}>
                 <View className={styles.wages}>
-                  <Text className={styles.money}>{data.orderPriceStart}{data.orderPriceEnd && `-${data.orderPriceEnd}`}</Text><Text>元/时</Text>
+                  <Text className={styles.money}>{data.orderPriceStart}{data.orderPriceEnd && `-${data.orderPriceEnd}`}</Text><Text>{data?.orderPriceType}</Text>
                 </View>
                 {
                   data?.subsidyAmount ? (
