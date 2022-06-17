@@ -43,7 +43,7 @@ const Position = () => {
       }
       setShareCode(res.data);
     } catch (error) {
-      console.log(err);
+      console.log(error);
     }
     
   }
@@ -92,7 +92,10 @@ const Position = () => {
   });
   useEffect(() => {
     getData();
-    getShareCode();
+    if (token) {
+      getShareCode();
+    }
+    
   }, []);
  
   return (
@@ -103,7 +106,7 @@ const Position = () => {
           <View className={styles.title}>{positionObj?.jobName}</View>
           <View className={styles.money}>
             <Text className={styles.price}>
-              <Text className={styles['price_count']}>{positionObj?.orderPriceStart}-{positionObj?.orderPriceEnd}</Text>
+              <Text className={styles['price_count']}>{positionObj?.orderPriceStart}{positionObj.orderPriceEnd && `-${positionObj.orderPriceEnd}`}</Text>
               <Text className={styles['price_unit']}>元/时</Text>
             </Text>
             {
@@ -135,7 +138,7 @@ const Position = () => {
         
           <View className={styles['item-body']}>
             <View className={styles['item-body-label']}>工价</View>
-            <View className={styles['item-body-text']}>{positionObj?.orderPriceStart} {item.orderPriceEnd && `-${item.orderPriceEnd}`}元</View>
+            <View className={styles['item-body-text']}>{positionObj?.orderPriceStart} {positionObj.orderPriceEnd && `-${positionObj.orderPriceEnd}`}元</View>
           </View>
           
           <View className={styles['item-body']}>
