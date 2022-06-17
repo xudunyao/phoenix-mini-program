@@ -107,7 +107,7 @@ const Position = () => {
           <View className={styles.money}>
             <Text className={styles.price}>
               <Text className={styles['price_count']}>{positionObj?.orderPriceStart}{positionObj.orderPriceEnd && `-${positionObj.orderPriceEnd}`}</Text>
-              <Text className={styles['price_unit']}>元/时</Text>
+              <Text className={styles['price_unit']}>{positionObj?.orderPriceType}</Text>
             </Text>
             {
               positionObj?.subsidyAmount && (
@@ -138,7 +138,7 @@ const Position = () => {
         
           <View className={styles['item-body']}>
             <View className={styles['item-body-label']}>工价</View>
-            <View className={styles['item-body-text']}>{positionObj?.orderPriceStart} {positionObj.orderPriceEnd && `-${positionObj.orderPriceEnd}`}元</View>
+            <View className={styles['item-body-text']}>{positionObj?.orderPriceStart} {positionObj.orderPriceEnd && `-${positionObj.orderPriceEnd}`}{positionObj.orderPriceType}</View>
           </View>
           
           <View className={styles['item-body']}>
