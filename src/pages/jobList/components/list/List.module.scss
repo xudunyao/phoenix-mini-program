@@ -18,6 +18,9 @@
   font-size: 16px;
   font-weight: 600;
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .money{
   padding: 2px 0;
