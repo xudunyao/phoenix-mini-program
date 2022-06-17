@@ -156,7 +156,8 @@ const Login = () => {
       try {
         const res = await httpRequest.post('phoenix-center-backend/sms/send',{
           data: {
-            mobile: form.phone.value
+            mobile: form.phone.value,
+            type:isH5 ? 'h5Login' : 'wxMinProgramLogin'
           }
         });
         if (res?.code !== 0) {
