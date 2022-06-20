@@ -33,36 +33,41 @@ const LoginGuide = () => {
       success: async (res) => {
         if (res.code) {
           try {
-           
-            const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',{
-              data: {
-                phoneCode: code,
-                encryptedData,
-                iv,
-                code: res.code,
-                channelCode,
-                recommendId,
+            if (e.detail.errMsg == 'getPhoneNumber:ok'){
+              const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxBuildInPhone',{
+                data: {
+                  phoneCode: code,
+                  encryptedData,
+                  iv,
+                  code: res.code,
+                  channelCode,
+                  recommendId,
+                }
               }
-            }
-            );
-            if (resInfo?.code !== 0) {
-              throw new Error(resInfo.msg)
+              );
+              if (resInfo?.code !== 0) {
+                throw new Error(resInfo.msg)
+              } else {
+                Taro.setStorageSync(storageKeys.OPENID, resInfo.data.openId);
+                Taro.setStorageSync(storageKeys.UNIONID, resInfo.data.unionId);
+                Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
+                Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
+                Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
+                auth.setInfo(resInfo.data)
+                Taro.navigateBack({
+                  delta: 1
+                })
+              }
             } else {
-              Taro.setStorageSync(storageKeys.OPENID, resInfo.data.openId);
-              Taro.setStorageSync(storageKeys.UNIONID, resInfo.data.unionId);
-              Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
-              Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
-              Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              auth.setInfo(resInfo.data)
-              Taro.navigateBack({
-                delta: 1
+              showToast({
+                icon: 'none',
+                title: '取消授权'
               })
             }
-            
           } catch (err) {
             showToast({
               icon: 'none',
-              title: `${err}`
+              title: `${err.message}`
             })
           }
         } else {
