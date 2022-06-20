@@ -42,12 +42,12 @@ const Auth = () => {
       },
     })
   }
-  const validate = () => {
-    if (!regExp.name(form.name.value)) {
+  const handleInputBlur = (type) => {
+    if (!regExp.name(form.name.value) && type === 'name') {
       setFormFieldError('name', '用户姓名格式不正确');
       return false;
     }
-    if (!regExp.idCard(form.idNo.value)) {
+    if (!regExp.idCard(form.idNo.value) && type === 'idNo') {
       setFormFieldError('idNo', '身份证号码格式不正确');
       setIsMove(true)
       return false;
@@ -73,11 +73,6 @@ const Auth = () => {
       setIsDialogShow(true);
     } catch (err) {
       setIsDialogShow(false);
-    }
-  }
-  const handleSubmit = () => {
-    if (validate()) {
-      handleUserAuth();
     }
   }
   const isButtonActive = useMemo(() => !!(regExp.idCard(form.idNo.value) && regExp.name(form.name.value)), [form]);
@@ -106,6 +101,7 @@ const Auth = () => {
                 onInput={(value) => setFormFieldValue('name', value)}
                 error={!!form.name.error}
                 onFocus={() =>{ handleInputFocus('name') }}
+                onBlur={() =>{ handleInputBlur('name') }}
               />
             </FormItem>
             <FormItem
@@ -119,6 +115,7 @@ const Auth = () => {
                 onInput={(value) => { setFormFieldValue('idNo', value) }}
                 error={!!form.idNo.error}
                 onFocus={() =>{ handleInputFocus('idNo') }}
+                onBlur={() =>{ handleInputBlur('idNo') }}
               />
             </FormItem>
             <View className={styles.tips} style={isMove && {marginTop:'22px'}}>
@@ -126,7 +123,7 @@ const Auth = () => {
               <Text className={styles['tips-text']}>确认填写本人真实信息，认证后不能修改</Text>
             </View>
             <View style='display: flex; justify-content: center'>
-              <Button className={`${styles.button} ${isButtonActive ? styles.active : styles.inactive}`} onClick={isButtonActive && handleSubmit}>开始认证</Button>
+              <Button className={`${styles.button} ${isButtonActive ? styles.active : styles.inactive}`} onClick={isButtonActive && handleUserAuth}>开始认证</Button>
             </View>
       </View>
       <Dialog
