@@ -33,7 +33,9 @@ const Message = () =>{
             text: (res.data.unReadCount).toString()
           })
         } else {
-          Taro.removeTabBarBadge()
+          Taro.removeTabBarBadge({
+            index: 1,
+          })
         }
       } else {
         showToast({
