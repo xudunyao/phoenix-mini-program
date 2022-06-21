@@ -1,4 +1,5 @@
 import Taro, {useRouter} from '@tarojs/taro';
+import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { View, Image  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
@@ -111,4 +112,4 @@ const Index = () => {
   )
 };
 
-export default Index
+export default observer(Index);

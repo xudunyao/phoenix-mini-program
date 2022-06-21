@@ -1,5 +1,6 @@
 import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { httpRequest, templateIdQuery } from '@/utils';
 import { resultImg, storageKeys } from '@/constants';
@@ -48,25 +49,29 @@ const Position = () => {
     
   }
   const handleSignUp = async() => {
-    try {
-      const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
-        data: {
-          mobile,
-          platform,
+    if(token) {
+      try {
+        const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
+          data: {
+            mobile,
+            platform,
+          }
+        });
+        if (res?.code !== 0) {
+          showToast({
+            icon: 'none',
+            title: res.msg
+          })
+        } else {
+          templateIdQuery()
+          setVisible(true)
         }
-      });
-      if (res?.code !== 0) {
-        showToast({
-          icon: 'none',
-          title: res.msg
-        })
-      } else {
-        templateIdQuery()
-        setVisible(true)
+        
+      } catch (err) {
+        console.log(err);
       }
-      
-    } catch (err) {
-      console.log(err);
+    } else {
+      setLoginVisible(true);
     }
   };
   const handleCall = () => {
@@ -244,4 +249,4 @@ const Position = () => {
     </View>
   );
 };
-export default Position;
+export default observer(Position);
