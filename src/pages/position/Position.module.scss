@@ -124,12 +124,13 @@
 }
 .item-body-label{
   width: 60px;
-  height: 20px;
   padding: 10px 10px;
   font-size: 14px;
   font-weight: 500;
   color: $text-primary;
-  
+  word-break: break-all;
+  display: flex;
+  justify-content: flex-start;
 }
 .item-body-text{
   width: 260px;
