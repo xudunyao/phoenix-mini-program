@@ -1,6 +1,9 @@
 .wrapper{
   display: flex;
   flex-wrap: wrap;
+  :last-child{
+    margin-right: 0Px;
+  }
   &-img-item{
     position: relative;
     width: 75Px;
