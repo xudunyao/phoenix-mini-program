@@ -76,9 +76,7 @@ const Workbench = (
                   <IconFont name='right' color='#ccc' />
                 </View>
             </View>
-            {
-              index !== workbenchList.length - 1 ? <View className={styles.line}></View> : ''
-            }
+            <View className={`${index !== workbenchList.length - 1 ? styles.line : styles.hide}`}></View> 
             </>
             )
           })

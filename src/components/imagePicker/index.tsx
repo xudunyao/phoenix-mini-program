@@ -1,5 +1,5 @@
 import { Image, View } from '@tarojs/components'
-import Taro from '@tarojs/taro';
+import Taro, {showToast}from '@tarojs/taro';
 import { IconFont } from "@/components";
 import { useState , useEffect } from 'react';
 import { storageKeys } from '@/constants';
@@ -18,30 +18,46 @@ const ImagePicker: React.FC<Props> = ({
     setImageList(imageList.filter((img:any) => img.key !== item.key));
   }
   const handleUpload = () => {
+    const token = Taro.getStorageSync(storageKeys.TOKEN);
     Taro.chooseImage({
-      count: 1,
+      count: 4,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
-      success: function (res) {
-        const url = res.tempFilePaths[0];
-        const name = res?.tempFiles[0]?.originalFileObj?.name;
-        const token = Taro.getStorageSync(storageKeys.TOKEN);
-        uploadUrl && Taro.uploadFile({
-          url: uploadUrl,
-          filePath: url,
-          name: 'file',
-          fileName:name,
-          header:{
-            'X-User-Token': token,
-          },
-          success (result){
-            const mid = JSON.parse(result?.data);
-            setImageList([...imageList,{url:mid.data?.url,key:mid.data?.fileKey}]);
-          },
-          fail(result){
-            onFail(result);
-          }
-        })
+      success: async function (res) {
+        const tempFiles=res.tempFilePaths;
+        const nameList = res.tempFiles;
+        const result = await Promise.allSettled<any[]>(tempFiles.map((item,index)=>{
+          return new Promise((resolve,reject)=>{
+             Taro.uploadFile({
+              url: uploadUrl,
+              filePath: item,
+              name: 'file',
+              fileName: nameList[index]?.originalFileObj?.name,
+              header:{
+                'X-User-Token': token,
+              },
+              success:function(reData){
+                const mid = JSON.parse(reData?.data);
+                if(mid.code === 1){
+                  reject(mid.msg);
+                  return;
+                }
+                resolve(mid.msg);
+                setImageList((values)=>{
+                  return [...values,{url:mid.data?.url,key:mid.data?.fileKey}];
+                });
+              },
+              fail:function(e){
+                onFail(e.errMsg);
+              },
+            })
+          })
+        }))
+        const errorMsg = result.filter((item)=>item.status === 'rejected');
+        if(errorMsg.length > 0){
+          const msg = errorMsg.map((item:any)=>item.reason).join('\n');
+          showToast({title:msg,icon:'none',duration:1000});
+        }
       },
       fail: function (err) {
         onFail(err);
@@ -59,9 +75,9 @@ const ImagePicker: React.FC<Props> = ({
         return (
           <View className='wrapper-img-item' key={item.key}>
             <Image src={item?.url} className='wrapper-img-item-img' />
-              <View className='wrapper-img-item-close' onClick={()=>{ handleDelete(item)}} >
-                <IconFont name='close' size={10} color='#ccc' />
-              </View>
+            <View className='wrapper-img-item-close' onClick={()=>{ handleDelete(item)}} >
+              <IconFont name='close' size={10} color='#ccc' />
+            </View> 
           </View>
         )
       })
