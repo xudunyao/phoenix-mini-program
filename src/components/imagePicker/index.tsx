@@ -20,19 +20,32 @@ const ImagePicker: React.FC<Props> = ({
   const handleUpload = () => {
     const token = Taro.getStorageSync(storageKeys.TOKEN);
     Taro.chooseImage({
-      count: 4,
+      count: size,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: async function (res) {
-        const tempFiles=res.tempFilePaths;
-        const nameList = res.tempFiles;
-        const result = await Promise.allSettled<any[]>(tempFiles.map((item,index)=>{
+        const tempFiles = res?.tempFiles;
+        const filterFiles = tempFiles.filter((item: any) => {
+          let fileSize = item.size;
+          let type:any = process.env.TARO_ENV === 'h5' ? item?.type.split('/').pop() : item.path.split('.').pop();
+          if( fileSize > 10*1024*1024 ){
+            showToast({title:'图片大小不能超过10M',icon:'none'});
+            return false;
+          }
+          if(!['jpg','jpeg','png'].includes(type)) {
+            showToast({title:'图片格式不正确,只允许jpg,jpeg,png格式',icon:'none'});
+            return false;
+          }
+          return true;
+        }
+        );
+        const result = await Promise.allSettled<any[]>(filterFiles.map((item)=>{
           return new Promise((resolve,reject)=>{
              Taro.uploadFile({
               url: uploadUrl,
-              filePath: item,
+              filePath: item?.path,
               name: 'file',
-              fileName: nameList[index]?.originalFileObj?.name,
+              fileName: item?.originalFileObj?.name,
               header:{
                 'X-User-Token': token,
               },
