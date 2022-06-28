@@ -16,6 +16,7 @@ const InfiniteScroll: React.FC<Props> = ({
   hasMoreComponent,
   loadingMoreComponent,
   noMoreComponent,
+  customStyle,
   getData,
 }) => {
   const initLoaded = useRef(false);
@@ -98,10 +99,10 @@ const InfiniteScroll: React.FC<Props> = ({
       className='infinite-scroll'
       scrollY
       scrollWithAnimation
-      upperThreshold={0}
+      // upperThreshold={0}
       lowerThreshold={threshold}
       enableBackToTop
-      onScrollToUpper={() => refresh(false)}
+      // onScrollToUpper={() => refresh(false)}
       onScrollToLower={loadMore}
     >
       {
@@ -118,7 +119,7 @@ const InfiniteScroll: React.FC<Props> = ({
               list?.length
                 ? list.map((i, index) => renderItem(i, index))
                 : (
-                  <View className='infinite-scroll-container'>
+                  <View className='infinite-scroll-container' style={customStyle}>
                     {
                       noDataComponent || (
                       <>

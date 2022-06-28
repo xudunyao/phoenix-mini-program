@@ -6,7 +6,7 @@ import { storageKeys } from '@/constants';
 import { getStorageSync, removeStorageSync } from '@/utils';
 
 export const getBaseUrl = async () => {
- 
+  console.log(process.env.APP_ENV,'APP_ENV')
   if (process.env.NODE_ENV === 'development') {
     return API_ENDPOINT;
   }
@@ -17,6 +17,7 @@ export const getBaseUrl = async () => {
       isProd = envVersion === 'release';
       break;
     case 'h5':
+      
       isProd = process.env.APP_ENV !== 'UAT';
       break;
     case 'tt':
@@ -29,6 +30,7 @@ export const getBaseUrl = async () => {
 
   return isProd ? API_ENDPOINT : API_ENDPOINT_UAT;
 }
+getBaseUrl();
 
 const handleUnauthorized = () => {
   removeStorageSync(storageKeys.TOKEN);

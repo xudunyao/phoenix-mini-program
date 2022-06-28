@@ -48,6 +48,7 @@ const MessageSystem = () => {
       <InfiniteScroll
         getData={getData}
         pageSize={20}
+        customStyle='justify-content: center'
         noDataComponent={
           <Result
             icon={icon}

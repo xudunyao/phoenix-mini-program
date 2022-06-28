@@ -1,8 +1,9 @@
 .container {
   // flex: 1;
-  display: flex;
+  // display: flex;
   flex-direction: column;
   height: 100%;
+  overflow-y: auto;
   :global(.tabs) {
     flex: 1;
   }
@@ -11,13 +12,17 @@
 .list{
   border-radius: 12px 12px 0px 0px;
   padding-top: 10px;
+  position: sticky;
+  top: 0px;
   margin-top: -20px;
   background-color: #fff;
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  // overflow: hidden;
   z-index: 11;
+  
 }
 .dialog-content {
   width: 100%;
