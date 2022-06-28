@@ -18,6 +18,7 @@ export type Props = {
   loadingMoreComponent?: JSX.Element;
   noMoreComponent?: JSX.Element;
   children?: JSX.Element;
+  customStyle?: string | object;
 };
 
 export interface ResponseTypes extends PaginationTypes {

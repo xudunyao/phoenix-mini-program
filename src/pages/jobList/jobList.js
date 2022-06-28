@@ -1,4 +1,4 @@
-import Taro, {useRouter} from '@tarojs/taro';
+import Taro, {useRouter } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { View, Image  } from '@tarojs/components';
@@ -52,7 +52,15 @@ const Index = () => {
       setVisible(false);
     }
     
-  }
+  };
+
+  // Taro.pageScrollTo({
+  //   scrollTop: 0,
+  //   duration: 300,
+  //   success: () => {
+  //     console.log('000')
+  //   }
+  // });
   return (
     <View className={styles.container}>
       <SwiperIndex customStyle='height: 231px' list={swiperList} position='left' />
