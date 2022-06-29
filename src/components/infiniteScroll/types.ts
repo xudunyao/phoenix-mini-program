@@ -7,6 +7,8 @@ export interface PaginationTypes {
 export type Props = {
   onRefresh?: () => void;
   loadMore?: () => void;
+  onScroll?: () => void;
+  scrollY: boolean,
   renderItem: (item: any, index: number) => any;
   getData: (search: PaginationTypes) => Promise<ResponseTypes>;
   hasMore?: boolean;

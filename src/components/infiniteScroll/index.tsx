@@ -11,12 +11,14 @@ const InfiniteScroll: React.FC<Props> = ({
   renderItem,
   pageSize = 15,
   threshold = 50,
+  scrollY = true,
   refreshComponent,
   noDataComponent,
   hasMoreComponent,
   loadingMoreComponent,
   noMoreComponent,
   customStyle,
+  onScroll,
   getData,
 }) => {
   const initLoaded = useRef(false);
@@ -80,7 +82,6 @@ const InfiniteScroll: React.FC<Props> = ({
       setIsLoadingMore(false);
     }
   };
-
   useEffect(() => {
     refresh(true);
   }, [])
@@ -97,11 +98,15 @@ const InfiniteScroll: React.FC<Props> = ({
   return (
     <ScrollView
       className='infinite-scroll'
-      scrollY
-      scrollWithAnimation
+      scrollY={scrollY}
+      enhanced
+      bounces={false}
+      scrollTop={10}
+      onScroll={onScroll}
+      scrollAnchoring
       // upperThreshold={0}
       lowerThreshold={threshold}
-      enableBackToTop
+      // enableBackToTop
       // onScrollToUpper={() => refresh(false)}
       onScrollToLower={loadMore}
     >

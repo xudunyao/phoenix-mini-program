@@ -1,7 +1,7 @@
-import Taro, {useRouter } from '@tarojs/taro';
+import Taro, {useRouter,useDidShow, useDidHide } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import { View, Image  } from '@tarojs/components';
+import { View, Image, ScrollView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
 import { resultImg, storageKeys } from '@/constants';
 import exampleImg from '@/assets/images/example.png';
@@ -10,7 +10,7 @@ import styles from  './Index.module.scss';
 import SwiperIndex from '../components/swiper/index';
 import ListIndex from './components/list/index';
 
-const tabList = [{
+const tabLists = [{
   key: 'ALL',
   title: '全部',
 }, {
@@ -31,7 +31,10 @@ const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] =useState(false);
+  const [scrollY, setScrollY] = useState(false);
+  const [tabList, setTabList] =useState([]);
   const router = useRouter();
+
   const {channelCode} = router.params;
   if(channelCode){
     Taro.setStorageSync(storageKeys.channelCode, channelCode);
@@ -39,6 +42,14 @@ const Index = () => {
   const onTabClick = (index) => {
     setTabCurrent(index)
   };
+  const onScroll = (e) => {
+    console.log(e)
+    if(e.detail.scrollTop > 100){
+      setScrollY(true)
+    }else {
+      setScrollY(false)
+    }
+  }
   const closeDialog = (v) => {
     if(v){
       if(v==='login'){
@@ -53,18 +64,16 @@ const Index = () => {
     }
     
   };
-
-  // Taro.pageScrollTo({
-  //   scrollTop: 0,
-  //   duration: 300,
-  //   success: () => {
-  //     console.log('000')
-  //   }
-  // });
+  useDidShow(() => {
+    setTabList(tabLists)
+  });
+  useDidHide(() => {
+    setTabList([])
+  });
   return (
-    <View className={styles.container}>
+    <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false}>
       <SwiperIndex customStyle='height: 231px' list={swiperList} position='left' />
-      <View className={styles.list}>
+      <View className={styles.list} >
         <Tabs 
           tabList={tabList}
           current={tabCurrent}
@@ -72,9 +81,9 @@ const Index = () => {
           extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
         >
           {
-            tabList.map((item) => (
+           tabList && tabList.map((item) => (
               <TabsPanel key={item.key}>
-                <ListIndex name={item.key} closeDialog={closeDialog}  />
+                <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} />
               </TabsPanel>
             ))
           }
@@ -116,7 +125,7 @@ const Index = () => {
           }]
         }
       />
-    </View>
+    </ScrollView>
   )
 };
 

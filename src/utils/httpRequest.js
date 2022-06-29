@@ -6,7 +6,6 @@ import { storageKeys } from '@/constants';
 import { getStorageSync, removeStorageSync } from '@/utils';
 
 export const getBaseUrl = async () => {
-  console.log(process.env.APP_ENV,'APP_ENV')
   if (process.env.NODE_ENV === 'development') {
     return API_ENDPOINT;
   }
