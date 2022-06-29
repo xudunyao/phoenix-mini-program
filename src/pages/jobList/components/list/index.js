@@ -11,6 +11,7 @@ import styles from  './List.module.scss';
 const List = ({
   name,
   closeDialog,
+  scrollY,
 }) => {
   const icon = {
     src:resultImg.empty,
@@ -72,6 +73,7 @@ const List = ({
     <InfiniteScroll
       getData={getData}
       pageSize={15}
+      scrollY={scrollY}
       noDataComponent={
         <Result
           icon={icon}
@@ -79,7 +81,7 @@ const List = ({
         />
       }
       renderItem={(item) => (
-        <View key={item.id} className={styles.list} onClick={() => toPage(item.id)}>
+        <View key={item.id} className={styles.list} onClick={() => toPage(item.id)} >
           
           <Image className={styles.img} src={item.positionImage} mode='aspectFill'></Image>
           <View className={styles.content}>
@@ -121,9 +123,11 @@ const List = ({
 }
 List.propTypes = {
   name: PropTypes.string,
+  scrollY: PropTypes.bool,
 };
 
 List.defaultProps = {
   name: '',
+  scrollY: false,
 };
 export default List;
