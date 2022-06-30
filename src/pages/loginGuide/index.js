@@ -9,6 +9,7 @@ import Logo from '../components/logo';
 
 import styles from './LoginGuide.module.scss'
 
+
 const LoginGuide = () => {
   const isH5 = process.env.TARO_ENV ==='h5';
   const channelCode = Taro.getStorageSync(storageKeys.channelCode);
@@ -53,7 +54,7 @@ const LoginGuide = () => {
                 Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
                 Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
                 Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-                auth.setInfo(resInfo.data)
+                auth.setInfo(resInfo.data);
                 Taro.navigateBack({
                   delta: 1
                 })

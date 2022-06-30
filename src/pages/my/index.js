@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View } from '@tarojs/components';
 import { Dialog } from '@/components';
-import { httpRequest } from '@/utils';
+import { httpRequest, getOverview } from '@/utils';
 import auth from '@/stores/auth';
 import { Auth, Wallet, Workbench } from "./components"
 import styles from  './My.module.scss';
@@ -34,7 +34,9 @@ const My = () => {
   useDidShow(() => {
     if(auth.info.token) {
       getUserInfo();
+      getOverview();
     }
+    
   });
   return  (
     <>
