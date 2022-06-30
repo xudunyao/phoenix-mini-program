@@ -11,14 +11,13 @@ const InfiniteScroll: React.FC<Props> = ({
   renderItem,
   pageSize = 15,
   threshold = 50,
-  scrollY = true,
+  scrollY=true,
   refreshComponent,
   noDataComponent,
   hasMoreComponent,
   loadingMoreComponent,
   noMoreComponent,
   customStyle,
-  onScroll,
   getData,
 }) => {
   const initLoaded = useRef(false);
@@ -101,9 +100,9 @@ const InfiniteScroll: React.FC<Props> = ({
       scrollY={scrollY}
       enhanced
       bounces={false}
-      scrollTop={10}
-      onScroll={onScroll}
-      scrollAnchoring
+      scrollTop={0}
+      // scrollAnchoring
+      showScrollbar={false}
       // upperThreshold={0}
       lowerThreshold={threshold}
       // enableBackToTop
