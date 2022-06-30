@@ -18,3 +18,22 @@ export const templateIdQuery = async () => {
     console.log(err);
   }
 };
+export const getOverview = async () => {
+  try{
+    const res = await httpRequest.get('phoenix-center-backend/client/message/overview');
+    if(res.code === 0) {
+      if(res.data.unReadCount !== 0){
+        Taro.setTabBarBadge({
+          index: 1,
+          text: (res.data.unReadCount).toString()
+        })
+      } else {
+        Taro.removeTabBarBadge({
+          index: 1,
+        })
+      }
+    } 
+  } catch (err) {
+    console.log(err);
+  }
+};

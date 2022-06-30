@@ -1,9 +1,11 @@
 import Taro, {useRouter,useDidShow, useDidHide } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
+import { getOverview } from '@/utils';
 import { View, Image, ScrollView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
 import { resultImg, storageKeys, imagesKeys } from '@/constants';
+import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
 import Swiper from './components/swiper/index';
 import ListIndex from './components/list/index';
@@ -29,7 +31,7 @@ const Index = () => {
   const [scrollY, setScrollY] = useState(false);
   const [tabList, setTabList] =useState([]);
   const router = useRouter();
-
+  
   const {channelCode} = router.params;
   if(channelCode){
     Taro.setStorageSync(storageKeys.channelCode, channelCode);
@@ -59,7 +61,10 @@ const Index = () => {
     
   };
   useDidShow(() => {
-    setTabList(tabLists)
+    setTabList(tabLists);
+    if(auth.info.token) {
+      getOverview();
+    }
   });
   useDidHide(() => {
     setTabList([])
@@ -67,11 +72,11 @@ const Index = () => {
   return (
     <View className={styles.page}>
       <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false}>
-        <Swiper list={imagesKeys.banner} position='left' />
+        <Swiper list={imagesKeys.banner} />
         <View className={styles.rebate}>
           <Image src={imagesKeys.rebate} className={styles['rebate-img']} mode='widthFix'></Image>
         </View>
-        <View className={styles.list} >
+        <View className={styles.list}  >
           <Tabs 
             tabList={tabList}
             current={tabCurrent}

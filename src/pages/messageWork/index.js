@@ -37,6 +37,7 @@ const MessageWork = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
+      getData();
     } catch (err) {
       console.log(err);
     }

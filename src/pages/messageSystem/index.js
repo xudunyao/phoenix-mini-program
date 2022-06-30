@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import moment from 'moment';
 import { showToast } from '@tarojs/taro';
 import { InfiniteScroll, Result } from '@/components';
@@ -8,6 +8,7 @@ import { resultImg, datetimeFormat } from '@/constants';
 import styles from './MessageSystem.module.scss'
 
 const MessageSystem = () => {
+  const [key, setKey] = useState(0)
   const icon = {
     src:resultImg.empty,
   }
@@ -36,16 +37,15 @@ const MessageSystem = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
+      setKey(messageId)
     } catch (err) {
       console.log(err);
     }
   }
-  useEffect(() => {
-    getData()
-  },[])
   return (
     <View className={styles.content}>
       <InfiniteScroll
+        key={key}
         getData={getData}
         pageSize={20}
         customStyle='justify-content: center'
@@ -61,7 +61,7 @@ const MessageSystem = () => {
               <Text className={styles.name}>
                 {item.messageEventType}
                 {
-                  !item.hasRead ? (<Text className={styles.badge} />) : null
+                  item.hasRead ? null : (<Text className={styles.badge} />)
                 }
               </Text>
               <Text className={styles.time}>{moment(item?.time).format(datetimeFormat.dateHourMin)}</Text>

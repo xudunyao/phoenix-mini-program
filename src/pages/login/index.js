@@ -11,6 +11,7 @@ import Logo from '../components/logo';
 
 import styles from './Login.module.scss'
 
+
 const initForm = {
   phone: {
     value: '',
@@ -89,7 +90,7 @@ const Login = () => {
               Taro.setStorageSync(storageKeys.MOBILE, resInfo.data.mobile);
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
-              auth.setInfo(resInfo.data)
+              auth.setInfo(resInfo.data);
               Taro.navigateBack({
                 delta: 2
               })
@@ -128,7 +129,7 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.MOBILE, res.data.mobile);
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
-        auth.setInfo(res.data)
+        auth.setInfo(res.data);
         Taro.navigateBack({
           delta: 2
         })
