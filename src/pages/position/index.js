@@ -5,7 +5,6 @@ import { View, Text, Image, Button } from '@tarojs/components';
 import { httpRequest, templateIdQuery } from '@/utils';
 import { resultImg, storageKeys } from '@/constants';
 import auth from '@/stores/auth';
-import exampleImg from '@/assets/images/example.png';
 import { IconFont, Button as MyButton, Dialog } from '@/components';
 import SwiperIndex from '../components/swiper/index';
 import styles from './Position.module.scss';
@@ -133,7 +132,7 @@ const Position = () => {
           </View>
         </View>
         <View className={styles['header-bottom']}>
-          <Image className={styles.img} mode='widthFix' src={exampleImg}></Image>
+          {/* <Image className={styles.img} mode='widthFix' src='' ></Image> */}
           <Text className={styles.name}>{positionObj?.companyName}</Text>
         </View>
       </View>

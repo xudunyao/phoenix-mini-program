@@ -1,9 +1,12 @@
+@import '@/scss/variable.scss';
+.page{
+  background-color: $color-alice-blue;
+  height: 100%;
+}
 .container {
-  // flex: 1;
-  // display: flex;
   flex-direction: column;
   height: 100%;
-  // overflow-y: auto;
+  background: linear-gradient(178deg, rgba(128, 162, 255, 0.11) 0%, rgba(255, 255, 255, 0) 54%, rgba(255, 255, 255, 0) 100%);
   :global(.tabs) {
     flex: 1;
   }
@@ -13,17 +16,24 @@
   border-radius: 12px 12px 0px 0px;
   padding-top: 10px;
   position: sticky;
-  top: 0;
-  margin-top: -20px;
-  background-color: #fff;
+  // top: 0;
   height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  // overflow: hidden;
+  overflow: hidden;
   z-index: 11;
   
 }
+.rebate {
+  width: 351px;
+  height: 113px;
+  margin: 12px auto;
+}
+.rebate-img {
+  width: 100%;
+}
+
 .dialog-content {
   width: 100%;
 }
