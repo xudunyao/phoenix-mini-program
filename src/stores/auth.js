@@ -11,6 +11,11 @@ class Auth{
     userid: Taro.getStorageSync(storageKeys.USERID),
     unionid: Taro.getStorageSync(storageKeys.UNIONID),
   };
+  realInfo ={
+    completeInfo: Taro.getStorageSync(storageKeys.completeInfo),
+    realMobile: Taro.getStorageSync(storageKeys.realMobile),
+    realName: Taro.getStorageSync(storageKeys.realName),
+  }
   constructor() {
     makeAutoObservable(this);
   }
@@ -23,6 +28,11 @@ class Auth{
     this.info.userid = obj?.userid;
     this.info.unionid = obj?.unionid;
   }
+  setRealInfo(obj) {
+    this.realInfo.completeInfo = obj?.completeInfo;
+    this.realInfo.realMobile = obj?.mobile;
+    this.realInfo.realName = obj?.name;
+  }
   clearInfo() {
     this.info = {
       token: '',
@@ -30,6 +40,11 @@ class Auth{
       openid: '',
       userid: '',
       unionid: '',
+    }
+    this.realInfo ={
+      completeInfo: false,
+      realMobile: '',
+      realName: '',
     }
   }
 };

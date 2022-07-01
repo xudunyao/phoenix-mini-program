@@ -7,7 +7,7 @@
   margin-bottom: 20Px;
   &-label {
     margin-right: 10Px;
-    font-size: 16Px;
+    font-size: 14Px;
     line-height: 22Px;
     padding: 10Px 0;
     box-sizing: border-box;
@@ -15,6 +15,7 @@
       margin-right: 0;
       margin-bottom: 6Px;
       width: 100% !important;
+      text-align: left;
     }
     &__right {
       text-align: right;

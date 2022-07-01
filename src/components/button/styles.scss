@@ -7,21 +7,19 @@
   box-sizing: border-box;
   height: 42Px;
   line-height: 42Px;
-  padding: 0 24Px;
   border: 1Px solid $color-primary;
   font-size: 16Px;
+  color: $color-primary;
   border-radius: $border-radius;
   &-primary {
     box-shadow: $box-shadow;
     background: $button-background;
     color: $color-white;
   }
-  &-default{
-    color: $text-primary;
-  }
   &-ghost {
     background-color: transparent;
     color: $color-primary;
+    // color: $text-primary;
   }
   &-round {
     border-radius: 22Px;

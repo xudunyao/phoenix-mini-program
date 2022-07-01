@@ -1,12 +1,14 @@
-import Taro, { useRouter, useShareAppMessage, showToast } from '@tarojs/taro';
+import Taro, { useRouter, useShareAppMessage, showToast, useDidShow } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View, Text, Image, Button } from '@tarojs/components';
-import { httpRequest, templateIdQuery } from '@/utils';
-import { resultImg, storageKeys } from '@/constants';
+import { httpRequest, templateIdQuery, getUserInfo } from '@/utils';
+import { resultImg, storageKeys, datetimeFormat } from '@/constants';
 import auth from '@/stores/auth';
+import moment from 'moment';
 import { IconFont, Button as MyButton, Dialog } from '@/components';
 import SwiperIndex from '../components/swiper/index';
+import Info from '../components/dialog/info';
 import styles from './Position.module.scss';
 
 const Position = () => {
@@ -21,7 +23,7 @@ const Position = () => {
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
-  const mobile = auth.info.mobile;
+  const [signVisible, setSignVisible] = useState(false);
   const token = auth.info.token;
   const platform = process.env.TARO_ENV;
   const getData = async () => {
@@ -45,14 +47,39 @@ const Position = () => {
     } catch (error) {
       console.log(error);
     }
-    
   }
+  const handleSubmit = async (form) => {
+    try {
+      const res = await httpRequest.post(`phoenix-center-backend/client/info/creat`, {
+        data: {
+          mobile: form.phone.value,
+          name: form.name.value,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      } else {
+        setSignVisible(false);
+        getUserInfo();
+      }
+    } catch (err) {
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
+    }
+  };
   const handleSignUp = async() => {
     if(token) {
+      if(!auth.realInfo.completeInfo){
+        setSignVisible(true)
+        return;
+      }
       try {
         const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
           data: {
-            mobile,
+            mobile: auth.realInfo.realMobile,
+            name: auth.realInfo.realName,
             platform,
           }
         });
@@ -101,6 +128,12 @@ const Position = () => {
     }
     
   }, []);
+  useDidShow(() => {
+    if(token) {
+      getUserInfo()
+    }
+    
+  })
  
   return (
     <View className={styles.position}>
@@ -179,8 +212,9 @@ const Position = () => {
               <View className={`${styles['item-body-text']} ${styles.location}`} onClick={toMap}><IconFont name='location' color='#80A2FF' />{positionObj?.city}{positionObj?.area}{positionObj?.addressDetail}</View>
             </View>
         </View>
+        
       </View>
-      
+      <View className={styles.tips}>此岗位由{positionObj?.tenantName}发布  {moment(positionObj?.lastModifiedDate).format(datetimeFormat.date)}</View>
       <View className={styles.bottom}>
         <View className={styles.icon} onClick={() => handleCall()}>
           <View className={styles['icon-item']}>
@@ -245,6 +279,7 @@ const Position = () => {
           }]
         }
       />
+      <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
     </View>
   );
 };

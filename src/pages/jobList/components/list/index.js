@@ -1,12 +1,12 @@
 import Taro, { showToast } from '@tarojs/taro';
+import { observer } from 'mobx-react-lite';
 import { View, Image, Text } from '@tarojs/components';
 import PropTypes from 'prop-types';
 import { httpRequest, templateIdQuery } from '@/utils';
+import auth from '@/stores/auth';
 import { IconFont, InfiniteScroll, Result } from '@/components';
-import { storageKeys, resultImg } from '@/constants';
-
+import { resultImg } from '@/constants';
 import styles from  './List.module.scss';
-
 
 const List = ({
   name,
@@ -34,21 +34,25 @@ const List = ({
       console.log(err);
     }
   };
+  
   const toPage = (id) => {
     Taro.navigateTo({
       url: `/pages/position/index?positionId=${id}`,
     });
   };
   const handleSignUp = async(positionId) => {
-    const token = Taro.getStorageSync(storageKeys.TOKEN);
-    const mobile = Taro.getStorageSync(storageKeys.MOBILE);
     const platform = process.env.TARO_ENV;
     
-    if(token) {
+    if(auth.info.token) {
+      if(!auth.realInfo.completeInfo){
+        closeDialog('sign');
+        return;
+      }
       try {
         const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
           data: {
-            mobile,
+            mobile: auth.realInfo.realMobile,
+            name: auth.realInfo.realName,
             platform,
           }
         });
@@ -130,4 +134,4 @@ List.defaultProps = {
   name: '',
   scrollY: false,
 };
-export default List;
+export default observer(List);
