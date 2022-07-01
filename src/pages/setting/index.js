@@ -18,7 +18,10 @@ const Setting = () => {
         Taro.removeStorageSync(storageKeys.USERID);
         Taro.removeStorageSync(storageKeys.recommendId);
         Taro.removeStorageSync(storageKeys.channelCode);
-        auth.clearInfo()
+        Taro.removeStorageSync(storageKeys.completeInfo);
+        Taro.removeStorageSync(storageKeys.realMobile);
+        Taro.removeStorageSync(storageKeys.realName);
+        auth.clearInfo();
         Taro.reLaunch({
           url: '../jobList/jobList',
         });

@@ -1,5 +1,7 @@
 import { httpRequest } from '@/utils';
 import Taro from '@tarojs/taro';
+import auth from '@/stores/auth';
+import { storageKeys } from '@/constants';
 
 export const templateIdQuery = async () => {
   try{
@@ -33,6 +35,20 @@ export const getOverview = async () => {
         })
       }
     } 
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getUserInfo = async () => {
+  try {
+    const res = await httpRequest.get('phoenix-center-backend/client/member/info');
+    if(res?.code !== 0){
+     throw new Error(res?.msg);
+    }
+    Taro.setStorageSync(storageKeys.completeInfo, res.data.completeInfo);
+    Taro.setStorageSync(storageKeys.realName, res.data.name);
+    Taro.setStorageSync(storageKeys.realMobile, res.data.mobile);
+    auth.setRealInfo(res.data)
   } catch (err) {
     console.log(err);
   }

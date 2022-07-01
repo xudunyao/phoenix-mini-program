@@ -20,7 +20,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
+    width: 80%;
     max-width: 320px;
     border-radius: 12px;
     background-color: $color-white;
@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px;
+    padding: 32px 20px 10px 20px;
   }
   &-close {
     padding: 20px;
@@ -54,8 +54,8 @@
   }
   &-actions {
     display: flex;
-    padding:0Px 16Px;
-    margin-bottom: 26Px;
+    padding:0Px 32Px;
+    margin-bottom: 32Px;
     justify-content: space-between;
     &-item {
       height: 44Px;

@@ -1,7 +1,7 @@
-import Taro, {useRouter,useDidShow, useDidHide } from '@tarojs/taro';
+import Taro, {useRouter,useDidShow, useDidHide, showToast } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import { getOverview } from '@/utils';
+import { getOverview, getUserInfo, httpRequest } from '@/utils';
 import { View, Image, ScrollView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
 import { resultImg, storageKeys, imagesKeys } from '@/constants';
@@ -9,6 +9,7 @@ import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
 import Swiper from './components/swiper/index';
 import ListIndex from './components/list/index';
+import Info from '../components/dialog/info';
 
 const tabLists = [{
   key: 'ALL',
@@ -27,6 +28,7 @@ const tabLists = [{
 const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [signVisible, setSignVisible] = useState(false);
   const [loginVisible, setLoginVisible] =useState(false);
   const [scrollY, setScrollY] = useState(false);
   const [tabList, setTabList] =useState([]);
@@ -50,20 +52,44 @@ const Index = () => {
     if(v){
       if(v==='login'){
         setLoginVisible(true);
-      }else {
+      } else if(v === 'success') {
         setVisible(true);
+      } else {
+        setSignVisible(true)
       }
-     
     } else {
       setLoginVisible(false);
       setVisible(false);
+      setSignVisible(false);
     }
-    
+  };
+  
+  const handleSubmit = async (form) => {
+    try {
+      const res = await httpRequest.post(`phoenix-center-backend/client/info/creat`, {
+        data: {
+          mobile: form.phone.value,
+          name: form.name.value,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      } else {
+        setSignVisible(false);
+        getUserInfo();
+      }
+    } catch (err) {
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
+    }
   };
   useDidShow(() => {
     setTabList(tabLists);
     if(auth.info.token) {
       getOverview();
+      getUserInfo();
     }
   });
   useDidHide(() => {
@@ -128,6 +154,7 @@ const Index = () => {
             }]
           }
         />
+        <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
       </ScrollView>
     </View>
   )

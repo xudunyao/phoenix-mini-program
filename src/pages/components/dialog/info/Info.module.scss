@@ -1,0 +1,15 @@
+@import '@/scss/variable.scss';
+.content{
+  :global(.form-item) {
+    margin-bottom: 5px;
+  }
+  :global(.input-wrapper) {
+    background-color: #F2F2F2;
+    border: none;
+    padding: 5px;
+    input {
+      text-align: left;
+      text-indent: 10px;
+    }
+  }
+}

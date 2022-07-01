@@ -6,4 +6,7 @@ export default {
   MOBILE: 'MOBILE',
   channelCode: 'channelCode',
   recommendId: 'recommendId',
+  completeInfo: 'completeInfo',
+  realName: 'realName',
+  realMobile: 'realMobile',
 }
