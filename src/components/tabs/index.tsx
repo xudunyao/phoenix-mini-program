@@ -36,7 +36,7 @@ const Tabs: React.FC<Props> = (
           })
         }
       </view>
-      <Swiper className='panel-content' current={current} onChange={(event)=>{ onTabClick(event.detail.current) }}>
+      <Swiper className='panel-content' current={current} onChange={(event)=>{ onTabClick(event?.detail?.current) }}>
         {
           children.constructor === Array ? children.map((item, index) => (
             <SwiperItem key={index}>

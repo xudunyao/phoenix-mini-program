@@ -58,7 +58,6 @@ const Message = () =>{
     })
   }
   useDidShow(() => {
-    console.log(auth.info.token)
     if(auth.info.token) {
       getData();
     }

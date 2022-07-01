@@ -7,7 +7,7 @@ import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
 import { resultImg, storageKeys, imagesKeys } from '@/constants';
 import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
-import Swiper from './components/swiper/index';
+import Swiper from './components/swiper/index'
 import ListIndex from './components/list/index';
 import Info from '../components/dialog/info';
 
@@ -39,6 +39,7 @@ const Index = () => {
     Taro.setStorageSync(storageKeys.channelCode, channelCode);
   }
   const onTabClick = (index) => {
+    console.log(index,'index')
     setTabCurrent(index)
   };
   const onScroll = (e) => {
@@ -110,7 +111,7 @@ const Index = () => {
             extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
           >
             {
-            tabList && tabList.map((item) => (
+              tabList.length > 0 && tabList.map((item) => (
                 <TabsPanel key={item.key}>
                   <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} />
                 </TabsPanel>
