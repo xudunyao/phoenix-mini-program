@@ -3,7 +3,6 @@ import { useGlobalIconFont } from './components/iconfont/helper';
 export default defineAppConfig({
   pages: [
     'pages/jobList/jobList',
-    'pages/privacyProtocol/index',
     'pages/setting/index',
     'pages/messageAccount/index',
     'pages/messageSystem/index',
@@ -17,7 +16,14 @@ export default defineAppConfig({
     'pages/registration/index',
     'pages/form/index',
     'pages/suggestion/index',
-    'pages/protocol/index',
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "pages": [
+        "pages/webView/index"
+      ]
+    }
   ],
   window: {
     backgroundTextStyle: 'light',

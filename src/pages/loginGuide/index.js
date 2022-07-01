@@ -21,7 +21,7 @@ const LoginGuide = () => {
       });
     } else {
       Taro.navigateTo({
-        url: `/pages/${page}/index`,
+        url: `/packageA/pages/webView/index?page=${page}`,
       });
     }
     
@@ -99,7 +99,7 @@ const LoginGuide = () => {
         </Button>
         <View className={styles.back} onClick={() =>toPage('jobList')}>回到首页</View>
         <View className={styles.protocol}>
-          登录即代表您同意寻工鸟<Text onClick={() => toPage('protocol')} className={styles['protocol-text']}>《用户协议》</Text>和<Text onClick={() => toPage('protocol')} className={styles['protocol-text']}>《隐私协议》</Text>
+          登录即代表您同意寻工鸟<Text onClick={() => toPage('register')} className={styles['protocol-text']}>《用户协议》</Text>和<Text onClick={() => toPage('privacy')} className={styles['protocol-text']}>《隐私协议》</Text>
         </View>
       </View>
     </View>
