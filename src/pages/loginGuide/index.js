@@ -19,6 +19,10 @@ const LoginGuide = () => {
       Taro.switchTab({
         url: `/pages/${page}/jobList`,
       });
+    } else if (page === 'login') {
+      Taro.navigateTo({
+        url: `/pages/${page}/index`,
+      });
     } else {
       Taro.navigateTo({
         url: `/packageA/pages/webView/index?page=${page}`,
