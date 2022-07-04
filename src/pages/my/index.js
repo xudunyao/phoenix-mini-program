@@ -11,6 +11,7 @@ import styles from  './My.module.scss';
 const My = () => {
   const [isValidation,setIsValidation] = useState(false);
   const [visible, setVisible] = useState(false);
+  const isH5 = process.env.TARO_ENV === 'h5';
   const getUserInfo = async () => {
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/certification/info');
@@ -34,7 +35,9 @@ const My = () => {
   useDidShow(() => {
     if(auth.info.token) {
       getUserInfo();
-      getOverview();
+      if(!isH5) {
+        getOverview();
+      }
     }
     
   });
