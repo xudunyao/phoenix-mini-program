@@ -1,7 +1,7 @@
 import Taro, { useRouter, useShareAppMessage, showToast, useDidShow } from '@tarojs/taro';
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { View, Text, Image, Button } from '@tarojs/components';
+import { View, Text, Image, Button, RichText } from '@tarojs/components';
 import { httpRequest, templateIdQuery, getUserInfo } from '@/utils';
 import { resultImg, storageKeys, datetimeFormat } from '@/constants';
 import auth from '@/stores/auth';
@@ -182,6 +182,10 @@ const Position = () => {
             <View className={styles['item-body-label']}>发薪日</View>
             <View className={styles['item-body-text']}>每月{positionObj?.payday}日</View>
           </View>
+          <View className={styles['item-body']}>
+            <View className={styles['item-body-label']}>薪资详情</View>
+            <View className={styles['item-body-text']}><RichText nodes={positionObj?.treatment} /></View>
+          </View>
         </View>
         <View className={styles.item}>
           <View className={styles['item-header']}>岗位描述</View>
@@ -195,7 +199,7 @@ const Position = () => {
             }
         </View>
         <View className={styles.item}>
-          <View className={styles['item-header']}>薪资待遇</View>
+          <View className={styles['item-header']}>招聘要求</View>
           {
               positionObj?.jobRequest?.map((v) => (
                 <View className={styles['item-body']}>
