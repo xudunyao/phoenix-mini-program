@@ -32,6 +32,7 @@ const Index = () => {
   const [loginVisible, setLoginVisible] =useState(false);
   const [scrollY, setScrollY] = useState(false);
   const [tabList, setTabList] =useState([]);
+  const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   
   const {channelCode} = router.params;
@@ -89,7 +90,9 @@ const Index = () => {
   useDidShow(() => {
     setTabList(tabLists);
     if(auth.info.token) {
-      getOverview();
+      if(!isH5){
+        getOverview();
+      }
       getUserInfo();
     }
   });
