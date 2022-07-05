@@ -2,14 +2,19 @@
 .page{
   background-color: $color-alice-blue;
   height: 100%;
+  position: relative;
 }
 .container {
   flex-direction: column;
-  height: 100%;
+  height: calc(100vh - 1rpx);
   background: linear-gradient(178deg, rgba(128, 162, 255, 0.11) 0%, rgba(255, 255, 255, 0) 54%, rgba(255, 255, 255, 0) 100%);
   :global(.tabs) {
     flex: 1;
   }
+}
+.content{
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .list{

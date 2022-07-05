@@ -46,8 +46,9 @@ const Index = () => {
   };
   
   const onScroll = (e) => {
+    console.log(e)
     scrollTop.current = e.detail.scrollTop;
-    if(e.detail.scrollTop > 260){
+    if(e.detail.scrollTop > 150){
       setScrollY(true)
     }else {
       setScrollY(false)
@@ -136,64 +137,67 @@ const Index = () => {
   return (
     <View className={styles.page}>
       <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false} scrollTop={scrollTop.current} >
-        <Swiper list={imagesKeys.banner} />
-        <View className={styles.rebate}>
-          <Image src={imagesKeys.rebate} className={styles['rebate-img']} mode='widthFix'></Image>
-        </View>
-        <View className={styles.list}  >
-          <Tabs 
-            tabList={tabList}
-            current={tabCurrent}
-            onTabClick={onTabClick}
-            extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
-          >
-            {
-              tabList.length > 0 && tabList.map((item) => (
-                <TabsPanel key={item.key}>
-                  <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
-                </TabsPanel>
-              ))
+        {/* <View className={styles.content}> */}
+          <Swiper list={imagesKeys.banner} />
+          <View className={styles.rebate}>
+            <Image src={imagesKeys.rebate} className={styles['rebate-img']} mode='widthFix'></Image>
+          </View>
+          <View className={styles.list}  >
+            <Tabs 
+              tabList={tabList}
+              current={tabCurrent}
+              onTabClick={onTabClick}
+              extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
+            >
+              {
+                tabList.length > 0 && tabList.map((item) => (
+                  <TabsPanel key={item.key}>
+                    <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
+                  </TabsPanel>
+                ))
+              }
+            </Tabs>
+          </View>
+          <Dialog 
+            maskClosable
+            visible={visible}
+            content={
+              <View className={styles['dialog-content']}>
+                <Image mode='widthFix' src={resultImg.success} className={styles['dialog-img']} />
+                <View className={styles['dialog-subtitle']}>恭喜您，报名成功</View>
+              </View>
             }
-          </Tabs>
-        </View>
-        <Dialog 
-          maskClosable
-          visible={visible}
-          content={
-            <View className={styles['dialog-content']}>
-              <Image mode='widthFix' src={resultImg.success} className={styles['dialog-img']} />
-              <View className={styles['dialog-subtitle']}>恭喜您，报名成功</View>
-            </View>
-          }
-          onClose={() => { 
-            setVisible(false);
-          }}
-        />
-        <Dialog 
-          maskClosable
-          visible={loginVisible}
-          content='您还未登录'
-          actions={
-            [{
-              title: '下次再说',
-              onClick: () =>{ setLoginVisible(false) },
-              type: 'default',
-              size: 'mini'
-            }, {
-              title: '去登录',
-              onClick: () =>{
-                setLoginVisible(false)
-                Taro.navigateTo({
-                  url: '../loginGuide/index'
-                })
-              },
-              type: 'primary',
-              size: 'mini'
-            }]
-          }
-        />
-        <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
+            onClose={() => { 
+              setVisible(false);
+            }}
+          />
+          <Dialog 
+            maskClosable
+            visible={loginVisible}
+            content='您还未登录'
+            actions={
+              [{
+                title: '下次再说',
+                onClick: () =>{ setLoginVisible(false) },
+                type: 'default',
+                size: 'mini'
+              }, {
+                title: '去登录',
+                onClick: () =>{
+                  setLoginVisible(false)
+                  Taro.navigateTo({
+                    url: '../loginGuide/index'
+                  })
+                },
+                type: 'primary',
+                size: 'mini'
+              }]
+            }
+          />
+          
+        {/* </View> */}
       </ScrollView>
+      <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
     </View>
   )
 };

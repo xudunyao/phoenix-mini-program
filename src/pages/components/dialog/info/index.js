@@ -122,6 +122,7 @@ const Info = ({
               value={form.name.value}
               onInput={(value) => setFormFieldValue('name', value)}
               error={!!form.name.error}
+              adjustPosition={false}
             />
           </FormItem>
           <FormItem
@@ -136,6 +137,7 @@ const Info = ({
               maxlength={11}
               onInput={(value) => setFormFieldValue('phone', value)}
               error={!!form.phone.error}
+              alwaysEmbed
             />
           </FormItem>
           <FormItem
@@ -151,6 +153,7 @@ const Info = ({
               maxlength={6}
               onInput={(value) => setFormFieldValue('sms', value)}
               error={!!form.sms.error}
+              adjust-position={false}
             />
           </FormItem>
         </View>
