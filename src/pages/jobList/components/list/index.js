@@ -1,8 +1,8 @@
-import Taro, { showToast } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { View, Image, Text } from '@tarojs/components';
 import PropTypes from 'prop-types';
-import { httpRequest, templateIdQuery } from '@/utils';
+import { httpRequest } from '@/utils';
 import auth from '@/stores/auth';
 import { IconFont, InfiniteScroll, Result } from '@/components';
 import { resultImg } from '@/constants';
@@ -12,6 +12,7 @@ const List = ({
   name,
   closeDialog,
   scrollY,
+  handleSubmit,
 }) => {
   const icon = {
     src:resultImg.empty,
@@ -40,34 +41,15 @@ const List = ({
       url: `/pages/position/index?positionId=${id}`,
     });
   };
-  const handleSignUp = async(positionId) => {
-    const platform = process.env.TARO_ENV;
-    
+  const handleSignUp = async(positionId) => {    
     if(auth.info.token) {
       if(!auth.realInfo.completeInfo){
-        closeDialog('sign');
+        closeDialog('sign', positionId);
         return;
+      } else {
+        handleSubmit(positionId)
       }
-      try {
-        const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${positionId}`, {
-          data: {
-            mobile: auth.realInfo.realMobile,
-            name: auth.realInfo.realName,
-            platform,
-          }
-        });
-        if (res?.code !== 0) {
-          throw new Error(res.msg);
-        } else {
-          templateIdQuery();
-          closeDialog('success')
-        }
-      } catch (err) {
-        showToast({
-          icon: 'none',
-          title: `${err.message}`
-        })
-      }
+      
     } else {
       closeDialog('login')
     }
@@ -128,10 +110,12 @@ const List = ({
 List.propTypes = {
   name: PropTypes.string,
   scrollY: PropTypes.bool,
+  handleSubmit: PropTypes.func,
 };
 
 List.defaultProps = {
   name: '',
   scrollY: false,
+  handleSubmit: () => {},
 };
 export default observer(List);
