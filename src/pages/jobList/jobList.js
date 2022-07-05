@@ -42,7 +42,6 @@ const Index = () => {
     Taro.setStorageSync(storageKeys.channelCode, channelCode);
   }
   const onTabClick = (index) => {
-    console.log(index,'index')
     setTabCurrent(index)
   };
   
@@ -103,6 +102,7 @@ const Index = () => {
         data: {
           mobile: form.phone.value,
           name: form.name.value,
+          smsCode: form.sms.value
         }
       });
       if (res?.code !== 0) {
