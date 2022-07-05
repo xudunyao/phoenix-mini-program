@@ -60,7 +60,9 @@ const Position = () => {
         throw new Error(res.msg);
       } else {
         setSignVisible(false);
-        getUserInfo();
+        getUserInfo().then(() => {
+          handleSignUp();
+        });
       }
     } catch (err) {
       showToast({

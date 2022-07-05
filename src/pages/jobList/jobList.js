@@ -1,7 +1,7 @@
 import Taro, {useRouter,useDidShow, useDidHide, showToast } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
-import { getOverview, getUserInfo, httpRequest } from '@/utils';
+import { useState, useRef } from 'react';
+import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
 import { View, Image, ScrollView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
 import { resultImg, storageKeys, imagesKeys } from '@/constants';
@@ -32,8 +32,10 @@ const Index = () => {
   const [loginVisible, setLoginVisible] =useState(false);
   const [scrollY, setScrollY] = useState(false);
   const [tabList, setTabList] =useState([]);
+  const [positionId, setPositionId] = useState('');
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
+  const scrollTop = useRef();
   
   const {channelCode} = router.params;
   if(channelCode){
@@ -43,14 +45,19 @@ const Index = () => {
     console.log(index,'index')
     setTabCurrent(index)
   };
+  
   const onScroll = (e) => {
-    if(e.detail.scrollTop > 200){
+    scrollTop.current = e.detail.scrollTop;
+    if(e.detail.scrollTop > 260){
       setScrollY(true)
     }else {
       setScrollY(false)
     }
   }
-  const closeDialog = (v) => {
+  const closeDialog = (v, params) => {
+    console.log(params,"params")
+    setPositionId(params);
+    console.log(positionId)
     if(v){
       if(v==='login'){
         setLoginVisible(true);
@@ -63,6 +70,30 @@ const Index = () => {
       setLoginVisible(false);
       setVisible(false);
       setSignVisible(false);
+    }
+  };
+
+  const handleSignUp =async (id) => {
+    const platform = process.env.TARO_ENV;
+    try {
+      const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${id}`, {
+        data: {
+          mobile: auth.realInfo.realMobile,
+          name: auth.realInfo.realName,
+          platform,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      } else {
+        templateIdQuery();
+        setVisible(true);
+      }
+    } catch (err) {
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
     }
   };
   
@@ -78,7 +109,9 @@ const Index = () => {
         throw new Error(res.msg);
       } else {
         setSignVisible(false);
-        getUserInfo();
+        getUserInfo().then(() => {
+          handleSignUp(positionId)
+        });
       }
     } catch (err) {
       showToast({
@@ -88,6 +121,7 @@ const Index = () => {
     }
   };
   useDidShow(() => {
+    scrollTop.current = 0;
     setTabList(tabLists);
     if(auth.info.token) {
       if(!isH5){
@@ -101,7 +135,7 @@ const Index = () => {
   });
   return (
     <View className={styles.page}>
-      <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false}>
+      <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false} scrollTop={scrollTop.current} >
         <Swiper list={imagesKeys.banner} />
         <View className={styles.rebate}>
           <Image src={imagesKeys.rebate} className={styles['rebate-img']} mode='widthFix'></Image>
@@ -116,7 +150,7 @@ const Index = () => {
             {
               tabList.length > 0 && tabList.map((item) => (
                 <TabsPanel key={item.key}>
-                  <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} />
+                  <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
                 </TabsPanel>
               ))
             }
