@@ -30,7 +30,6 @@ const Info = ({
 }) => {
   const [form, setForm] = useState(initForm);
   const [sendStatus, setSendStatus] = useState(true);
-  const isH5 = process.env.TARO_ENV === 'h5';
   const setFormFieldValue = (fieldName, value) => {
     setForm({
       ...form,
@@ -84,7 +83,7 @@ const Info = ({
         const res = await httpRequest.post('phoenix-center-backend/sms/send',{
           data: {
             mobile: form.phone.value,
-            type:isH5 ? 'h5Login' : 'wxMinProgramLogin'
+            type: 'infoVerification'
           }
         });
         if (res?.code !== 0) {
