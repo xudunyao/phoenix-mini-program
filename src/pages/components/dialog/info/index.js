@@ -133,6 +133,7 @@ const Info = ({
             <Input
               placeholder='请输入手机号'
               value={form.phone.value}
+              maxlength={11}
               onInput={(value) => setFormFieldValue('phone', value)}
               error={!!form.phone.error}
             />
@@ -147,6 +148,7 @@ const Info = ({
               placeholder='请输入验证码'
               suffix={<VerifyCode className={styles.send} onClick={sendStatus && getCode} listeners={handleListeners} />}
               value={form.sms.value}
+              maxlength={6}
               onInput={(value) => setFormFieldValue('sms', value)}
               error={!!form.sms.error}
             />
