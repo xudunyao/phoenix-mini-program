@@ -46,9 +46,8 @@ const Index = () => {
   };
   
   const onScroll = (e) => {
-    console.log(e)
     scrollTop.current = e.detail.scrollTop;
-    if(e.detail.scrollTop > 150){
+    if(e.detail.scrollTop > 250){
       setScrollY(true)
     }else {
       setScrollY(false)
