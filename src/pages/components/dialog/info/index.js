@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { showToast } from '@tarojs/taro';
 import PropTypes from 'prop-types';
 import { Dialog } from '@/components';
 import { FormItem, Input } from '@/components/form';
@@ -88,13 +89,17 @@ const Info = ({
         });
         if (res?.code !== 0) {
           showToast({
+            icon: 'none',
             title: res.msg
           })
         }
         cb && cb();
         setSendStatus(false)
       } catch (err) {
-        console.log(err);
+        showToast({
+          icon: 'none',
+          title: `${err.message}`
+        })
       }
     } else {
       setFormFieldError('phone', '请输入正确的手机号码');
