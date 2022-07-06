@@ -54,6 +54,7 @@ const Position = () => {
         data: {
           mobile: form.phone.value,
           name: form.name.value,
+          smsCode: form.sms.value
         }
       });
       if (res?.code !== 0) {
