@@ -1,11 +1,11 @@
 @import '@/scss/variable.scss';
 .mask {
-  width: 100%;
-  height: 100%;
   background: rgba(0, 0, 0, .5);
   position: fixed;
   top: 0;
   bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 99;
   &-body{
     position: absolute;
@@ -23,14 +23,6 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-    }
-    &-close{
-      position: absolute;
-      width: 25Px;
-      height:25Px;
-      bottom:0px;
-      left: 50%;
-      transform: translateX(-50%);
     }
   }
 }

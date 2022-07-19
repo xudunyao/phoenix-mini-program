@@ -9,7 +9,6 @@ import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
 import Swiper from './components/swiper/index'
 import ListIndex from './components/list/index';
-import Info from '../components/dialog/info';
 
 const tabLists = [{
   key: 'ALL',
@@ -35,7 +34,6 @@ const Index = () => {
   const [scrollY, setScrollY] = useState(false);
   const [bannerPop, setBannerPop] = useState();
   const [tabList, setTabList] =useState([]);
-  const [positionId, setPositionId] = useState('');
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const scrollTop = useRef();
@@ -56,9 +54,7 @@ const Index = () => {
     }
   }
   const closeDialog = (v, params) => {
-    console.log(params,"params")
     setPositionId(params);
-    console.log(positionId)
     if(v){
       if(v==='login'){
         setLoginVisible(true);
@@ -88,30 +84,6 @@ const Index = () => {
       } else {
         templateIdQuery();
         setVisible(true);
-      }
-    } catch (err) {
-      showToast({
-        icon: 'none',
-        title: `${err.message}`
-      })
-    }
-  };
-  const handleSubmit = async (form) => {
-    try {
-      const res = await httpRequest.post(`phoenix-center-backend/client/info/creat`, {
-        data: {
-          mobile: form.phone.value,
-          name: form.name.value,
-          smsCode: form.sms.value
-        }
-      });
-      if (res?.code !== 0) {
-        throw new Error(res.msg);
-      } else {
-        setSignVisible(false);
-        getUserInfo().then(() => {
-          handleSignUp(positionId)
-        });
       }
     } catch (err) {
       showToast({
@@ -152,7 +124,7 @@ const Index = () => {
       })
     }
   }
-  const getBannerPop = async () => {
+  const getPopAds = async () => {
     try {
       const res = await httpRequest.get(`phoenix-center-backend/client/noauth/banner/pop`);
       if (res?.code !== 0) {
@@ -185,7 +157,7 @@ const Index = () => {
   });
   useEffect(() => {
     getImagesBanner();
-    getBannerPop();
+    getPopAds();
   },[]);
   return (
     <View className={styles.page}>
@@ -210,49 +182,70 @@ const Index = () => {
               }
             </Tabs>
           </View>
-          <Dialog 
-            maskClosable
-            visible={visible}
-            content={
-              <View className={styles['dialog-content']}>
-                <Image mode='widthFix' src={resultImg.success} className={styles['dialog-img']} />
-                <View className={styles['dialog-subtitle']}>恭喜您，报名成功</View>
-              </View>
-            }
-            onClose={() => { 
-              setVisible(false);
-            }}
-          />
-          <Dialog 
-            maskClosable
-            visible={loginVisible}
-            content='您还未登录'
-            actions={
-              [{
-                title: '下次再说',
-                onClick: () =>{ setLoginVisible(false) },
-                type: 'default',
-                size: 'mini'
-              }, {
-                title: '去登录',
-                onClick: () =>{
-                  setLoginVisible(false)
-                  Taro.navigateTo({
-                    url: '../loginGuide/index'
-                  })
-                },
-                type: 'primary',
-                size: 'mini'
-              }]
-            }
-          />
       </ScrollView>
       <AdvertModal 
         visible={advertVisible}
         onClose={handleCloseAdvert}
         imageUrl={bannerPop?.imageUrl}
       />
-      <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
+      <Dialog 
+        maskClosable
+        visible={visible}
+        content={
+          <View className={styles['dialog-content']}>
+            <Image mode='widthFix' src={resultImg.success} className={styles['dialog-img']} />
+            <View className={styles['dialog-subtitle']}>恭喜您，报名成功</View>
+          </View>
+          }
+        onClose={() => { 
+          setVisible(false);
+        }}
+      />
+      <Dialog 
+        maskClosable
+        visible={loginVisible}
+        content='您还未登录'
+        actions={
+          [{
+            title: '下次再说',
+            onClick: () =>{ setLoginVisible(false) },
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '去登录',
+            onClick: () =>{
+            setLoginVisible(false)
+            Taro.navigateTo({
+            url: '../loginGuide/index'
+          })
+          },
+          type: 'primary',
+          size: 'mini'
+        }]
+        }
+      />
+      <Dialog 
+        maskClosable
+        visible={signVisible}
+        title='提示'
+        content='报名岗位需要先完善您的个人简历'
+        actions={
+          [{
+            title: '取消',
+            onClick: () =>{ setSignVisible(false) },
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '去完善',
+            onClick: () =>{
+            setSignVisible(false)
+            //TODO: 处理跳转逻辑
+            },
+            type: 'primary',
+            size: 'mini'
+        }]
+        }
+      />
     </View>
   )
 };
