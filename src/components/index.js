@@ -9,3 +9,4 @@ export {default as Tabs} from './tabs';
 export {TabsPanel} from './tabs';
 export { default as NavBar } from './navbar';
 export { default as ImagePicker} from './imagePicker';
+export { default as AdvertModal } from './advertModal';

@@ -1,9 +1,9 @@
 import Taro, {useRouter,useDidShow, useDidHide, showToast } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
 import { View, Image, ScrollView  } from '@tarojs/components';
-import { Tabs, TabsPanel, IconFont, Dialog } from '@/components';
+import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal } from '@/components';
 import { resultImg, storageKeys, imagesKeys } from '@/constants';
 import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
@@ -30,7 +30,10 @@ const Index = () => {
   const [visible, setVisible] = useState(false);
   const [signVisible, setSignVisible] = useState(false);
   const [loginVisible, setLoginVisible] =useState(false);
+  const [advertVisible,setAdvertVisible] = useState(false);
+  const [imageBanners, setImageBanners] = useState([]);
   const [scrollY, setScrollY] = useState(false);
+  const [bannerPop, setBannerPop] = useState();
   const [tabList, setTabList] =useState([]);
   const [positionId, setPositionId] = useState('');
   const isH5 = process.env.TARO_ENV === 'h5';
@@ -44,7 +47,6 @@ const Index = () => {
   const onTabClick = (index) => {
     setTabCurrent(index)
   };
-  
   const onScroll = (e) => {
     scrollTop.current = e.detail.scrollTop;
     if(e.detail.scrollTop > 250){
@@ -71,7 +73,6 @@ const Index = () => {
       setSignVisible(false);
     }
   };
-
   const handleSignUp =async (id) => {
     const platform = process.env.TARO_ENV;
     try {
@@ -95,7 +96,6 @@ const Index = () => {
       })
     }
   };
-  
   const handleSubmit = async (form) => {
     try {
       const res = await httpRequest.post(`phoenix-center-backend/client/info/creat`, {
@@ -120,6 +120,56 @@ const Index = () => {
       })
     }
   };
+  const handleClickBanner = async (id) => {
+    try {
+      const res = await httpRequest.put(`phoenix-center-backend/client/noauth/banner/click/${id}`);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+    } catch (err) {
+     console.log('err',err)
+    }
+  }
+  const getImagesBanner = async () => {
+    try {
+      const res = await httpRequest.get(`phoenix-center-backend/client/noauth/banner/home`);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setImageBanners(()=>{
+        return res.data.map(item => {
+          return {
+            url: item.imageUrl,
+            id: item.id,
+            onClick:handleClickBanner,
+            }
+          })
+        });
+    } catch (err) {
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
+    }
+  }
+  const getBannerPop = async () => {
+    try {
+      const res = await httpRequest.get(`phoenix-center-backend/client/noauth/banner/pop`);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setBannerPop(res.data);
+      if(res.data){
+        setAdvertVisible(true);
+      }
+    } catch (err) {
+      console.log('err',err)
+    }
+  }
+  const handleCloseAdvert = () => {
+    setAdvertVisible(false);
+    //TODO: 处理跳转逻辑
+  }
   useDidShow(() => {
     scrollTop.current = 0;
     setTabList(tabLists);
@@ -133,11 +183,14 @@ const Index = () => {
   useDidHide(() => {
     setTabList([])
   });
+  useEffect(() => {
+    getImagesBanner();
+    getBannerPop();
+  },[]);
   return (
     <View className={styles.page}>
       <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false} scrollTop={scrollTop.current} >
-        {/* <View className={styles.content}> */}
-          <Swiper list={imagesKeys.banner} />
+          <Swiper list={imageBanners} />
           <View className={styles.rebate}>
             <Image src={imagesKeys.rebate} className={styles['rebate-img']} mode='widthFix'></Image>
           </View>
@@ -193,9 +246,12 @@ const Index = () => {
               }]
             }
           />
-          
-        {/* </View> */}
       </ScrollView>
+      <AdvertModal 
+        visible={advertVisible}
+        onClose={handleCloseAdvert}
+        imageUrl={bannerPop?.imageUrl}
+      />
       <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
     </View>
   )

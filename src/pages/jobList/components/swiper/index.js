@@ -21,7 +21,7 @@ const SwiperIndex = ({
       >
         {
           list?.map((f) => (
-            <SwiperItem key={f.name}>
+            <SwiperItem key={f.name} onClick={() => f.onClick(f.id)}>
               <Image mode='widthFix' className={styles.img} src={f.url}></Image>
             </SwiperItem>
           ))
