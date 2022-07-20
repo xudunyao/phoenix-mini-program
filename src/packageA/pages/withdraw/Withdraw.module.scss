@@ -1,0 +1,101 @@
+@import '@/scss/variable.scss';
+.withdraw{
+  padding:20Px 12Px;
+  background: #F4F6FE;
+  height:100%;
+  box-sizing: border-box;
+}
+.title{
+  font-size: 14Px;
+  color: $text-primary;
+  line-height: 20Px;
+}
+.bank-logo{
+  width: 20Px;
+  height:20Px;
+}
+.bank-info{
+  display: flex;
+  align-items: center;
+  margin-top:20Px;
+}
+.bank-name{
+  font-size: 14Px;
+  color: $text-primary;
+  line-height: 20Px;
+  margin-left:10Px;
+}
+.bank-tips{
+  font-size: 12Px;
+  color: $text-subTitle;
+  line-height: 17Px;
+  margin-top:4Px;
+  margin-left:30Px;
+}
+.withdraw-amount{
+  margin-top:20Px;
+  background: $color-white;
+  border-radius: 12px;
+  padding:16Px;
+  :global(.input-wrapper){
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: none;
+    border-radius: 0Px;
+    padding:0px;
+    height: 44Px;
+  }
+  :global(.form-item){
+    box-sizing: border-box;
+    margin-bottom: 0Px;
+  }
+  :global(.form-item-label){
+    width: auto !important;
+    word-spacing: 28Px;
+  }
+  :global(.prefix){
+    font-size: 24Px;
+    font-weight: 500;
+    color: $text-primary;
+    line-height: 44Px;
+  }
+  :global(input){
+    height: 100% !important;
+    height: 44Px;
+    font-size: 24Px;
+    font-weight: 500;
+    color: $text-primary;
+    line-height: 33Px;
+  }
+}
+.withdraw-amount-title{
+  font-size: 14Px;
+  color: $text-primary;
+  line-height: 20Px;
+}
+.withdraw-amount-tips{
+  font-size: 12Px;
+  color: $text-subTitle;
+  line-height: 17Px;
+  height: 17Px;
+  margin-top:8Px;
+}
+.withdraw-all{
+  color:$color-medium-slateBlue;
+}
+.withdraw-code{
+  margin-top:4Px;
+  :global(.suffix){
+    display: flex;
+    align-items: center;
+  }
+}
+.withdraw-button{
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  bottom: 44Px;
+  padding:16Px;
+}
+

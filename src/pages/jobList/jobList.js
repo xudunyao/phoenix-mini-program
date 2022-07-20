@@ -142,7 +142,7 @@ const Index = () => {
     setAdvertVisible(false);
     //TODO: 处理跳转逻辑
     Taro.navigateTo({
-      url: `/packageActivity/pages/invitation/index`
+      url: `/packageA/pages/withdraw/index`
     })
   }
   useDidShow(() => {

@@ -10,8 +10,13 @@ const name = (val) => {
   const reg = /^[\u4E00-\u9FA5]+(\.?[\u4e00-\u9fa5])+$/;
   return reg.test(val);
 }
+const money = (val) => {
+  const reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
+  return reg.test(val);
+}
 export default {
   phone,
   idCard,
-  name
+  name,
+  money
 }

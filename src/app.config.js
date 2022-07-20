@@ -23,6 +23,7 @@ export default defineAppConfig({
       "pages": [
         "pages/webView/index",
         'pages/wallet/index',
+        'pages/withdraw/index',
       ]
     },
     {
