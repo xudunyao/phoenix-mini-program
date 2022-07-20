@@ -23,6 +23,12 @@ export default defineAppConfig({
       "pages": [
         "pages/webView/index"
       ]
+    },
+    {
+      "root": "packageActivity",
+      "pages": [
+        "pages/invitation/index"
+      ]
     }
   ],
   window: {

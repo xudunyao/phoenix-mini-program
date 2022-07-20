@@ -141,6 +141,9 @@ const Index = () => {
   const handleCloseAdvert = () => {
     setAdvertVisible(false);
     //TODO: 处理跳转逻辑
+    Taro.navigateTo({
+      url: `/packageActivity/pages/invitation/index`
+    })
   }
   useDidShow(() => {
     scrollTop.current = 0;

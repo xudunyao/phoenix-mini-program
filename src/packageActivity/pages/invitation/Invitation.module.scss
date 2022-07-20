@@ -1,0 +1,208 @@
+@import '@/scss/variable.scss';
+
+.activity{
+  position: relative;
+  height: 100%;
+}
+.rule{
+  position: absolute;
+  top: 38px;
+  right: 0;
+  width: 19px;
+  height: 59px;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: center;
+  color: $color-activity-tips;
+  padding:5px 4px;
+  box-sizing: border-box;
+  background: linear-gradient(171deg, #FBF6B5, #FECF78);
+  border-radius: 10px 0px 0px 10px;
+}
+.tips{
+  position: absolute;
+  line-height: 25px;
+  font-size: 14px;
+  white-space: nowrap;
+  background: linear-gradient(0deg, #FAFBBD, #FFCA6F);
+  border-radius: 25px;
+  left: 50%;
+  top:130px;
+  padding:5px 12px;
+  color: $color-activity-tips;
+  box-sizing: border-box;
+  transform: translateX(-50%);
+}
+.block{
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  left:50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  background: $color-white;
+  border-radius: 14px;
+}
+.invitation-info{
+  top:447px;
+}
+.info-title{
+  width: 284px;
+  height: 22px;
+  margin-top:16px;
+  background-image: url('./img/info_title.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.info-count{
+  margin-top:16px;
+  line-height: 13px;
+  font-size: 14px;
+  color: $color-activity-text;
+}
+.info-process{
+  display: flex;
+  width: 333px;
+  height: 70px;
+  background: $color-progress-bg ;
+  border-radius: 10px;
+  margin-top:16px;
+  line-height: 13px;
+  font-size: 14px;
+  padding:11px 12px;
+  box-sizing: border-box;
+  color: $color-activity-text;
+}
+.invitation-activity{
+  top: 715px;
+}
+.activity-process{
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 28px);
+  margin-top:16px;
+}
+.activity-process-item{
+  width: 60px;
+  height:86px;
+  background-image: url('./img/money.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: $color-white;
+}
+.process-info{
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 28px);
+  margin-top:16px;
+}
+.process-info-item{
+  width: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: $color-activity-text;
+}
+.process-bar{
+  width: calc(100% - 28px);
+  background-image: url('./img/process.png');
+  height: 12px;
+  margin-top:6px;
+  background-size:cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.process-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  border-right:1px solid #FFD6DC;
+  &:last-child{
+    border-right:none;
+  }
+}
+.process-title{
+  font-size: 12px;
+  opacity: 0.6;
+}
+.process-count{
+  font-size: 14px;
+  font-weight: 500;
+}
+.reward{
+  position: relative;
+  margin-top:16px;
+  width: 171px;
+  background: linear-gradient(90deg, #E2152D, rgba(255,125,67,0));
+}
+.reward-info{
+  width: 171px;
+  font-size: 14px;
+  color: $color-white;
+  text-align: center;
+}
+.reward-img{
+  position: absolute;
+  width: 31px;
+  height:30px;
+  top: -3px;
+  left: -12px;
+  background-image: url('./img/reward.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.button{
+  width: 120px;
+  height:30px;
+  margin-top:16px;
+  margin-bottom: 16px;
+  background-image: url('./img/button.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.activity-title{
+  width: 284px;
+  height: 22px;
+  margin:0 auto;
+  margin-top:16px;
+  background-image: url('./img/activity_title.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.activity-button{
+  display: flex;
+  justify-content: space-between;
+  margin-top:35px;
+  margin-bottom: 16px;
+}
+.activity-button-save{
+  width: 170px;
+  height:40px;
+  background-image: url('./img/save.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.activity-button-share{
+  width: 170px;
+  height:40px;
+  background-image: url('./img/share.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
