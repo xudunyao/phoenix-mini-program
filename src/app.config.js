@@ -27,7 +27,8 @@ export default defineAppConfig({
     {
       "root": "packageActivity",
       "pages": [
-        "pages/invitation/index"
+        "pages/invitation/index",
+        "pages/userGift/index"
       ]
     }
   ],

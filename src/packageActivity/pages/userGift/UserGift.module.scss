@@ -1,0 +1,73 @@
+@import '@/scss/variable.scss';
+.userGift {
+    padding-top: 155px;
+    width: 100%;
+    height: 100%;
+    background-image: url(./images/userGiftBackground.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.body {
+    margin-left: 12px;
+    margin-right: 12px;
+    border-radius: 12px;
+    padding-top: 16px;
+    padding-bottom: 20px;
+    background: linear-gradient(180deg, #FFF3E2 0%, #FFD48A 100%);;
+}
+.activityObject {
+    position: relative;
+    padding-top: 8px;
+    margin-left: 12px;
+    margin-right: 12px;
+    border-radius: 12px;
+    padding-bottom: 16px;
+    background-color: $color-white;
+}
+.activityRules {
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    margin: 10px 12px 0px 12px;
+    border-radius: 12px;
+    background-color: $color-white;
+
+}
+.activityObjectHeader {
+    position: absolute;
+    left: -4px;
+    margin-bottom: 12px;
+    border-radius:  0 13px 13px 0;
+    background-image: url(./images/label.png);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+.activityHeaderText {
+    margin-left: 15px;
+    margin-right: 15px;
+    line-height: 22px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $text-header;
+}
+.activityText {
+    color: $text-lable;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 10px 12px;
+}
+.img {
+    width: 74px;
+    height: 24px;
+    display: block;
+    margin: 20px auto 0px;
+}
+.removeSag {
+    margin-top: 40px;
+}
+.money {
+    color: $text-header;
+    font-size: 14px;
+    font-weight: 400;
+}
