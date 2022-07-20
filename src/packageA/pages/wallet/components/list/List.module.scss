@@ -1,0 +1,31 @@
+@import '@/scss/variable.scss';
+.list{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16Px;
+  padding-top:16Px;
+  border-bottom: 1px solid $border-primary;
+}
+.info{
+  font-size: 16Px;
+  color: $text-primary;
+  line-height: 22Px;
+}
+.time{
+  font-size: 12Px;
+  color: $text-subTitle;
+  line-height: 1Ppx;
+}
+.income-money{
+  margin-top:6Px;
+  font-size: 16Px;
+  font-weight: 500;
+  color: $text-orange-red;
+  line-height: 22Px;
+}
+.outlay-money{
+  font-size: 16Px;
+  font-weight: 500;
+  color: $text-primary;
+  line-height: 22Px;
+}

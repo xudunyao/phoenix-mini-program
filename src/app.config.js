@@ -21,7 +21,8 @@ export default defineAppConfig({
     {
       "root": "packageA",
       "pages": [
-        "pages/webView/index"
+        "pages/webView/index",
+        'pages/wallet/index',
       ]
     },
     {

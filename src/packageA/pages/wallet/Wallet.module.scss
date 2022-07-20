@@ -1,0 +1,51 @@
+@import '@/scss/variable.scss';
+.wallet{
+  background: linear-gradient(360deg, #F4F6FE 0%, #EEF2FE 70%, #5280FF 100%);
+  box-sizing: border-box;
+  height: 100%;
+  padding:9Px 12Px;
+  padding-top: 88PX;
+  overflow: scroll;
+}
+.account{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: $color-white;
+  border-radius: 12Px;
+}
+.account-title{
+  font-size: 16Px;
+  color: $text-subTitle;
+  line-height: 22Px;
+  margin-top:24Px;
+}
+.account-money{
+  font-size: 24Px;
+  font-weight: 500;
+  color: $text-primary;
+  line-height: 33Px;
+  padding-top:8Px;
+}
+.detailed-title{
+  margin-top: 50Px;
+  font-size: 16Px;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: 22Px;
+  border-left:3Px solid $color-primary;
+  padding-left: 4Px;
+}
+.detailed-tab{
+  margin-top: 20Px;
+  background: $color-white;
+  border-radius: 12Px;
+  padding:16Px 12Px;
+  overflow: hidden;
+  height: 375Px;
+  :global(.tabs) {
+   height: 375Px;
+  }
+}
+
