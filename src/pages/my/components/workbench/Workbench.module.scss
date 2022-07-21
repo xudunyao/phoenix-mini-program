@@ -17,30 +17,50 @@
   margin-left: 12Px;
   margin-bottom: 14Px;
 }
-.workbenchItem{
+.workbench-item{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
   box-sizing: border-box;
-  margin-bottom: 8Px;
+  padding: 0px 12Px;
 }
-.iconWrapper{
-  width: 30Px;
-  height: 30Px;
+.icon-wrapper{
+  position: relative;
+  width: 36Px;
+  height: 36Px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-left: 7Px;
 }
 .center{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  width: 25%;
+  margin-bottom: 20Px;
 }
 .icon{
-  height: 30Px;
+  height: 36Px;
   background-position: center;
+}
+.icon-tips{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  font-size: 10Px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: linear-gradient(227deg, $color-orange 0%, $color-orange-red, 100%);
+  border-radius: 100px 100px 100px 1px;
+  color: $color-white;
+  line-height: 14Px;
+  padding:0px 4Px;
+  box-sizing: border-box;
+  transform: translateY(-100%);
+  
 }
 .subTitle{
   height: 20Px;
@@ -48,16 +68,6 @@
   color:$text-primary;
   line-height: 20Px;
   display: inline-block;
-  align-self: flex-start;
-  margin-top: 2Px;
-  margin-left:7Px;
-}
-.line{
-  height: 1Px;
-  background: $border-primary;
-  border-radius: 12Px;
-  margin-left:12Px;
-  margin-bottom: 9Px;
 }
 .hide{
   height: 1Px;

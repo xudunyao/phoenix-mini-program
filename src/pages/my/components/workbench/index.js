@@ -1,5 +1,4 @@
 import { View ,Text, Image} from '@tarojs/components';
-import { IconFont } from '@/components';
 import { observer } from 'mobx-react-lite';
 import Taro , {showToast } from '@tarojs/taro';
 import auth from '@/stores/auth';
@@ -8,6 +7,10 @@ import  idea from './img/idea.png';
 import real_name from './img/real_name.png';
 import setting from './img/setting.png';
 import sing_up from './img/sing_up.png';
+import bill from './img/bill.png';
+import introduce from './img/introduce.png';
+import resume from './img/resume.png';
+import invitation from './img/invitation.png';
 
 const workbenchList = [
   {
@@ -16,9 +19,30 @@ const workbenchList = [
     url: 'pages/auth/index',
   },
   {
+    title: '我的简历',
+    icon: resume  ,
+    url: 'pages/auth/index',
+  },
+  {
+    title: '邀请好友',
+    icon: invitation  ,
+    url: 'packageActivity/pages/invitation/index',
+    tips: '1288.8元红包',
+  },
+  {
     title: '我的报名',
     icon: sing_up,
     url: 'pages/registration/index',
+  },
+  {
+    title: '寻工鸟介绍',
+    icon: introduce,
+    url: 'pages/registration/index',
+  },
+  {
+    title: '账单明细',
+    icon: bill,
+    url: 'packageA/pages/wallet/index',
   },
   {
     title: '意见反馈',
@@ -39,7 +63,6 @@ const Workbench = (
   }
 ) => {
   const handleClick = (item) => {
-    console.log(auth.info.token,'auth.info.token')
     if(!auth.info.token){
       notLogin();
       return;
@@ -61,26 +84,27 @@ const Workbench = (
     <>
       <View className={styles.workbench}>
         <View className={styles.title}>工作台</View>
-        {
-          workbenchList.map((item, index) => {
-            return (
-              <>
-              <View className={styles.workbenchItem} onClick={() => { handleClick(item)}}>
-                <View className={styles.center}>
-                    <View className={styles.iconWrapper}>
-                      <Image src={item.icon} className={styles.icon} />
+          <View className={styles['workbench-item']}>
+            {
+              workbenchList.map((item) => {
+                return (
+                    <View className={styles.center} onClick={() => { handleClick(item)}} key={item.title}>
+                        <View className={styles['icon-wrapper']}>
+                          {
+                            item.tips &&  <View className={styles['icon-tips']}>
+                              {
+                                item.tips
+                              }
+                            </View>
+                          }
+                          <Image src={item.icon} className={styles.icon} />
+                        </View>
+                        <Text className={styles.subTitle}>{item?.title}</Text>
                     </View>
-                    <Text className={styles.subTitle}>{item?.title}</Text>
-                </View>
-                <View>
-                  <IconFont name='right' color='#ccc' />
-                </View>
-            </View>
-            <View className={`${index !== workbenchList.length - 1 ? styles.line : styles.hide}`}></View> 
-            </>
-            )
-          })
-        }
+                )
+              })
+            }
+        </View>
       </View>
       
     </>

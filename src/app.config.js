@@ -16,6 +16,7 @@ export default defineAppConfig({
     'pages/registration/index',
     'pages/form/index',
     'pages/suggestion/index',
+    'packageActivity/pages/invitation/index',
   ],
   "subpackages": [
     {
@@ -28,13 +29,6 @@ export default defineAppConfig({
         'pages/bindCard/index',
       ]
     },
-    {
-      "root": "packageActivity",
-      "pages": [
-        "pages/invitation/index",
-        "pages/userGift/index"
-      ]
-    }
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -50,7 +44,14 @@ export default defineAppConfig({
       text: '首页',
       iconPath:"assets/images/iconIndex.png",
       selectedIconPath:"assets/images/iconIndex_active.png",
-    }, {
+    }, 
+    {
+      pagePath: 'packageActivity/pages/invitation/index',
+      text: '邀请',
+      iconPath:"assets/images/activity.png",
+      selectedIconPath:"assets/images/activity_active.png",
+    },
+    {
       pagePath: 'pages/my/index',
       text: '我的',
       iconPath:"assets/images/iconMy.png",
@@ -60,7 +61,14 @@ export default defineAppConfig({
       text: '首页',
       iconPath:"assets/images/iconIndex.png",
       selectedIconPath:"assets/images/iconIndex_active.png",
-    }, {
+    }, 
+    {
+      pagePath: 'packageActivity/pages/invitation/index',
+      text: '邀请',
+      iconPath:"assets/images/activity.png",
+      selectedIconPath:"assets/images/activity_active.png",
+    },
+    {
       pagePath: 'pages/message/index',
       text: '消息',
       iconPath:"assets/images/iconMessage.png",
