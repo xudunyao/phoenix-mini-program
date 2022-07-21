@@ -142,7 +142,7 @@ const Index = () => {
     setAdvertVisible(false);
     //TODO: 处理跳转逻辑
     Taro.navigateTo({
-      url: `/packageA/pages/steps/index`
+      url: `/packageA/pages/myResume/index`
     })
   }
   useDidShow(() => {

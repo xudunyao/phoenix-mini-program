@@ -10,4 +10,5 @@ export type Props = {
   error?: boolean;
   prefix: JSX.Element;
   suffix: JSX.Element;
+  placeholderStyle?:string;
 }

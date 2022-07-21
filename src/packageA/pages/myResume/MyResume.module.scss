@@ -1,0 +1,147 @@
+@import '@/scss/variable.scss';
+
+.container{
+  background-color: $color-white;
+  height: 100%;
+  :global(.input-wrapper){
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: none;
+    border-radius: 0Px;
+    padding:20Px 0Px;
+    line-height: 22Px;
+  }
+  :global(.form-item){
+    box-sizing: border-box;
+    margin-bottom: 0Px;
+  }
+  :global(.form-item-label){
+    width: auto !important;
+    word-spacing: 28Px;
+  }
+  :global(.modal-body){
+    width: auto ;
+    left:42Px;
+    right:42Px;
+    border-radius: 12Px;
+    top:132Px;
+    height:204Px ;
+    min-height: 0Px;
+  }
+  :global(.resumeInput) {
+    flex: 1,
+  }
+  :global(input){
+      text-align: right;
+  }
+}
+.mainBody{
+  padding: 0 12Px;
+}
+.mainFooter{
+  margin-top: 10Px;
+  padding: 0 12Px;
+}
+.icon{
+  width: 10Px;
+  height:10Px;
+  padding:10Px;
+}
+.prompt{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34Px;
+  background: #FCF4E8;
+  padding: 7Px 16Px;
+  box-sizing: border-box;
+  font-size: 14Px;
+  color: #F5B253;
+}
+.tips{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top:8Px;
+}
+.label-text{
+  font-size: 16Px;
+  color: $text-lable;
+  line-height: 22Px;
+  height: 22Px;
+  text-align: justify;
+  text-align-last: justify;
+}
+.button{
+  width: 330Px;
+  height: 40Px;
+  background: $color-primary;
+  border-radius: 25Px;
+  font-size: 18Px;
+  font-weight: 400;
+  color: $color-white;
+  margin-top: 40Px;
+  display:block;
+}
+.inactive{
+  opacity: 0.5;
+}
+.active{
+  opacity: 1;
+}
+.dialog-title{
+  font-size: 18Px;
+  font-weight: 500;
+  color: $text-lable;
+  line-height: 25Px;
+  text-align: center;
+  margin-top:26Px;
+}
+.dialog-tips{
+  font-size: 14Px;
+  color: $text-tertiary;
+  line-height: 20Px;
+  text-align: center;
+
+}
+.dialog-img{
+  width: 50Px;
+  height:50Px;
+  margin-top:38Px;
+}
+.dialog-subtitle{
+  font-size: 18Px;
+  color: $text-lable;
+  line-height: 18Px;
+  margin-top:12Px;
+}
+.dialog-content{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.boxHeader {
+  margin-top: 20Px;
+  font-size: 18Px;
+  font-weight: 600;
+  line-height: 18Px;
+  color: $text-lable;
+}
+.boxHeaderStar {
+  font-size: 18Px;
+  line-height: 18Px;
+  color: #F26B6B;
+}
+.arrowImg{
+  height: 14px;
+  width: 8px;
+  margin-left: 6px;
+}
+.annotation {
+  font-weight: 400;
+  color: $text-subTitle;
+  line-height: 22px;
+  font-size: 16px;
+}

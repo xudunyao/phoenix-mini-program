@@ -22,11 +22,17 @@ const bankCard = (val) => {
   const reg = /^([1-9]{1})(\d{14}|\d{18})$/;
   return reg.test(val);
 }
+const mobile = (val) => {
+  const reg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
+  return reg.test(val);
+}
+
 export default {
   phone,
   idCard,
   name,
   money,
   sms,
-  bankCard
+  bankCard,
+  mobile,
 }

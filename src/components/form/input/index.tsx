@@ -17,6 +17,7 @@ const MyInput: React.FC<Props> = ({
   maxlength = 1000,
   placeholder = '请输入',
   error = false,
+  placeholderStyle
 }) => {
   const handleInput = (e) => {
     if (onInput) {
@@ -48,6 +49,7 @@ const MyInput: React.FC<Props> = ({
         prefix ? (<View className='prefix'>{prefix}</View>) : null
       }
       <Input
+        className='resumeInput'
         placeholder={placeholder}
         onInput={handleInput}
         onFocus={handleFocus}
@@ -55,6 +57,7 @@ const MyInput: React.FC<Props> = ({
         disabled={disabled}
         maxlength={maxlength}
         value={value}
+        placeholder-style={placeholderStyle}
       />
       {clearable && !!value && (<View className='clear' onClick={handleClear}>
         <IconFont name='clear' color='#ccc' />
