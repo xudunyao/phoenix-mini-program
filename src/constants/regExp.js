@@ -14,9 +14,19 @@ const money = (val) => {
   const reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
   return reg.test(val);
 }
+const sms = (val) => {
+  const reg = /^\d{6}$/;
+  return reg.test(val);
+}
+const bankCard = (val) => {
+  const reg = /^([1-9]{1})(\d{14}|\d{18})$/;
+  return reg.test(val);
+}
 export default {
   phone,
   idCard,
   name,
-  money
+  money,
+  sms,
+  bankCard
 }

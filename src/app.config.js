@@ -25,6 +25,7 @@ export default defineAppConfig({
         'pages/wallet/index',
         'pages/withdraw/index',
         'pages/steps/index',
+        'pages/bindCard/index',
       ]
     },
     {
