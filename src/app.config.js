@@ -27,7 +27,8 @@ export default defineAppConfig({
         'pages/withdraw/index',
         'pages/steps/index',
         'pages/bindCard/index',
-        "pages/myResume/index"
+        "pages/myResume/index",
+        "pages/activityRules/index",
       ]
     },
   ],

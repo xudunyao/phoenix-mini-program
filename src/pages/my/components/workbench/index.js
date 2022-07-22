@@ -21,7 +21,7 @@ const workbenchList = [
   {
     title: '我的简历',
     icon: resume  ,
-    url: 'pages/auth/index',
+    url: 'packageA/pages/myResume/index',
   },
   {
     title: '邀请好友',
