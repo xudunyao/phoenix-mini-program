@@ -36,27 +36,25 @@ const initForm = {
   },
 }
 const jobList = {
-       "小时工" : 'PRAT_TIME_WORKER',
-       "日结工": 'DISPATCH_WORKER',
-       "正式工" : 'FORMAL_WORKER',
+  "小时工" : 'PRAT_TIME_WORKER',
+  "日结工": 'DISPATCH_WORKER',
+  "正式工" : 'FORMAL_WORKER',
 }
 const jobListReverse = {
   "PRAT_TIME_WORKER" : '小时工',
   "DISPATCH_WORKER": '日结工',
   "FORMAL_WORKER" : '正式工',
 }
-
+const sex = ['男', '女'];
+const jobType = ['正式工','兼职工','派遣工'];
 const MyResume = () => {
   const [resumeInfo, setResumeInfo] = useState({});
   const [isDialogShow, setIsDialogShow] = useState(false);
   const [sendStatus, setSendStatus] = useState(true);
-  const [provincesArr ,setProvincesArr] = useState([])
   const [cityArr , setCityArr] = useState([])
-  const [selectDate,setSelectDate] = useState({
-    sex: ['男', '女'],
-    jobType: ['正式工','兼职工','派遣工'],
-    city: [],
-  })
+  const [list, setList] = useState([]);
+  const [multiIndex, setMultiIndex]= useState([0,0]);
+  
   const [form, setForm] = useState(initForm);
 
   const getCode = async (cb) => {
@@ -129,15 +127,9 @@ const MyResume = () => {
       const city = provincesCity.map(item=>{
         return item[1]
       })
-      setSelectDate(() => ({
-        ...selectDate,
-        city:[provinces,city[0]]  ,
-      })) 
-      setProvincesArr(provinces)
-      setCityArr(city)
-
+      setCityArr(city);
+      setList([provinces,city[0]]);
       const myResumeData = await getMyResume()
-      console.log(myResumeData);
       setForm({
         ...form,
         name: {
@@ -186,23 +178,26 @@ const MyResume = () => {
   const handleChange = (e, type) => {
     switch (type) {
       case 'sex':
-        setFormFieldValue(type, selectDate.sex[e.detail.value])
+        setFormFieldValue(type, sex[e.detail.value])
         break;
       case 'jobType':
-        setFormFieldValue(type, selectDate.jobType[e.detail.value]);
+        setFormFieldValue(type, jobType[e.detail.value]);
         break;
       case 'city':
-        setFormFieldValue(type, selectDate.city[0][e.detail.value[0]]+selectDate.city[1][e.detail.value[1]]);
+        setFormFieldValue(type, list[0][e.detail.value[0]]+list[1][e.detail.value[1]]);
         break;
     }
   }
   const handleColumnChange = (e)=>{
+    const multiIndexs = multiIndex;
+    const lists = list;
+    multiIndexs[e.detail.column] = e.detail.value;
+
     if(e.detail.column ===0 ){
-      setSelectDate(() => ({
-        ...selectDate,
-        city:[provincesArr,cityArr[e.detail.value]],
-      }))
+      lists[1] = cityArr[e.detail.value]
     }
+    setMultiIndex(multiIndexs);
+    setList(lists)
   }
   const handleInputBlur = (type) => {
     if (!regExp.name(form.name.value) && type === 'name') {
@@ -268,7 +263,7 @@ const MyResume = () => {
               error={!!form.sex.error}
               suffix={
                 <View style={{ display: 'flex', alignItems: 'center' }}>
-                  <Picker mode='selector' range={selectDate.sex} onChange={(e) => handleChange(e, 'sex')}><Text className={form.sex.value ? '' : styles.annotation}>{form.sex.value ? form.sex.value : '请选择性别'}</Text></Picker>
+                  <Picker mode='selector' range={sex} onChange={(e) => handleChange(e, 'sex')}><Text className={form.sex.value ? '' : styles.annotation}>{form.sex.value ? form.sex.value : '请选择性别'}</Text></Picker>
                   {form.sex.value ? '' : <Image className={styles.arrowImg} src={rightArrow}></Image>}
                 </View>
               }
@@ -319,7 +314,7 @@ const MyResume = () => {
               error={!!form.jobType.error}
               suffix={
                 <View style={{ display: 'flex', alignItems: 'center' }}>
-                  <Picker mode='selector' range={selectDate.jobType} onChange={(e) => handleChange(e, 'jobType')}><Text className={form.jobType.value ? '' : styles.annotation}>{form.jobType.value ? form.jobType.value : '请选择求职类型'}</Text></Picker>
+                  <Picker mode='selector' range={jobType} onChange={(e) => handleChange(e, 'jobType')}><Text className={form.jobType.value ? '' : styles.annotation}>{form.jobType.value ? form.jobType.value : '请选择求职类型'}</Text></Picker>
                   {form.jobType.value ? '' : <Image className={styles.arrowImg} src={rightArrow}></Image>}
                 </View>
               }
@@ -334,7 +329,7 @@ const MyResume = () => {
               error={!!form.city.error}
               suffix={
                 <View style={{ display: 'flex', alignItems: 'center' }}>
-                  <Picker mode='multiSelector' range={selectDate.city} onChange={(e) => handleChange(e, 'city')} onColumnChange={(e)=>handleColumnChange(e)}><Text className={form.city.value ? '' : styles.annotation}>{form.city.value ? form.city.value : '请选择期望工作城市'}</Text></Picker>
+                  <Picker mode='multiSelector' range={list} value={multiIndex} onChange={(e) => handleChange(e, 'city')} onColumnChange={(e)=>handleColumnChange(e)}><Text className={form.city.value ? '' : styles.annotation}>{form.city.value ? form.city.value : '请选择期望工作城市'}</Text></Picker>
                   {form.city.value ? '' : <Image className={styles.arrowImg} src={rightArrow}></Image>}
                 </View>
               }
