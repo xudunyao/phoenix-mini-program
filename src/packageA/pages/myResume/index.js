@@ -35,16 +35,6 @@ const initForm = {
     error: '',
   },
 }
-const jobList = {
-  "小时工" : 'PRAT_TIME_WORKER',
-  "日结工": 'DISPATCH_WORKER',
-  "正式工" : 'FORMAL_WORKER',
-}
-const jobListReverse = {
-  "PRAT_TIME_WORKER" : '小时工',
-  "DISPATCH_WORKER": '日结工',
-  "FORMAL_WORKER" : '正式工',
-}
 const sex = ['男', '女'];
 const jobType = ['正式工','兼职工','派遣工'];
 const MyResume = () => {
@@ -58,7 +48,6 @@ const MyResume = () => {
   const [form, setForm] = useState(initForm);
 
   const getCode = async (cb) => {
-    
     if(regExp.phone(form.mobile.value)){
       try {
         const res = await httpRequest.post('phoenix-center-backend/sms/send',{
@@ -84,16 +73,36 @@ const MyResume = () => {
     } else {
       setFormFieldError('mobile', '请输入正确的手机号码');
     }
-    
   };
-  const getMyResume = async ()=>{
+  const getInformation = async ()=>{
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/info/detail');
-      console.log(res)
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      return res.data;
+      setForm({
+        ...form,
+        name: {
+          value: res.data.name,       
+          error: '',
+        },
+        sex: {
+          value: res.data.sex,
+          error: '',
+        },
+        mobile: {
+          value: res.data.mobile,
+          error: '',
+        },
+        jobType: {
+          value: res.data.jobType,
+          error: '',
+        },
+        city: {
+          value: res.data.city,
+          error: '',
+        },
+      })
     } catch (err) {
       console.log(err);
     }
@@ -107,54 +116,27 @@ const MyResume = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  useEffect(()=>{
-    async function fetchData() {
-      const cityData = await getCityData();
-      const provincesCity = cityData.map((item)=>{
+      const areaData = res.data.map((item)=>{
         const cityName = item.districts.map((itemCity)=>{
           return itemCity.cityName
         })
         return [item.provinceName,cityName]
       })
-      const provinces = provincesCity.map(item=>{
+      const provinces = areaData.map(item=>{
         return item[0]
       })
-      const city = provincesCity.map(item=>{
+      const city = areaData.map(item=>{
         return item[1]
       })
       setCityArr(city);
       setList([provinces,city[0]]);
-      const myResumeData = await getMyResume()
-      setForm({
-        ...form,
-        name: {
-          value: myResumeData.name,       
-          error: '',
-        },
-        sex: {
-          value: myResumeData.sex,
-          error: '',
-        },
-        mobile: {
-          value: myResumeData.mobile,
-          error: '',
-        },
-        jobType: {
-          value: jobListReverse[myResumeData.jobType],
-          error: '',
-        },
-        city: {
-          value: myResumeData.city,
-          error: '',
-        },
-      })
+    } catch (err) {
+      console.log(err);
     }
-    fetchData()
+  }
+  useEffect(()=>{
+      getCityData();
+      getInformation()
   },[])
   const setFormFieldValue = (fieldName, value) => {
     setForm({
@@ -194,7 +176,8 @@ const MyResume = () => {
     multiIndexs[e.detail.column] = e.detail.value;
 
     if(e.detail.column ===0 ){
-      lists[1] = cityArr[e.detail.value]
+      lists[1] = cityArr[e.detail.value];
+      multiIndexs[1] = 0;
     }
     setMultiIndex(multiIndexs);
     setList(lists)
@@ -225,7 +208,7 @@ const MyResume = () => {
           mobile:form.mobile.value,
           smsCode:form.smsCode.value,
           sex:form.sex.value,
-          jobType : jobList[form.jobType.value],
+          jobType : form.jobType.value,
           city:form.city.value,
         }
       });
