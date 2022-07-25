@@ -1,0 +1,216 @@
+@import '@/scss/variable.scss';
+
+.gift-bag{
+  position: relative;
+  height: 100%;
+}
+.gift-rule{
+  position: absolute;
+  top:35px;
+  right:0px;
+  background: $color-bottom-line;
+  opacity: 0.58;
+  border-radius: 22px 0px 0px 22px;
+  font-size: 12px;
+  color: $color-white;
+  box-sizing: border-box;
+  padding:3px 7px;
+  letter-spacing:1px;
+}
+.gift-reward{
+  position: absolute;
+  top:341px;
+  left:50%;
+  transform: translateX(-50%);
+}
+.gift-reward-title{
+  color: #FFF2DB;
+  font-size: 15px;
+}
+.gift-reward-money{
+  font-size: 22px;
+  font-weight: 800;
+  color: #FFF2DB;
+}
+.gift-reward-unit{
+  font-size:12px;
+}
+.activity-module{
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  left:50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  background: $color-white;
+  border-radius: 14px;
+}
+.induction-award{
+  top:417px;
+}
+.induction-award-title{
+  width: 284px;
+  height:42px;
+  background-image: url('./img/titleThree.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.induction-award-desc{
+  line-height: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4C1105;
+  margin-top:7px;
+  display: flex;
+  align-items: center;
+}
+.award-desc-modify{
+  width: 20px;
+  height: 1px;
+  margin:0px 10px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), #4C1105);
+}
+.reward-item-wrapper{
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 24px);
+  margin-top:25px;
+}
+.reward-item{
+  position: relative;
+  width: 60px;
+  height:85px;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: $color-white;
+}
+.reward-tips{
+  position: absolute;
+  top: 0;
+  left: 42%;
+  font-size: 10px;
+  white-space: nowrap;
+  color: $color-white;
+  line-height: 14Px;
+  padding:0px 4Px;
+  box-sizing: border-box;
+  transform: translateY(-95%);
+  background: linear-gradient(40deg, #FF6A32, #FF3704);
+  border-radius: 14px 14px 14px 0px;
+}
+.induction-award-font{
+  display: flex;
+  justify-content: space-around;
+  width: calc(100% - 24px);
+  margin-bottom: 18px;
+}
+.award-font-text{
+  font-size: 12px;
+  color: #4C1105;;
+  text-align: center;
+  width: 60px;
+  padding:0px 5px;
+  box-sizing: border-box;
+}
+.award-register-btn{
+  line-height: 18px;
+  background: linear-gradient(0deg, #FF9D3B, #FF3F08);
+  box-shadow: 0px 3px 10px 0px rgba(211,96,83,0.2200);
+  border-radius: 18px;
+  color: $color-white;
+  font-size: 10px;
+  text-align: center;
+  margin-top:8px;
+  padding:5px 6px;
+  box-sizing: border-box;
+}
+.sing-up{
+  top:700px;
+  height: 320px;
+  padding: 0px 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+  :global(.tabs) {
+    height: 320Px;
+   }
+}
+.sing-up-title{
+  width: 284px;
+  height:42px;
+  background-image: url('./img/titleThree.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin-bottom: 13px;
+}
+.post-item{
+  background: #FFF4DE;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+.post-item-header{
+  display: flex;
+  justify-content: space-between;
+}
+.item-header-title{
+  line-height: 16px;
+  font-size: 16px;
+  max-width: 208px;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  color: #4C1105;
+
+}
+.item-header-details{
+  font-size: 12px;
+  color: $color-warning;
+}
+.post-label-wrapper{
+  display: flex;
+  justify-content: flex-start;
+  margin-top:7px;
+}
+.label-item{
+  font-size: 10px;
+  color: #C2421C;
+  padding: 2px 3px;
+  box-sizing: border-box;
+  margin-right:10px;
+  line-height: 14px;
+  background: linear-gradient(-5deg, #FACB9D, #FEC380);
+  border-radius: 2px;
+}
+.post-item-botton{
+  display: flex;
+  justify-content: space-between;
+  margin-top:14px;
+}
+.item-botton-money{
+  font-size: 16px;
+  font-weight: bold;
+  color: #D32807;
+}
+.sing-up-button{
+  line-height: 22px;
+  background: linear-gradient(0deg, #FF9D3B, #FF3F08);
+  box-shadow: 0px 3px 10px 0px rgba(211,96,83,0.2200);
+  border-radius: 24px;
+  padding: 4px 7px;
+  box-sizing: border-box;
+  color:$color-white;
+  font-size: 14px;
+}

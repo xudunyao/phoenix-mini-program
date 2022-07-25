@@ -1,0 +1,62 @@
+@import '@/scss/variable.scss';
+.post-item{
+  background: #FFF4DE;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+.post-item-header{
+  display: flex;
+  justify-content: space-between;
+}
+.item-header-title{
+  line-height: 16px;
+  font-size: 16px;
+  max-width: 208px;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  color: #4C1105;
+
+}
+.item-header-details{
+  font-size: 12px;
+  color: #FF8830;
+}
+.post-label-wrapper{
+  display: flex;
+  justify-content: flex-start;
+  margin-top:7px;
+}
+.label-item{
+  font-size: 10px;
+  color: #C2421C;
+  padding: 2px 3px;
+  box-sizing: border-box;
+  margin-right:10px;
+  line-height: 14px;
+  background: linear-gradient(-5deg, #FACB9D, #FEC380);
+  border-radius: 2px;
+}
+.post-item-botton{
+  display: flex;
+  justify-content: space-between;
+  margin-top:14px;
+}
+.item-botton-money{
+  font-size: 16px;
+  font-weight: bold;
+  color: #D32807;
+}
+.sing-up-button{
+  line-height: 22px;
+  background: linear-gradient(0deg, #FF9D3B, #FF3F08);
+  box-shadow: 0px 3px 10px 0px rgba(211,96,83,0.2200);
+  border-radius: 12px;
+  padding: 4px 7px;
+  box-sizing: border-box;
+  color: $color-white;
+  font-size: 14px;
+}

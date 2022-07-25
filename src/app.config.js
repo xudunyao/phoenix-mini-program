@@ -16,7 +16,7 @@ export default defineAppConfig({
     'pages/registration/index',
     'pages/form/index',
     'pages/suggestion/index',
-    'packageActivity/pages/invitation/index',
+    'pages/invitation/index',
   ],
   "subpackages": [
     {
@@ -29,6 +29,12 @@ export default defineAppConfig({
         'pages/bindCard/index',
         "pages/myResume/index",
         "pages/activityRules/index",
+      ]
+    },
+    {
+      "root": "packageActivity",
+      "pages": [
+        "pages/giftBag/index",
       ]
     },
   ],
@@ -48,7 +54,7 @@ export default defineAppConfig({
       selectedIconPath:"assets/images/iconIndex_active.png",
     }, 
     {
-      pagePath: 'packageActivity/pages/invitation/index',
+      pagePath: 'pages/invitation/index',
       text: '邀请',
       iconPath:"assets/images/activity.png",
       selectedIconPath:"assets/images/activity_active.png",
@@ -65,7 +71,7 @@ export default defineAppConfig({
       selectedIconPath:"assets/images/iconIndex_active.png",
     }, 
     {
-      pagePath: 'packageActivity/pages/invitation/index',
+      pagePath: 'pages/invitation/index',
       text: '邀请',
       iconPath:"assets/images/activity.png",
       selectedIconPath:"assets/images/activity_active.png",
