@@ -11,22 +11,20 @@ const name = (val) => {
   return reg.test(val);
 }
 const money = (val) => {
-  const reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
+  const reg = /^\d+(\.\d{2})?$/;
   return reg.test(val);
 }
 const sms = (val) => {
   const reg = /^\d{6}$/;
   return reg.test(val);
 }
-const bankCard = (val) => {
-  const reg = /^([1-9]{1})(\d{14}|\d{18})$/;
-  return reg.test(val);
+const bankCard = () => {
+  return true;
 }
 const mobile = (val) => {
   const reg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
   return reg.test(val);
 }
-
 export default {
   phone,
   idCard,

@@ -1,10 +1,11 @@
 import { View, Text, Image } from '@tarojs/components';
+import backgroundImg from '@/constants/backgroundImg';
 import styles from './UserGift.module.scss';
 import LogoImg from './images/logo.png'
 
 const userGift = () => {
   return (
-    <View className={styles.userGift}>
+    <View className={styles.userGift} style={{backgroundImage: `url(${backgroundImg.userGiftBackground})`}}>
         <View className={styles.body}>
             <View className={styles.activityObject}>
                 <View className={styles.activityObjectHeader}>

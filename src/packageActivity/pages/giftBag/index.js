@@ -1,9 +1,9 @@
 import { View, Image,Text} from '@tarojs/components';
 import { InfiniteScroll} from '@/components';
+import backgroundImg from '@/constants/backgroundImg'
 import  Progress from './components/progress'
 import ListItem  from './components/ListItem';
 import styles from "./GiftBag.module.scss";
-import baseImg from './img/baseImg.png';
 
 const process = [
   {
@@ -56,7 +56,7 @@ const getData = async (search) => {
 }
 const ProcessItem = ({ title, count }) => {
   return (
-    <View className={styles['reward-item']} style={{backgroundImage: "url(" + require("./img/open.png") + ")"}}>
+    <View className={styles['reward-item']} style={{backgroundImage:  `url(${backgroundImg.baseImg})`}}>
       <View className={styles['reward-tips']}>{title}</View>
       <View className={styles['reward-count']}>{count}</View>
     </View>

@@ -1,6 +1,6 @@
 import { View, Image } from '@tarojs/components';
+import backgroundImg from '@/constants/backgroundImg';
 import styles from "./Invitation.module.scss";
-import baseImg from './img/base.png';
 
 const process = [
   {
@@ -35,7 +35,7 @@ const ProcessItem = ({ title, count }) => {
 const Invitation = () => {
   return  (
     <View className={styles.activity}>
-      <Image src={baseImg} mode='widthFix' style={{width:'100%'}} ></Image>
+      <Image src={backgroundImg.baseImg} mode='widthFix' style={{width:'100%'}} ></Image>
       <View className={styles.tips}>
         123****1223 刚邀请了1位好友 获得8.88元
       </View>

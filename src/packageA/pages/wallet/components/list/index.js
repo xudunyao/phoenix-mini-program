@@ -2,22 +2,50 @@ import moment from 'moment';
 import { observer } from 'mobx-react-lite';
 import { View } from '@tarojs/components';
 import { datetimeFormat } from '@/constants';
+import { InfiniteScroll } from '@/components';
+import { httpRequest } from '@/utils';
+import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import styles from  './List.module.scss';
 
 const ListItem = ({
-  data
+  type
 }) => {
+  const getData = async (search) => {
+    try {
+      const res = await httpRequest.post('phoenix-center-backend/client/wallet/transactionRecord',{
+        data: {
+          billType: type,
+          ...search,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <View className={styles.list}>
-      <View className={styles.info}>
-        <View className={styles.title}>{data?.title}</View>
-        <View className={styles.time}>{moment(data.time).format(datetimeFormat.dateTime)}</View>
+    <InfiniteScroll
+      getData={getData}
+      pageSize={10}
+      renderItem={(item) => (
+      <View className={styles.list}>
+        <View className={styles.info}>
+          <View className={styles.title}>{item?.tradeType}</View>
+          <View className={`${item.amount > 0 ?　styles['income-money'] : styles['outlay-money']}`}>
+          {
+            item?.amount > 0 ? `+${numeral(item?.amount).format('0,0.00')}元` : `-${numeral(item?.amount).format('0,0.00')}元`
+          }
+          </View>
+        </View>
+        <View className={styles.time}>{moment(item.time).format(datetimeFormat.dateTime)}</View>
       </View>
-      <View className={styles['income-money']}>
-        {data?.money}
-      </View>
-    </View>
+    )}
+    >
+   </InfiniteScroll>
   );
 }
 ListItem.propTypes = {

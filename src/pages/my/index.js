@@ -45,7 +45,7 @@ const My = () => {
     <>
       <View className={styles.my}>
         <Auth validation={isValidation} notLogin={notLogin} />
-        <Wallet />
+        <Wallet notLogin={notLogin} />
         <Workbench validation={isValidation} notLogin={notLogin} />
       </View>
       <Dialog 

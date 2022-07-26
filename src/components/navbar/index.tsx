@@ -31,7 +31,7 @@ const NavBar: React.FC<Props> = ({
         <View className='navbar-content' style={`marginTop:${statusHeight}px`}>
         {
           showBack?(
-            <View className='navbar-content-back' >
+            <View className='navbar-content-back' onClick={()=>{ Taro.navigateBack() }}>
               <IconFont name='back' />
             </View>
           ):null

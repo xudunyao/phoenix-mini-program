@@ -2,7 +2,7 @@ import Taro, {useRouter,useDidShow, useDidHide, showToast } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState, useRef, useEffect } from 'react';
 import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
-import { View, Image, ScrollView  } from '@tarojs/components';
+import { View, Image, ScrollView,WebView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal } from '@/components';
 import { resultImg, storageKeys, imagesKeys } from '@/constants';
 import auth from '@/stores/auth';
@@ -32,7 +32,7 @@ const Index = () => {
   const [advertVisible,setAdvertVisible] = useState(false);
   const [imageBanners, setImageBanners] = useState([]);
   const [scrollY, setScrollY] = useState(false);
-  const [bannerPop, setBannerPop] = useState();
+  const [popAds, setPopAds] = useState({});
   const [tabList, setTabList] =useState([]);
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
@@ -92,31 +92,13 @@ const Index = () => {
       })
     }
   };
-  const handleClickBanner = async (id) => {
-    try {
-      const res = await httpRequest.put(`phoenix-center-backend/client/noauth/banner/click/${id}`);
-      if (res?.code !== 0) {
-        throw new Error(res.msg);
-      }
-    } catch (err) {
-     console.log('err',err)
-    }
-  }
   const getImagesBanner = async () => {
     try {
       const res = await httpRequest.get(`phoenix-center-backend/client/noauth/banner/home`);
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      setImageBanners(()=>{
-        return res.data.map(item => {
-          return {
-            url: item.imageUrl,
-            id: item.id,
-            onClick:handleClickBanner,
-            }
-          })
-        });
+      setImageBanners(res.data);
     } catch (err) {
       showToast({
         icon: 'none',
@@ -130,7 +112,7 @@ const Index = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      setBannerPop(res.data);
+      setPopAds(res.data);
       if(res.data){
         setAdvertVisible(true);
       }
@@ -140,10 +122,14 @@ const Index = () => {
   }
   const handleCloseAdvert = () => {
     setAdvertVisible(false);
-    //TODO: 处理跳转逻辑
-    Taro.navigateTo({
-      url: `/packageActivity/pages/giftBag/index`
-    })
+    const { jumpUrl } = popAds;
+    if(jumpUrl.indexOf('https') >= 0){
+      <WebView src={jumpUrl} />
+    }else{
+      Taro.navigateTo({
+        url: jumpUrl
+      })
+    }
   }
   useDidShow(() => {
     scrollTop.current = 0;
@@ -189,7 +175,7 @@ const Index = () => {
       <AdvertModal 
         visible={advertVisible}
         onClose={handleCloseAdvert}
-        imageUrl={bannerPop?.imageUrl}
+        imageUrl={popAds?.imageUrl}
       />
       <Dialog 
         maskClosable

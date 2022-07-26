@@ -1,0 +1,56 @@
+@import '@/scss/variable.scss';
+
+.container{
+
+}
+.prompt{
+  display: flex;
+  justify-content: flex-start;
+  background: #FCF4E8;
+  align-items: center;
+  font-size: 14px;
+  color: #F5B253;
+  line-height: 20Px;
+  height: 34Px;
+  padding:0px 12px;
+}
+.title{
+  font-size: 16Px;
+  font-weight: 600;
+  color: #061748;
+  line-height: 22Px;
+  margin-top: 16Px;
+}
+.bank{
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 48Px;
+  background: #F4F6FE;
+  border-radius: 4Px;
+  padding: 0px 12Px;
+  box-sizing: border-box;
+}
+.bank-logo{
+  width: 20Px;
+  height:20Px;
+}
+.bank-name{
+  line-height: 24Px;
+  margin-right: 8Px;
+  line-height: 20Px;
+  font-size: 14Px;
+  color: #061748;
+  margin-left: 8Px;
+}
+.bank-btn{
+  line-height: 14Px;
+  font-size: 10Px;
+  color: #FFFFFF;
+  padding: 4Px 11Px;
+  box-sizing: border-box;
+  border-radius: 12Px;
+  margin-left: auto;
+  background: linear-gradient(222deg, #80A2FF 0%, #5482FF 100%);
+}

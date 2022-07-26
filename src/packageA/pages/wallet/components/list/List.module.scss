@@ -1,7 +1,5 @@
 @import '@/scss/variable.scss';
 .list{
-  display: flex;
-  justify-content: space-between;
   padding-bottom: 16Px;
   padding-top:16Px;
   border-bottom: 1px solid $border-primary;
@@ -10,11 +8,14 @@
   font-size: 16Px;
   color: $text-primary;
   line-height: 22Px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .time{
   font-size: 12Px;
   color: $text-subTitle;
-  line-height: 1Ppx;
+  line-height: 17Px;
 }
 .income-money{
   margin-top:6Px;
