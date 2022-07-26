@@ -4,11 +4,12 @@ import { useState, useRef, useEffect } from 'react';
 import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
 import { View, Image, ScrollView,WebView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal } from '@/components';
-import { resultImg, storageKeys, imagesKeys } from '@/constants';
+import { resultImg, storageKeys } from '@/constants';
 import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
 import Swiper from './components/swiper/index'
 import ListIndex from './components/list/index';
+import Login from './components/login/index';
 
 const tabLists = [{
   key: 'ALL',
@@ -152,8 +153,8 @@ const Index = () => {
     <View className={styles.page}>
       <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false} scrollTop={scrollTop.current} >
           <Swiper list={imageBanners} />
-          <View className={styles.rebate}>
-            <Image src={imagesKeys.rebate} className={styles['rebate-img']} mode='widthFix'></Image>
+          <View className={styles.login}>
+            <Login />
           </View>
           <View className={styles.list}  >
             <Tabs 
