@@ -153,9 +153,12 @@ const Index = () => {
     <View className={styles.page}>
       <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false} scrollTop={scrollTop.current} >
           <Swiper list={imageBanners} />
-          <View className={styles.login}>
-            <Login />
-          </View>
+          {
+            !auth.info.token ? 
+            (<View className={styles.login}>
+               <Login />
+            </View>):null
+          }
           <View className={styles.list}  >
             <Tabs 
               tabList={tabList}

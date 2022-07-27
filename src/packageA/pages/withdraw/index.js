@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View,Image, Text } from '@tarojs/components';
 import { FormItem, Input } from '@/components/form';
 import IconFont from '@/components/iconfont';
-import Taro from '@tarojs/taro';
+import Taro, {showToast,useDidShow} from '@tarojs/taro';
 import { regExp } from '@/constants';
 import { Button } from '@/components';
 import { httpRequest } from '@/utils';
@@ -25,6 +25,7 @@ const initForm = {
 const Withdraw = () => {
   const [form, setForm] = useState(initForm);
   const [balance, setBalance] = useState(0);
+  const [bankInfo, setBankInfo] = useState({});
   const setFormFieldValue = (fieldName, value) => {
     setForm({
       ...form,
@@ -68,7 +69,6 @@ const Withdraw = () => {
   const handleInputFocus = (type) =>{
     setFormFieldError(type,'');
   }
-
   const handleWithdrawAll = async () => {
     setForm({
       ...form,
@@ -92,8 +92,29 @@ const Withdraw = () => {
         throw new Error(res?.msg);
       }
       setForm(initForm);
+      Taro.navigateTo({
+        url: '/packageA/pages/steps/index',
+        events: {
+          acceptDataFromOpenedPage: function(data) {
+            console.log(data)
+          },
+          someEvent: function(data) {
+            console.log(data)
+          }
+        },
+        success: function (result) {
+          result.eventChannel.emit('acceptDataFromOpenerPage', { data: {
+            ...bankInfo,
+            balance: form.money.value,
+          }
+        })
+        }
+      })
     } catch (err) {
-      console.log('err',err)
+      showToast({
+        icon: 'none',
+        title: `${err.message}`,
+      })
     }
   }
   const getBankInfo = async () => {
@@ -109,19 +130,22 @@ const Withdraw = () => {
   }
   const handleClick = () => {
     Taro.navigateTo({
-      url: '/packageA/pages/unbindCard/index'
+      url: '/packageA/pages/unbindCard/index',
+      success: function(res) {
+        res.eventChannel.emit('acceptDataFromOpenerPage', { data: bankInfo })
+      }
     })
   }
-  useEffect(() => {
+  useDidShow(() => {
     getWalletInfo();
     getBankInfo();
-  },[])
+  })
   return  (
     <View className={styles.withdraw}>
       <View className={styles.title}>到账银行</View>
       <View className={styles['bank-info']}>
-        <Image className={styles['bank-logo']} src={require('@/assets/images/iconIndex_active.png')} />
-        <View className={styles['bank-name']}>中国农业银行储蓄卡(尾号1170)</View>
+        <Image className={styles['bank-logo']} src={require(`./img/${bankInfo.bankCode}.png`)} />
+        <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
         <View style={{marginLeft:'auto'}} onClick={handleClick}>
           <IconFont name='right' size={25}></IconFont>
         </View>

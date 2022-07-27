@@ -1,28 +1,45 @@
 import { useState } from 'react';
 import { View, Text,Image } from "@tarojs/components";
-import { showToast } from '@tarojs/taro';
+import Taro,{ showToast,useDidShow } from '@tarojs/taro';
 import { IconFont } from "@/components";
 import { httpRequest } from '@/utils';
 import styles from "./UnbindCard.module.scss";
 
 const UnbindCard = () => {
   const [isTipsShow,setIsTipsShow] = useState(true);
-  const handleClick = async () => {
+  const [bankInfo,setBankInfo] = useState({});
+  const getBankInfo = async () => {
     try {
-      const res = await httpRequest.post('phoenix-center-backend/client/wallet/unbindCard');
+      const res = await httpRequest.post('phoenix-center-backend/client/wallet/bankInfo');
+      if(res?.code !== 0){
+        throw new Error(res?.msg);
+      }
+      setBankInfo(res.data);
+    } catch (err) {
+      console.log('err',err)
+    }
+  }
+  const handleUnbindCard = async () => {
+    try {
+      const res = await httpRequest.post('phoenix-center-backend/client/wallet/unBindCard');
       if(res?.code !== 0){
         throw new Error(res?.msg);
       }
       showToast({
         title: '解绑成功',
-        icon: 'success',
-        duration: 2000,
       });
-      setIsTipsShow(false);
+      Taro.switchTab({
+        url: '/pages/my/index',
+      })
     } catch (err) {
-      console.log('err',err)
+      showToast({
+        title: `${err.message}`,
+      });
     }
   }
+  useDidShow(() => {
+    getBankInfo();
+  })
   return (
     <View className={styles.container}>
       {
@@ -37,9 +54,9 @@ const UnbindCard = () => {
       }
       <View className={styles.title}>银行卡账号</View>
       <View className={styles.bank}>
-        <Image className={styles['bank-logo']} src={require('@/assets/images/iconIndex_active.png')} />
-        <View className={styles['bank-name']}>中国农业银行(尾号1170)备份</View>
-        <View className={styles['bank-btn']} onClick={handleClick}>解除绑定</View>
+        <Image className={styles['bank-logo']} src={require(`../withdraw/img/${bankInfo.bankCode}.png`)} />
+        <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
+        <View className={styles['bank-btn']} onClick={handleUnbindCard}>解除绑定</View>
       </View>
     </View>
   );

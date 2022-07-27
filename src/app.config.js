@@ -30,6 +30,7 @@ export default defineAppConfig({
         'pages/unbindCard/index',
         "pages/myResume/index",
         "pages/activityRules/index",
+        "pages/savePoster/index",
       ]
     },
     {

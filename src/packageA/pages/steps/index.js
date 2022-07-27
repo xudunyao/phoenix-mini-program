@@ -1,22 +1,9 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View, Text } from '@tarojs/components';
+import Taro,{ useDidShow } from '@tarojs/taro';
 import styles from  './steps.module.scss';
 
-const info = [
-  {
-    type: '提现金额',
-    value:288.88
-  },
-  {
-    type: '到账银行卡',
-    value:"招商银行  尾号1489"
-  },
-  {
-    type: '服务费',
-    value:288.88
-  },
-]
 const process = [
   {
     text: '发起提现申请',
@@ -34,7 +21,18 @@ const process = [
     isActive:false,
   },
 ]
+
 const Steps = () => {
+  const [data, setData] = useState();
+  useDidShow(() => {
+    const pages = Taro.getCurrentPages()
+    const current = pages[pages.length - 1]
+    const eventChannel = current.getOpenerEventChannel()
+    eventChannel.on('acceptDataFromOpenerPage',(res)=>{
+    console.log('page_test',res);
+    setData(res.data.data);
+    })
+  })
   return  (
     <View className={styles.steps}>
       <View className={styles.process}>
@@ -67,19 +65,16 @@ const Steps = () => {
         }
       </View>
       <View className={styles.info}>
-        {
-          info.map((item,index)=>{
-            return (
-              <View className={styles['info-item']} key={index}>
-                <View className={styles.type}>{item.type}</View>
-                <View className={styles.value}>{item.value}</View>
-              </View>
-            )
-          })
-        }
+        <View className={styles['info-item']}>
+          <View className={styles.type}>提现金额</View>
+          <View className={styles.value}>{data?.balance}</View>
+        </View>
+        <View className={styles['info-item']}>
+          <View className={styles.type}>到账银行卡</View>
+          <View className={styles.value}>{`${data?.bankName}(尾号${data.bankNo?.substr(data?.bankNo?.length - 4)})`}</View>
+        </View>
       </View>
     </View>
   )
   }
-
 export default observer(Steps);

@@ -48,7 +48,6 @@ const BindCard = () => {
         }
         cb && cb();
         setSendStatus(false)
-        setData(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -105,18 +104,15 @@ const BindCard = () => {
     setFormFieldError(type,'');
   }
   const handleBindCard = async () => {
-    if (validate()) {
-      try {
-        const res = await httpRequest.post(`phoenix-center-backend/client/wallet/bindCard/${form.sms.value}`);
-        if (res?.code !== 0) {
-          showToast({
-            title: res.msg
-          })
-        }
-        setIsDialogShow(true)
-      } catch (err) {
-        console.log(err);
+    try {
+      const res = await httpRequest.post(`phoenix-center-backend/client/wallet/bindCard/${form.sms.value}`);
+      setData(res);
+      setIsDialogShow(true);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
       }
+    } catch (err) {
+      console.log('err', err);
     }
   }
   const getRealName = async () => {
@@ -168,7 +164,7 @@ const BindCard = () => {
                 prefix={<View className={styles['label-text']}>银行卡号</View>}
                 placeholder='请输入银行卡号'
                 value={form.cardId.value}
-                maxlength={18}
+                maxlength={19}
                 onInput={(value) => { setFormFieldValue('cardId', value) }}
                 error={!!form.cardId.error}
                 onFocus={() =>{ handleInputFocus('cardId') }}
@@ -216,20 +212,20 @@ const BindCard = () => {
             </View>
       </View>
       <Dialog
-        title={<View className={styles['dialog-title']}>{data?.code === 1 ? '验证失败' : '验证成功'}</View>}
+        title={<View className={styles['dialog-title']}>{data?.msg}</View>}
         visible={isDialogShow}
         maskClosable
-        content={<View className={styles['dialog-tips']}>{data?.msg}</View>}
         onClose={() => {
           setIsDialogShow(false);
-          //TODO: 跳转
         }}
         actions={[
           {
             title: '确定',
             onClick: ()=>{
               setIsDialogShow(false);
-              //TODO: 跳转
+              if(data.code !== 1){
+                Taro.navigateBack();
+              }
             },
             type: 'primary'
           },

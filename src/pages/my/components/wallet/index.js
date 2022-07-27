@@ -25,6 +25,13 @@ const Wallet = ({
       })
       return ;
     }
+    if(walletInfo.disable){
+      showToast({
+        title: '您的账户异常请联系管理员',
+        icon: 'none',
+      })
+      return ;
+    }
     if(walletInfo.bind){{
       Taro.navigateTo({
         url: '/packageA/pages/wallet/index'
