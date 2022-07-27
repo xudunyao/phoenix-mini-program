@@ -37,7 +37,7 @@ const workbenchList = [
   {
     title: '寻工鸟介绍',
     icon: introduce,
-    url: 'pages/registration/index',
+    url: 'pages/introduce/index',
   },
   {
     title: '账单明细',

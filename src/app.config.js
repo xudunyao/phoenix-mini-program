@@ -17,6 +17,7 @@ export default defineAppConfig({
     'pages/form/index',
     'pages/suggestion/index',
     'pages/invitation/index',
+    'pages/introduce/index'
   ],
   "subpackages": [
     {
@@ -31,6 +32,7 @@ export default defineAppConfig({
         "pages/myResume/index",
         "pages/activityRules/index",
         "pages/savePoster/index",
+        "pages/inviteRecord/index",
       ]
     },
     {

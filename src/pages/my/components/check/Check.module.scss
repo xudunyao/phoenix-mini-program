@@ -1,0 +1,25 @@
+@import '@/scss/variable.scss';
+
+.content{
+  display: flex;
+  justify-content:flex-end;
+  align-items:center;
+  height: 46px;
+  margin-bottom: 12px;
+  background-image:  url(./img/banner.png) ;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.button{
+  width: 48px;
+  height: 22px;
+  margin-right: 12px;
+  background: linear-gradient(270deg, #F7DFC7 0%, #F6E2C8 100%);
+  border-radius: 14px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 500;
+  color: #5F3639;
+  line-height: 22px;
+}

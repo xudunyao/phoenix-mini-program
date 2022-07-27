@@ -65,7 +65,7 @@ const ProcessItem = ({ title, count }) => {
 const Invitation = () => {
   return  (
     <View className={styles['gift-bag']}>
-      <Image src={baseImg} mode='widthFix' style={{width:'100%'}} ></Image>
+      <Image src={backgroundImg.baseImg} mode='widthFix' style={{width:'100%'}} ></Image>
       <View className={styles['gift-rule']}>规则说明</View>
       <View className={styles['gift-reward']}>
         <View className={styles['gift-reward-title']}>累计奖金</View>

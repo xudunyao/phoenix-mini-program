@@ -5,7 +5,7 @@ import { View } from '@tarojs/components';
 import { Dialog } from '@/components';
 import { httpRequest, getOverview } from '@/utils';
 import auth from '@/stores/auth';
-import { Auth, Wallet, Workbench } from "./components"
+import { Auth, Wallet, Workbench, Check } from "./components"
 import styles from  './My.module.scss';
 
 const My = () => {
@@ -46,6 +46,7 @@ const My = () => {
       <View className={styles.my}>
         <Auth validation={isValidation} notLogin={notLogin} />
         <Wallet notLogin={notLogin} />
+        <Check></Check>
         <Workbench validation={isValidation} notLogin={notLogin} />
       </View>
       <Dialog 
