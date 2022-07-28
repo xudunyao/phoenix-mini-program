@@ -13,9 +13,9 @@ import styles from './Position.module.scss';
 
 const Position = () => {
   const router = useRouter();
-  const {positionId,channelCode,recommendId} = router.params;
-  if(channelCode) {
-    Taro.setStorageSync(storageKeys.channelCode, channelCode);
+  const {positionId,scene} = router.params;
+  if(scene) {
+    Taro.setStorageSync(storageKeys.scene, scene);
   }
  
   Taro.setStorageSync(storageKeys.recommendId, recommendId);
@@ -121,7 +121,7 @@ const Position = () => {
   useShareAppMessage(() => {
     return {
       title: '岗位详情',
-      path: `${router.path}?positionId=${positionId}&channelCode=${shareCode}&recommendId=${auth.info.userid}`
+      path: `${router.path}?positionId=${positionId}&scene=${scene}&recommendId=${auth.info.userid}`
     }
   });
   useEffect(() => {

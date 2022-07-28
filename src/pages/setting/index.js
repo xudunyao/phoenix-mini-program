@@ -16,8 +16,7 @@ const Setting = () => {
         Taro.removeStorageSync(storageKeys.OPENID);
         Taro.removeStorageSync(storageKeys.UNIONID);
         Taro.removeStorageSync(storageKeys.USERID);
-        Taro.removeStorageSync(storageKeys.recommendId);
-        Taro.removeStorageSync(storageKeys.channelCode);
+        Taro.removeStorageSync(storageKeys.scene);
         Taro.removeStorageSync(storageKeys.completeInfo);
         Taro.removeStorageSync(storageKeys.realMobile);
         Taro.removeStorageSync(storageKeys.realName);

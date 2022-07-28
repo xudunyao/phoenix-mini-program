@@ -12,8 +12,7 @@ import styles from './LoginGuide.module.scss'
 
 const LoginGuide = () => {
   const isH5 = process.env.TARO_ENV ==='h5';
-  const channelCode = Taro.getStorageSync(storageKeys.channelCode);
-  const recommendId = Taro.getStorageSync('recommendId') || null;
+  const scene = Taro.getStorageSync(storageKeys.scene);
   const toPage = (page) => {
     if(page === 'jobList'){
       Taro.switchTab({
@@ -45,8 +44,7 @@ const LoginGuide = () => {
                   encryptedData,
                   iv,
                   code: res.code,
-                  channelCode,
-                  recommendId,
+                  scene,
                 }
               }
               );

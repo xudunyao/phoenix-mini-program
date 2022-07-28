@@ -26,12 +26,12 @@ export const getOverview = async () => {
     if(res.code === 0) {
       if(res.data.unReadCount !== 0){
         Taro.setTabBarBadge({
-          index: 1,
+          index: 2,
           text: (res.data.unReadCount).toString()
         })
       } else {
         Taro.removeTabBarBadge({
-          index: 1,
+          index: 2,
         })
       }
     } 

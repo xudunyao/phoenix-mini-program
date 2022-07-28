@@ -29,12 +29,12 @@ const Message = () =>{
         setList(res.data.messageVOS)
         if(res.data.unReadCount !== 0){
           Taro.setTabBarBadge({
-            index: 1,
+            index: 2,
             text: (res.data.unReadCount).toString()
           })
         } else {
           Taro.removeTabBarBadge({
-            index: 1,
+            index: 2,
           })
         }
       } else {

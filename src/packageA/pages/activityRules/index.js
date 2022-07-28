@@ -5,7 +5,7 @@ import LogoImg from './images/logo.png'
 
 const userGift = () => {
   return (
-    <View className={styles.userGift} style={{backgroundImage: `url(${backgroundImg.userGiftBackground})`}}>
+    <View className={styles.userGift} style={{backgroundImage: `url(${backgroundImg.activityBackground})`}}>
         <View className={styles.body}>
             <View className={styles.activityObject}>
                 <View className={styles.activityObjectHeader}>

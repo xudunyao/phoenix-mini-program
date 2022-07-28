@@ -2,6 +2,7 @@ module.exports = {
   "extends": ["taro/react"],
   "rules": {
     "no-undef": 1,
+    "no-unused-vars": 1,
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off"
   },

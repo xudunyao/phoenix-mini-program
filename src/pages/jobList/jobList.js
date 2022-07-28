@@ -1,6 +1,7 @@
-import Taro, {useRouter,useDidShow, useDidHide, showToast } from '@tarojs/taro';
+import Taro, {useRouter,useDidShow, useDidHide, showToast, useReady } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState, useRef, useEffect } from 'react';
+import { duration } from 'moment';
 import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
 import { View, Image, ScrollView,WebView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal } from '@/components';
@@ -39,9 +40,9 @@ const Index = () => {
   const router = useRouter();
   const scrollTop = useRef();
   
-  const {channelCode} = router.params;
-  if(channelCode){
-    Taro.setStorageSync(storageKeys.channelCode, channelCode);
+  const { scene } = router.params;
+  if(scene){
+    Taro.setStorageSync(storageKeys.scene, scene);
   }
   const onTabClick = (index) => {
     setTabCurrent(index)
