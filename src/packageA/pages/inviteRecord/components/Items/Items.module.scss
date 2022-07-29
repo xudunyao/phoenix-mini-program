@@ -1,0 +1,105 @@
+@import '@/scss/variable.scss';
+
+.content-item{
+  height: 87px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-progress-bg;
+  margin: 0px 9px 8px 9px;
+  border-radius: 5px;
+}
+.image{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+  background-image: url(../../images/headPortrait.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.registry-message{
+  margin-left: 10px;
+  flex-grow:1;
+}
+.registry-status{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #64ABF8 ;
+}
+.signUp-status{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #FF7E4E ;
+}
+.interview-status{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #FF9E1E ;
+}
+.pass-status{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #9283FE ;
+}
+.success-status{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #3ADF9C ;
+}
+.phone-number{
+  width: 93px;
+  font-size: 16px;
+  font-weight: 500;
+  color: $color-activity-text;
+}
+.reward{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 120px;
+  height: 50px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #F67934;
+}
+.rewardOffset{
+  margin-right: 12Px;
+}
+.logoImage{
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  margin-top: 3px;
+}

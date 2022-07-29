@@ -96,7 +96,9 @@ const Invitation = () => {
     })
   }
   const handleInviteRecord =  () => {
-   //TODO
+    Taro.navigateTo({
+      url: '/packageA/pages/inviteRecord/index'
+    })
   }
   useShareAppMessage(() => {
     return {

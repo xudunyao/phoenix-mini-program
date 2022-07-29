@@ -1,0 +1,133 @@
+@import '@/scss/variable.scss';
+
+.content{
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  :global(.tabs) {
+    flex: 1;
+  }
+}
+.header{
+  height: 160px;
+}
+.body{
+  padding: 16px 0px;
+  margin: 0px 12px;
+  background-color: #F8FAFF;
+  border-radius: 14px;
+}
+.filtrate{
+  display: flex;
+  flex-direction:row-reverse;
+  height: 21px;
+  background-image: url(./images/title.png);
+  background-size: 147px 21px;
+  background-repeat: no-repeat;
+  background-position:center;
+}
+.filtrateText{
+  position: absolute;
+  top: 174px;
+  right: 27px;
+  color: #FF2824;
+  font-weight: 400;
+  font-size: 14px;
+}
+.promptMessage{
+  margin: 16px 50px;
+  display: flex;
+  justify-content:space-between;
+}
+.promptMessageData{
+  font-size: 14px;
+  font-weight: 400;
+  color: $color-activity-text;
+}
+.record-detailed{
+  display: flex;
+  padding: 12px 0 11px 0;
+  margin: 0 9px 18px 9px;
+  border-radius: 5px;
+  background-color: $color-progress-bg;
+}
+.record-detailed-box{
+  width: 100px;
+  height: 47px;
+  border-right: 1px solid #FFD6DC;
+  &:last-child{
+    border-right:none;
+  }
+}
+.record-detailed-title{
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  color: #4F0606;
+  opacity: 0.6;
+}
+.record-detailed-value{
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-activity-text;
+}
+.content-item{
+  height: 87px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-progress-bg;
+  margin: 8px 9px;
+  border-radius: 5px;
+}
+.image{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #FF2824;
+}
+.registry-message{
+  margin-left: 10px;
+  flex-grow:1;
+}
+.registry-status{
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #64ABF8 ;
+}
+.phone-number{
+  width: 93px;
+  font-size: 16px;
+  font-weight: 500;
+  color: $color-activity-text;
+}
+.reward{
+  width: 100px;
+  height: 50px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #F67934;
+  margin-right: 12px;
+}
+.withdrawCash{
+  position: absolute;
+  z-index: 1000;
+  right: 12px;
+  bottom: 80px;
+  width: 44Px;
+  height: 44Px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  color: $color-white;
+  line-height: 44Px;
+  background: linear-gradient(6deg, #E41A2D, #FF7D43);
+  box-shadow: 0px 5px 18px 0px rgba(244,60,0,0.2400);
+}

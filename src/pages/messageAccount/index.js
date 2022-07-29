@@ -1,4 +1,5 @@
 import { showToast } from '@tarojs/taro';
+import { useState } from 'react';
 import { InfiniteScroll, Result } from '@/components';
 import { View, Text } from '@tarojs/components';
 import { httpRequest } from '@/utils';
@@ -7,6 +8,7 @@ import { resultImg, datetimeFormat } from '@/constants';
 import styles from './MessageAccount.module.scss'
 
 const MessageAccount = () => {
+  const [key, setKey] = useState(0)
   const EventType = {
     'WALLET_MSG': "钱包到账提醒",
     'WITHDRAW_SUCCEED': "钱包提现到账",
@@ -33,9 +35,11 @@ const MessageAccount = () => {
       const content = res.data.content.map((item) => {
         return {
           'messageEventType': item.messageEventType,
+          'messageId': item.messageId,
           'content': item.content,
+          'hasRead':item.hasRead,
           'amount': item.amount,
-          'activity':  item.messageEventType==='WITHDRAW_FAIL_ENTRY',
+          'activity': item.messageEventType === 'WITHDRAW_FAIL_ENTRY',
           'list': [
             {
               show: item.messageEventType === 'WALLET_MSG',
@@ -50,18 +54,18 @@ const MessageAccount = () => {
             {
               show: item.messageEventType !== 'WALLET_MSG',
               label: '提现时间',
-              value: moment(item.applyTime).format(datetimeFormat.dateTime)
+              value: item.applyTime && moment(item.applyTime).format(datetimeFormat.dateTime)
             },
             {
               show: true,
               label: '到账时间',
-              activity:  item.messageEventType==='WITHDRAW_FAIL_ENTRY',
-              value: item.messageEventType === 'WITHDRAW_FAIL_ENTRY' ? '未到账' : moment(item.outTime).format(datetimeFormat.dateTime),
+              activity: item.messageEventType === 'WITHDRAW_FAIL_ENTRY',
+              value: item.messageEventType === 'WITHDRAW_FAIL_ENTRY' ? '未到账' : item.outTime && moment(item.outTime).format(datetimeFormat.dateTime),
             },
             {
               show: item.messageEventType !== 'WALLET_MSG',
               label: '备注',
-              activity:  item.messageEventType==='WITHDRAW_FAIL_ENTRY',
+              activity: item.messageEventType === 'WITHDRAW_FAIL_ENTRY',
               value: item.remark,
             },
           ]
@@ -73,9 +77,21 @@ const MessageAccount = () => {
       console.log(err);
     }
   };
+  const handleRead = async (messageId) => {
+    try{
+      const res = await httpRequest.put(`phoenix-center-backend/client/message/${messageId}`);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setKey(messageId)
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <View className={styles.content}>
       <InfiniteScroll
+        key={key}
         getData={getData}
         pageSize={20}
         customStyle='justify-content: center'
@@ -86,9 +102,9 @@ const MessageAccount = () => {
           />
         }
         renderItem={(item) => (
-          <View className={styles.item}>
-            <View className={styles.title}>{EventType[item.messageEventType]}</View>
-            <View className={`${styles.type} ${item.activity?styles.remindColor: ''}`}>{item.content}</View>
+          <View className={styles.item} onClick={() =>handleRead(item.messageId)}>
+            <View className={styles.title}><Text>{EventType[item.messageEventType]}</Text>{item.hasRead?'':<View style={{ display: 'inline-block',height: '5px',width:'5px',borderRadius:'50%',marginLeft:'5px',marginBottom: '6px',backgroundColor: '#EF6060'}}></View>}</View>
+            <View className={`${styles.type} ${item.activity ? styles.remindColor : ''}`}>{item.content}</View>
             <View className={styles.price}>
               <Text className={styles.unit}>￥</Text>
               <Text className={styles.money}>{item.amount}</Text>
@@ -98,7 +114,7 @@ const MessageAccount = () => {
                 return f.show ? (
                   <View className={styles.list}>
                     <View className={styles.label}>{f.label}</View>
-                    <View className={`${styles.text} ${f.activity?styles.remindColor: ''}`}>{f.value}</View>
+                    <View className={`${styles.text} ${f.activity ? styles.remindColor : ''}`}>{f.value}</View>
                   </View>
                 ) : null
               })

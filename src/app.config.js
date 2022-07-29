@@ -32,6 +32,7 @@ export default defineAppConfig({
         "pages/myResume/index",
         "pages/activityRules/index",
         "pages/savePoster/index",
+        "pages/inviteRecord/index"
       ]
     },
     {
