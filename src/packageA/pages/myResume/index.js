@@ -41,7 +41,8 @@ const MyResume = () => {
   const [resumeInfo, setResumeInfo] = useState({});
   const [isDialogShow, setIsDialogShow] = useState(false);
   const [sendStatus, setSendStatus] = useState(true);
-  const [cityArr , setCityArr] = useState([])
+  const [provincesArr,setProvincesArr] = useState([]);
+  const [cityArr , setCityArr] = useState([]);
   const [list, setList] = useState([]);
   const [multiIndex, setMultiIndex]= useState([0,0]);
   
@@ -128,6 +129,7 @@ const MyResume = () => {
       const city = areaData.map(item=>{
         return item[1]
       })
+      setProvincesArr(provinces)
       setCityArr(city);
       setList([provinces,city[0]]);
     } catch (err) {
@@ -171,16 +173,15 @@ const MyResume = () => {
     }
   }
   const handleColumnChange = (e)=>{
-    const multiIndexs = multiIndex;
-    const lists = list;
-    multiIndexs[e.detail.column] = e.detail.value;
-
-    if(e.detail.column ===0 ){
-      lists[1] = cityArr[e.detail.value];
-      multiIndexs[1] = 0;
+    if(e.detail.column === 0){
+      setList([provincesArr,cityArr[e.detail.value]])
+      setMultiIndex([e.detail.value,0])
+      return 
     }
-    setMultiIndex(multiIndexs);
-    setList(lists)
+    setMultiIndex((val)=>{
+      console.log('val',val)
+      return [val[0],e.detail.value]
+    })
   }
   const handleInputBlur = (type) => {
     if (!regExp.name(form.name.value) && type === 'name') {
