@@ -1,10 +1,11 @@
 @import '@/scss/variable.scss';
 
-.gift-bag{
-  position: relative;
-  height: 100%;
+.container{
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  padding-bottom: 73px;
 }
-.gift-rule{
+.rule{
   position: absolute;
   top:35px;
   right:0px;
@@ -17,74 +18,99 @@
   padding:3px 7px;
   letter-spacing:1px;
 }
-.gift-reward{
-  position: absolute;
-  top:341px;
-  left:50%;
-  transform: translateX(-50%);
+.reward{
+  padding-top:339px;
+  margin: 0 auto;
+  text-align: center;
+  :global(.title){
+    position: relative;
+    color: #FFF2DB;
+    font-size: 15px;
+    display: inline-block;
+    &:after{
+      position:absolute;
+      display: inline-block;
+      content:'';
+      width: 20px;
+      height: 1px;
+      top:50%;
+      margin-left: 3px;
+      transform: rotate(180deg);
+      background: linear-gradient(90deg, rgba(255,255,255,0), #FFF2DB);
+    }
+    &:before{
+      position:absolute;
+      display: inline-block;
+      content:'';
+      width: 20px;
+      height: 1px;
+      left:-23px;
+      top:50%;
+      margin-right: 3px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), #FFF2DB);
+    }
+  }
+  :global(.money){
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFF2DB;
+    line-height: 17px;
+    margin-top: 4px;
+  }
+  :global(.unit){
+    font-size:12px;
+  }
 }
-.gift-reward-title{
-  color: #FFF2DB;
-  font-size: 15px;
-}
-.gift-reward-money{
-  font-size: 22px;
-  font-weight: 800;
-  color: #FFF2DB;
-}
-.gift-reward-unit{
-  font-size:12px;
-}
-.activity-module{
-  position: absolute;
+
+.induction{
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  left:50%;
-  transform: translateX(-50%);
-  width: calc(100% - 24px);
   background: $color-white;
   border-radius: 14px;
+  margin:0px 12px;
+  margin-top:12px;
+  padding: 0px 12px;
+  box-sizing: border-box;
+  :global(.title){
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 284px;
+    height:42px;
+  }
+  :global(.desc){
+    line-height: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #4C1105;
+    margin-top:7px;
+    display: flex;
+    align-items: center;
+  }
+  :global(.modify){
+    width: 20px;
+    height: 1px;
+    margin:0px 10px;
+    background: linear-gradient(90deg, rgba(255,255,255,0), #4C1105);
+  }
 }
-.induction-award{
-  top:417px;
-}
-.induction-award-title{
-  width: 284px;
-  height:42px;
+.award-title{
   background-image: url('./img/titleThree.png');
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
 }
-.induction-award-desc{
-  line-height: 16px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #4C1105;
-  margin-top:7px;
-  display: flex;
-  align-items: center;
-}
-.award-desc-modify{
-  width: 20px;
-  height: 1px;
-  margin:0px 10px;
-  background: linear-gradient(90deg, rgba(255,255,255,0), #4C1105);
-}
+
 .reward-item-wrapper{
   display: flex;
   justify-content: space-between;
-  width: calc(100% - 24px);
   margin-top:25px;
+  width: 100%;
 }
 .reward-item{
   position: relative;
   width: 60px;
   height:85px;
-  background-size: contain;
-  background-position: center center;
+  background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
@@ -93,6 +119,15 @@
   box-sizing: border-box;
   font-size: 12px;
   color: $color-white;
+  :global(.undone){
+    background: linear-gradient(40deg, #6DBBF6, #538CFB);
+  }
+  :global(.pending){
+    background: linear-gradient(40deg, #6DBBF6, #538CFB);
+  }
+  :global(.finished){
+    background: linear-gradient(40deg, #FF6A32, #FF3704);
+  }
 }
 .reward-tips{
   position: absolute;
@@ -105,21 +140,21 @@
   padding:0px 4Px;
   box-sizing: border-box;
   transform: translateY(-95%);
-  background: linear-gradient(40deg, #FF6A32, #FF3704);
   border-radius: 14px 14px 14px 0px;
 }
+
 .induction-award-font{
   display: flex;
-  justify-content: space-around;
-  width: calc(100% - 24px);
+  justify-content: space-between;
+  width: 100%;
   margin-bottom: 18px;
+  margin-top:12px;
 }
 .award-font-text{
   font-size: 12px;
   color: #4C1105;;
   text-align: center;
-  width: 60px;
-  padding:0px 5px;
+  width: 65px;
   box-sizing: border-box;
 }
 .award-register-btn{
@@ -130,19 +165,11 @@
   color: $color-white;
   font-size: 10px;
   text-align: center;
-  margin-top:8px;
-  padding:5px 6px;
+  margin:8px auto;
+  margin-bottom: 0px;
   box-sizing: border-box;
-}
-.sing-up{
-  top:700px;
-  height: 320px;
-  padding: 0px 12px;
-  box-sizing: border-box;
-  overflow: hidden;
-  :global(.tabs) {
-    height: 320Px;
-   }
+  width: 45px;
+  height: 18px;
 }
 .sing-up-title{
   width: 284px;
@@ -213,4 +240,14 @@
   box-sizing: border-box;
   color:$color-white;
   font-size: 14px;
+}
+.infiniteScroll{
+  height: 330px;
+  padding: 0px 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-bottom: 12px;
+  :global(.tabs) {
+    height: 330Px;
+   }
 }

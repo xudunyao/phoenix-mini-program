@@ -49,7 +49,6 @@ const List = ({
       } else {
         handleSubmit(positionId)
       }
-      
     } else {
       closeDialog('login')
     }
@@ -68,7 +67,6 @@ const List = ({
       }
       renderItem={(item) => (
         <View key={item.id} className={styles.list} onClick={() => toPage(item.id)} >
-          
           <Image className={styles.img} src={item.positionImage} mode='aspectFill'></Image>
           <View className={styles.content}>
             <View className={styles.title}>{item.jobName}</View>
@@ -87,7 +85,6 @@ const List = ({
               }
               
             </View>
-            
             <View className={styles.tags}>
               {
                 item.tags.slice(0,3).map((v) => (

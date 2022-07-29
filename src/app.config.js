@@ -39,6 +39,7 @@ export default defineAppConfig({
       "root": "packageActivity",
       "pages": [
         "pages/giftBag/index",
+        "pages/userGift/index",
       ]
     },
   ],

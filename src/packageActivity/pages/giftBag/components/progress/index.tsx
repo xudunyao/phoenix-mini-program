@@ -17,7 +17,7 @@ const Progress = ({
           )
         })
       }
-      <View className={styles['percentage']} style={{width:`${percentage} / 100`}} />
+      <View className={styles['percentage']} style={{width:`${percentage}%`}} />
   </View>
   )
 }

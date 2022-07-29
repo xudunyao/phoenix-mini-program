@@ -56,7 +56,6 @@ const Index = () => {
     }
   }
   const closeDialog = (v, params) => {
-    setPositionId(params);
     if(v){
       if(v==='login'){
         setLoginVisible(true);
@@ -86,6 +85,7 @@ const Index = () => {
       } else {
         templateIdQuery();
         setVisible(true);
+        httpRequest.put('phoenix-center-backend/client/register/signedUpAward')
       }
     } catch (err) {
       showToast({
@@ -232,8 +232,10 @@ const Index = () => {
           }, {
             title: '去完善',
             onClick: () =>{
-            setSignVisible(false)
-            //TODO: 处理跳转逻辑
+              setSignVisible(false);
+              Taro.navigateTo({
+                url: '/packageA/pages/myResume/index'
+              })
             },
             type: 'primary',
             size: 'mini'

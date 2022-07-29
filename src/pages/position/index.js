@@ -17,8 +17,6 @@ const Position = () => {
   if(scene) {
     Taro.setStorageSync(storageKeys.scene, scene);
   }
- 
-  Taro.setStorageSync(storageKeys.recommendId, recommendId);
   const [shareCode, setShareCode] = useState();
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
@@ -75,7 +73,7 @@ const Position = () => {
   const handleSignUp = async() => {
     if(token) {
       if(!auth.realInfo.completeInfo){
-        setSignVisible(true)
+        setSignVisible(true);
         return;
       }
       try {
@@ -104,7 +102,6 @@ const Position = () => {
     }
   };
   const handleCall = () => {
-    
     Taro.makePhoneCall({
       phoneNumber: '15203910705',
     })
@@ -121,7 +118,7 @@ const Position = () => {
   useShareAppMessage(() => {
     return {
       title: '岗位详情',
-      path: `${router.path}?positionId=${positionId}&scene=${scene}&recommendId=${auth.info.userid}`
+      path: `${router.path}?positionId=${positionId}&scene=${scene}`
     }
   });
   useEffect(() => {
@@ -135,9 +132,7 @@ const Position = () => {
     if(token) {
       getUserInfo()
     }
-    
   })
- 
   return (
     <View className={styles.position}>
       <SwiperIndex customStyle='height: 216px' list={positionObj?.companyImages} />
@@ -168,7 +163,6 @@ const Position = () => {
           </View>
         </View>
         <View className={styles['header-bottom']}>
-          {/* <Image className={styles.img} mode='widthFix' src='' ></Image> */}
           <Text className={styles.name}>{positionObj?.companyName}</Text>
         </View>
       </View>
@@ -286,7 +280,30 @@ const Position = () => {
           }]
         }
       />
-      <Info title='个人信息' visible={signVisible} onSubmit={handleSubmit} onCancel={() => setSignVisible(false)} />
+      <Dialog 
+        maskClosable
+        visible={signVisible}
+        title='提示'
+        content='报名岗位需要先完善您的个人简历'
+        actions={
+          [{
+            title: '取消',
+            onClick: () =>{ setSignVisible(false) },
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '去完善',
+            onClick: () =>{
+              setSignVisible(false);
+              Taro.navigateTo({
+                url: '/packageA/pages/myResume/index'
+              })
+            },
+            type: 'primary',
+            size: 'mini'
+        }]
+        }
+      />
     </View>
   );
 };

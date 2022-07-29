@@ -1,110 +1,267 @@
-import { View, Image,Text} from '@tarojs/components';
-import { InfiniteScroll} from '@/components';
+import { useState } from 'react';
+import Taro,{ useDidShow,showToast } from '@tarojs/taro';
+import { View,Text} from '@tarojs/components';
+import { InfiniteScroll,Result} from '@/components';
+import { httpRequest } from '@/utils';
+import numeral from 'numeral';
 import backgroundImg from '@/constants/backgroundImg'
+import { resultImg } from '@/constants';
 import  Progress from './components/progress'
-import ListItem  from './components/ListItem';
+import ListItem  from './components/listItem';
 import styles from "./GiftBag.module.scss";
+import gift from './img/gift.png';
+import undone from './img/undone.png';
+import finished from './img/finished.png';
+import pending from './img/pending.png';
 
-const process = [
+
+const giftImg = Object.freeze({
+  "GIFT":gift,
+  "UNDONE": undone,
+  "PENDING": pending,
+  "FINISHED": finished,
+})
+const GiftStyles = Object.freeze({
+  "UNDONE":"undone",
+  "PENDING":"pending",
+  "FINISHED":"finished",
+})
+const GiftStatus = Object.freeze({
+  "UNDONE":"未完成",
+  "PENDING":"待领取",
+  "FINISHED":"已完成",
+})
+const register  = Object.freeze(
   {
-    title: '已完成',
-    count: '154',
-  },
+    "FIRST_ENTRY_CLOCK_IN_7_DAYS":25,
+    "FIRST_ENTRY_CLOCK_IN_30_DAYS":50,
+    "SECOND_ENTRY_CLOCK_IN_30_DAYS":75,
+    "THIRD_ENTRY_CLOCK_IN_30_DAYS":100,
+  }
+)
+const entry  = Object.freeze(
   {
-    title: '已完成',
-    count: '54',
-  },
-  {
-    title: '已完成',
-    count: '14',
-  },
-  {
-    title: '待领取',
-    count: '8',
-  },
-]
-const getData = async (search) => {
-  const res = await new Promise((resolve) => {
-    setTimeout(() => {
-      const response = {
-        code: 0,
-        data: {
-          content: [
-            {
-              title:'我是岗位名称啊啊啊我到这儿',
-              label:['男女不限','需要体检','身体健康'],
-              money:'5000-8000/月',
-            },
-            {
-              title:'我是岗位名称啊啊啊我到这儿',
-              label:['男女不限','需要体检','身体健康'],
-              money:'5000-8000/月',
-            },
-            {
-              title:'我是岗位名称啊啊啊我到这儿',
-              label:['男女不限','需要体检','身体健康'],
-              money:'5000-8000/月',
-            },
-          ],
-          ...search,
-          totalPages: 5,
-        }};
-      resolve(response)
-    }, 500);
-  });
-  return res.data;
+    "REGISTER_SUCCESS":20,
+    "FIRST_SIGNUP":40,
+    "ARRIVE_INTERVIEW":60,
+    "INTERVIEW_PASS":80,
+    "ENTRY_SUCCESS":100,
+  }
+)
+const icon = {
+  src:resultImg.empty,
+  width: 120,
+  height: 120,
 }
-const ProcessItem = ({ title, count }) => {
+const ProcessItem = ({ award, status,index,stage}) => {
+  const handleClick = async (step,s) => {
+    if(s === 'UNDONE'){
+      showToast({
+        title: '还未达到红包领取条件，请努力完成哦！',
+        icon: 'none',
+      })
+      return ;
+    }
+    if(s === 'FINISHED'){
+      showToast({
+        title: '红包已领取，请继续完成哦！',
+        icon: 'none',
+      })
+      return ;
+    }
+    const res = null;
+    try{
+       if(step === 'ENTRY_SUCCESS'){
+        res = await httpRequest.put(`phoenix-center-backend/client/register/receiveEntrySuccessAward/${step}`);
+       }else{
+        res = await httpRequest.put(`phoenix-center-backend/client/register/receiveRegisterAward/${step}`);
+       }
+      if (res.code ==! 0) {
+        throw new Error(res.msg);
+      }
+      showToast({
+        title: '领取成功',
+        icon: 'none',
+      })
+    } catch(err) {
+      showToast({
+        title: `${err.message}`,
+        icon: 'none',
+      })
+    }finally{
+      Taro.reload();
+    }
+  }
   return (
-    <View className={styles['reward-item']} style={{backgroundImage:  `url(${backgroundImg.baseImg})`}}>
-      <View className={styles['reward-tips']}>{title}</View>
-      <View className={styles['reward-count']}>{count}</View>
+    <View className={styles['reward-item']} style={{backgroundImage:`url(${index === 0 && stage !== 'FIRST_ENTRY_CLOCK_IN_7_DAYS' ? giftImg['GIFT'] : giftImg[status]})`}} onClick={() => {handleClick(stage,status)}}>
+      <View className={`${styles['reward-tips']} ${GiftStyles[status]}`}>{GiftStatus[status]}</View>
+      <View className={styles['reward-count']}>{award}</View>
     </View>
   )
 }
 const Invitation = () => {
+  const [fetchAward, setFetchAward] = useState(0);
+  const [registerAwardStages, setRegisterAwardStages] = useState([]);
+  const [entryAwardStages, setEntryAwardStages] = useState([]);
+  const [registerWithdraw, setRegisterWithdraw] = useState(false);
+  const [registerProgress, setRegisterProgress] = useState(0);
+  const [entryProgress, setEntryProgress] = useState(0);
+  const getRegisterDetail = async () => {
+    try{
+      const res = await httpRequest.get('phoenix-center-backend/client/register/award/detail');
+      if (res.code ==! 0) {
+        throw new Error(res.msg);
+      }
+      const result = entry[res.data?.currentStage];
+      if(result){
+        setRegisterProgress(result);
+        setEntryProgress(0);
+      }else{
+        const en = register[res.data?.currentStage];
+        if(en){
+          setEntryProgress(en);
+          setRegisterProgress(100);
+        }else{
+          setRegisterProgress(0);
+        }
+      }
+      setFetchAward(res.data?.fetchAward);
+      setRegisterAwardStages(res.data?.registerAwardStages);
+      setEntryAwardStages(res.data?.entryAwardStages);
+      setRegisterWithdraw(res.data?.registerWithdraw);
+    } catch(err) {
+      showToast({
+        title: '获取数据失败',
+        icon: 'none',
+      })
+    }
+  }
+  const getButtonText = (stage,status) => {
+    if(status === 'UNDONE' && stage === 'FIRST_SIGNUP'){
+      return '去报名'
+    }
+    if(stage === 'ENTRY_SUCCESS' && status === 'FINISHED'){
+      return '去提现'
+    }
+    return false;
+  }
+  const getData = async (search) => {
+    try {
+      const res = await httpRequest.post('phoenix-manager-backend/client/noauth/positionOrders/inquiry',{
+        data: {
+          ...search,
+          searchEnum:'ALL',
+          registerAward: true
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleRegister =  (value) => {
+    if(value === 'FIRST_SIGNUP'){
+      Taro.switchTab({
+        url: '/pages/jobList/jobList',
+      })
+    }
+    if(value === 'ENTRY_SUCCESS' || value === 'THIRD_ENTRY_CLOCK_IN_30_DAYS'){
+      Taro.navigateTo({
+        url: '/packageA/pages/wallet/index',
+      })
+    }
+  }
+  const handleRule = () => {
+    Taro.navigateTo({
+      url: '../userGift/index'
+    })
+  }
+  useDidShow(() => {
+    getRegisterDetail();
+  })
   return  (
-    <View className={styles['gift-bag']}>
-      <Image src={backgroundImg.baseImg} mode='widthFix' style={{width:'100%'}} ></Image>
-      <View className={styles['gift-rule']}>规则说明</View>
-      <View className={styles['gift-reward']}>
-        <View className={styles['gift-reward-title']}>累计奖金</View>
-        <View className={styles['gift-reward-money']}>23.8<Text className={styles['gift-reward-unit']}>元</Text></View>
+    <View className={styles.container} style={{backgroundImage:`url(${backgroundImg.baseImg})`}}>
+      <View className={styles.rule} onClick={handleRule}>规则说明</View>
+      <View className={styles.reward}>
+        <View className='title'>累计奖金</View>
+        <View className='money' >{numeral(fetchAward).format('0,0.00')}<Text className='unit'>元</Text></View>
       </View>
-      <View className={`${styles['activity-module']} ${styles['induction-award']}`}>
-        <View className={styles['induction-award-title']} />
-        <View className={styles['induction-award-desc']}>
-          <Text className={styles['award-desc-modify']} />所有岗位<Text className={styles['award-desc-modify']} style='transform:rotate(180deg)' />
+      <View className={styles.induction}>
+        <View className={`title ${styles['award-title']}`} />
+        <View className='desc'>
+          <Text className='modify' />所有岗位<Text className='modify' style='transform:rotate(180deg)' />
         </View>
         <View className={styles['reward-item-wrapper']}>
           {
-            process.map((item)=>{
-              return <ProcessItem {...item}></ProcessItem>
-            })
+            registerAwardStages.map((item,index) =>  <ProcessItem {...item} index={index}></ProcessItem> )
           }
         </View>
-        <Progress size={4} percentage={50} />
+        <Progress size={5} percentage={registerProgress} />
         <View className={styles['induction-award-font']}>
           {
-            process.map(()=>{
+            registerAwardStages.map((item)=>{
               return (
-              <View>
-                <View className={styles['award-font-text']}>首次入职</View>
-                <View className={styles['award-register-btn']}>去注册</View>
+              <View key={item}>
+                <View className={styles['award-font-text']}>{item?.desc}</View>
+                {
+                  getButtonText(item?.stage,item?.status) ?<View className={styles['award-register-btn']} onClick={()=>handleRegister(item?.stage)}>{
+                    getButtonText(item?.stage,item?.status)
+                  }</View>:null
+                }
               </View>
               )
             })
           }
         </View>
       </View>
-      <View className={`${styles['activity-module']} ${styles['sing-up']}`}>
+      <View className={styles.induction}>
+        <View className={`title ${styles['award-title']}`} />
+        <View className='desc'>
+          <Text className='modify' />所有岗位<Text className='modify' style='transform:rotate(180deg)' />
+        </View>
+        <View className={styles['reward-item-wrapper']}>
+          {
+            entryAwardStages.map((item,index) =>  <ProcessItem {...item} index={index}></ProcessItem> )
+          }
+        </View>
+        <Progress size={4} percentage={entryProgress} />
+        <View className={styles['induction-award-font']}>
+          {
+            entryAwardStages.map((item)=>{
+              return (
+              <View key={item}>
+                <View className={styles['award-font-text']}>
+                  <View>{item.desc.substring(0,4)}</View>
+                  <Text>{item.desc.substring(4)}</Text>
+                </View>
+                {
+                  item.stage === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' ? 
+                  (<View className={styles['award-register-btn']} onClick={()=>handleRegister(item?.stage)}>去提现</View>): null
+                }
+              </View>
+              )
+            })
+          }
+        </View>
+      </View>
+      <View className={`${styles.induction} ${styles.infiniteScroll}`}>
         <View className={styles['sing-up-title']} />
         <InfiniteScroll
           getData={getData}
           pageSize={5}
-          renderItem={(item) => (
-            <ListItem  data={item} />
-          )}
+          noDataComponent={
+            <Result
+              icon={icon}
+              subTitle='暂无更多数据' 
+            />
+          }
+          renderItem={(item) => {
+            console.log('item',item)
+            return <ListItem  data={item} />
+          }}
         >
         </InfiniteScroll>
       </View>
