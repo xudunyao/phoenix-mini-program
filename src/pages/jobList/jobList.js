@@ -125,14 +125,52 @@ const Index = () => {
   const handleCloseAdvert = () => {
     setAdvertVisible(false);
     const { jumpUrl } = popAds;
-    if(jumpUrl.indexOf('https') >= 0){
-      <WebView src={jumpUrl} />
-    }else{
-      Taro.navigateTo({
-        url: jumpUrl
-      })
+    if (jumpUrl) {
+      const http = /^http:\/\/.*/i.test(jumpUrl);
+      const https = /^https:\/\/.*/i.test(jumpUrl);
+      if (!http && !https) {
+        Taro.navigateTo({
+          url: jumpUrl,
+        });
+      }else{
+        Taro.navigateTo({
+          url: '../../packageA/pages/webView/index?url=' + jumpUrl,
+        });
+      }
     }
   }
+  const handleAuthLocation =  () => {
+    Taro.getSetting({
+      success: (res) => {
+        if(res.authSetting['scope.userLocation']){
+          Taro.getLocation({
+            success: (result) => {
+              Taro.setStorageSync(storageKeys.longitude, result.longitude);
+              Taro.setStorageSync(storageKeys.latitude, result.latitude);
+            },
+            fail: (err) => {
+              console.log('err',err)
+            }
+          })
+        }else{
+          Taro.authorize({
+            scope: 'scope.userLocation',
+            success: () => {
+              Taro.getLocation({
+                success: (result) => {
+                  Taro.setStorageSync(storageKeys.longitude, result.longitude);
+                  Taro.setStorageSync(storageKeys.latitude, result.latitude);
+                },
+                fail: (err) => {
+                  console.log('err',err)
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  } 
   useDidShow(() => {
     scrollTop.current = 0;
     setTabList(tabLists);
@@ -142,13 +180,14 @@ const Index = () => {
       }
       getUserInfo();
     }
+    getImagesBanner();
   });
   useDidHide(() => {
     setTabList([])
   });
   useEffect(() => {
-    getImagesBanner();
     getPopAds();
+    handleAuthLocation();
   },[]);
   return (
     <View className={styles.page}>

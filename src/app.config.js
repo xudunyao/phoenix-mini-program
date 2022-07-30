@@ -15,6 +15,7 @@ export default defineAppConfig({
     'pages/position/index',
     'pages/registration/index',
     'pages/form/index',
+    'pages/loginAuth/index',
     'pages/suggestion/index',
     'pages/invitation/index',
     'pages/introduce/index'
@@ -96,4 +97,9 @@ export default defineAppConfig({
     color: '#454D66',
     selectedColor: '#80A2FF',
   },
+  permission: {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于推荐最近的工作",
+    }
+  }
 })

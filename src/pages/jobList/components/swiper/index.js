@@ -13,12 +13,18 @@ const SwiperIndex = ({
   };
   const handleClickBanner = async (params) => {
     const { id, jumpUrl } = params;
-    if(jumpUrl.indexOf('https') >= 0){
-      <WebView src={jumpUrl} />
-    }else{
-      Taro.navigateTo({
-        url: jumpUrl
-      })
+    if (jumpUrl) {
+      const http = /^http:\/\/.*/i.test(jumpUrl);
+      const https = /^https:\/\/.*/i.test(jumpUrl);
+      if (!http && !https) {
+        Taro.navigateTo({
+          url: jumpUrl,
+        });
+      }else{
+        Taro.navigateTo({
+          url: '../../packageA/pages/webView/index?url=' + jumpUrl,
+        });
+      }
     }
     try {
       const res = await httpRequest.put(`phoenix-center-backend/client/noauth/banner/click/${id}`);

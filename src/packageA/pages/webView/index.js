@@ -4,9 +4,10 @@ import { useRouter } from '@tarojs/taro';
 
 const WebViews = () => {
   const router = useRouter();
-  const { page } = router.params;
+  const { page,　url } = router.params;
+  const  toPage = page ? pageKeys[page] : url;
   return (
-    <WebView src={pageKeys[page]} />
+    <WebView src={toPage} />
   )
 };
 

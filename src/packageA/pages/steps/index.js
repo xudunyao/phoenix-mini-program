@@ -1,27 +1,28 @@
 import React,{ useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View, Text } from '@tarojs/components';
+import { datetimeFormat } from '@/constants';
+import moment from 'moment';
+import numeral from 'numeral';
 import Taro,{ useDidShow } from '@tarojs/taro';
 import styles from  './steps.module.scss';
 
 const process = [
   {
     text: '发起提现申请',
-    time:288.88,
-    isActive:false,
+    isActive: false,
+    isFinish:true,
   },
   {
-    text: '发起提现申请',
-    time:"预计2021-09-07  17:13前到账",
+    text: '银行处理中',
     isActive:true,
   },
   {
-    text: '发起提现申请',
-    time:288.88,
+    text: '到账成功',
     isActive:false,
+    isFinish:false,
   },
 ]
-
 const Steps = () => {
   const [data, setData] = useState();
   useDidShow(() => {
@@ -29,8 +30,7 @@ const Steps = () => {
     const current = pages[pages.length - 1]
     const eventChannel = current.getOpenerEventChannel()
     eventChannel.on('acceptDataFromOpenerPage',(res)=>{
-    console.log('page_test',res);
-    setData(res.data.data);
+    setData(res.data);
     })
   })
   return  (
@@ -42,7 +42,7 @@ const Steps = () => {
               <React.Fragment key={item.text}>
                 <View className={styles['process-item']} >
                   <View className={styles['process-dot-wrapper']}>
-                  <View className={`${item.isActive ? styles['item-dot-active'] : styles['item-dot']}`} />
+                  <View className={`${item.isActive ? styles['item-dot-active'] : item.isFinish ? styles['item-dot-finish'] : styles['item-dot']}`} />
                 </View>
                 <View className={styles['item-text']}>
                   {
@@ -50,14 +50,14 @@ const Steps = () => {
                       <Text >{item.text}</Text> : (
                         <>
                           <View className={styles['text-active']}>{item.text}</View>
-                          <View className={styles['text-time']}>{item.time}</View>
+                          <View className={styles['text-time']}>{`预计${moment(new Date().getTime() + 2 * 60 * 60 * 1000).format(datetimeFormat.dateTime)}前到账`}</View>
                         </>
                       )
                   }
                 </View>
                 </View>
                 {
-                  process.length !== index+1  &&　<View className={styles['item-line']} />
+                  process.length !== index+1  &&　<View className={`${item.isFinish ? styles['item-line-active'] : styles['item-line']}`} />
                 }
               </React.Fragment>
             )
@@ -67,11 +67,11 @@ const Steps = () => {
       <View className={styles.info}>
         <View className={styles['info-item']}>
           <View className={styles.type}>提现金额</View>
-          <View className={styles.value}>{data?.balance}</View>
+          <View className={styles.value}>{ numeral(data?.balance).format('0,0.00')}</View>
         </View>
         <View className={styles['info-item']}>
           <View className={styles.type}>到账银行卡</View>
-          <View className={styles.value}>{`${data?.bankName}(尾号${data.bankNo?.substr(data?.bankNo?.length - 4)})`}</View>
+          <View className={styles.value}>{`${data?.bankName}(尾号${data?.bankNo?.substr(data?.bankNo?.length - 4)})`}</View>
         </View>
       </View>
     </View>

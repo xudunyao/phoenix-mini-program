@@ -1,6 +1,6 @@
 import { useEffect,useState } from 'react';
 import { View, Image,Button, Text } from '@tarojs/components';
-import Taro,{ useShareAppMessage } from '@tarojs/taro';
+import Taro,{ useShareAppMessage,showToast } from '@tarojs/taro';
 import backgroundImg from '@/constants/backgroundImg';
 import { httpRequest } from '@/utils';
 import styles from "./Invitation.module.scss";

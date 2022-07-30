@@ -8,4 +8,6 @@ export default {
   completeInfo: 'completeInfo',
   realName: 'realName',
   realMobile: 'realMobile',
+  longitude: 'longitude',
+  latitude: 'latitude',
 }

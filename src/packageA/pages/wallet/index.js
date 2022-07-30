@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import Taro,{ useDidShow } from '@tarojs/taro';
 import { httpRequest } from '@/utils';
 import { Button,Tabs, TabsPanel, IconFont,NavBar} from '@/components';
 import numeral from 'numeral';
@@ -37,7 +37,7 @@ const Wallet = () => {
       url: '/packageA/pages/withdraw/index'
     })
   }
-  useEffect(() => {
+  useDidShow(() => {
     getWalletInfo();
   },[]);
   return  (

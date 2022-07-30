@@ -48,7 +48,6 @@ const Login = () => {
   };
 
   const validate = () => {
-    // TODO: 根据业务需求来
     if (!form.phone.value ) {
       setFormFieldError('phone', '手机号不能为空！');
       return false;
@@ -67,17 +66,20 @@ const Login = () => {
     Taro.login({
       success: async (res) => {
         if (res.code) {
-          //发起网络请求
           try {
             const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',{
               data: {
                 mobile: form.phone.value,
                 smsCode: form.sms.value,
                 code: res.code,
+                gps:{
+                  longitude: Taro.getStorageSync(storageKeys.longitude),
+                  latitude: Taro.getStorageSync(storageKeys.latitude),
+                },
                 scene,
               }
             }
-              
+            
             );
             if (resInfo?.code !== 0) {
               throw new Error(resInfo.msg);
@@ -88,8 +90,14 @@ const Login = () => {
               Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
               Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
               auth.setInfo(resInfo.data);
+              if(!resInfo.data.unionId){
+                Taro.navigateTo({
+                  url: '/pages/loginAuth/index'
+                })
+                return ;
+              }
               Taro.navigateBack({
-                delta: 2
+                delta: 3
               })
             }
             
@@ -116,8 +124,7 @@ const Login = () => {
           smsCode: form.sms.value,
           scene,
         }
-      }
-        
+      } 
       );
       if (res?.code !== 0) {
         throw new Error(res.msg);
@@ -126,11 +133,16 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
         auth.setInfo(res.data);
-        Taro.navigateBack({
-          delta: 2
-        })
+        if(Taro.getCurrentPages().length > 0 ){
+          Taro.navigateBack({
+            delta: 2,
+          })
+        }else{
+          Taro.switchTab({
+            url: '/pages/jobList/jobList'
+          })
+        }
       }
-      
     } catch (err) {
       showToast({
         icon: 'none',

@@ -37,7 +37,7 @@ const ListItem = ({
           <View className={styles.title}>{item?.tradeType}</View>
           <View className={`${item.amount > 0 ?　styles['income-money'] : styles['outlay-money']}`}>
           {
-            item?.amount > 0 ? `+${numeral(item?.amount).format('0,0.00')}元` : `-${numeral(item?.amount).format('0,0.00')}元`
+            item?.amount > 0 ? `+${numeral(item?.amount).format('0,0.00')}元` : `${numeral(item?.amount).format('0,0.00')}元`
           }
           </View>
         </View>

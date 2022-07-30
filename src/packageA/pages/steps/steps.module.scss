@@ -20,11 +20,19 @@
 .item-dot{
   width: 12Px;
   height: 12Px;
-  background: $color-primary;
+  background: #CBCBCB;
   border-radius: 50%;
 }
-.item-line-active{
+.item-dot-finish{
+  width: 12Px;
+  height: 12Px;
+  border-radius: 50%;
   background: $color-primary;
+}
+.item-line-active{
+  height:53Px;
+  border-left: 1px dashed $color-primary;
+  margin-left: 19Px;
 }
 .text-time{
   font-size: 12Px;

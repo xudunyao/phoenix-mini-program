@@ -45,6 +45,10 @@ const LoginGuide = () => {
                   iv,
                   code: res.code,
                   scene,
+                  gps:{
+                    longitude: Taro.getStorageSync(storageKeys.longitude),
+                    latitude: Taro.getStorageSync(storageKeys.latitude),
+                  },
                 }
               }
               );
