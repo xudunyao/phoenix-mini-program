@@ -14,7 +14,6 @@ export default defineAppConfig({
     'pages/login/index',
     'pages/position/index',
     'pages/registration/index',
-    'pages/form/index',
     'pages/loginAuth/index',
     'pages/suggestion/index',
     'pages/invitation/index',
@@ -33,7 +32,8 @@ export default defineAppConfig({
         "pages/myResume/index",
         "pages/activityRules/index",
         "pages/savePoster/index",
-        "pages/inviteRecord/index"
+        "pages/inviteRecord/index",
+        'pages/form/index',
       ]
     },
     {

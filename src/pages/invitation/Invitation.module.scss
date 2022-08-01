@@ -57,7 +57,7 @@
 .invitation{
   margin-top: 292px;
   :global(.title) {
-    background-image: url('./img/info_title.png');
+    background-image: url('./img/activity_title.png');
   }
   :global(.statistics) {
     display: flex;
@@ -84,7 +84,7 @@
 .activity {
   margin-top: 12px;
   :global(.title) {
-    background-image: url('./img/activity_title.png');
+    background-image: url('./img/info_title.png');
   }
   :global(.red-packets) {
     display: flex;
