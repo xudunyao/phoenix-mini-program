@@ -45,7 +45,7 @@ const Dialog: React.FC<Props> = ({
         <View className='dialog-actions' style={buttonWrapperStyle}>
           {
            showButton && renderedActions.map(item => (
-              <View className='dialog-actions-item' style={`flex:${renderedActions.length === 1 ? 1 :'none'}`}>
+              <View key={item.title} className='dialog-actions-item' style={`flex:${renderedActions.length === 1 ? 1 :'none'}`}>
                 <Button title={item.title}  onClick={item.onClick || onClose} {...item} />
              </View>
             ))

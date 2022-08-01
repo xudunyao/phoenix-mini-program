@@ -2,6 +2,7 @@ import { useEffect,useState } from 'react';
 import { View, Image,Button, Text } from '@tarojs/components';
 import Taro,{ useShareAppMessage,showToast } from '@tarojs/taro';
 import backgroundImg from '@/constants/backgroundImg';
+import numeral from 'numeral';
 import { httpRequest } from '@/utils';
 import styles from "./Invitation.module.scss";
 
@@ -129,12 +130,12 @@ const Invitation = () => {
           </View>
           <View className='statistics'>
             {
-              interview.map((item, index) => <ProcessItem key={index} {...item} />)
+              interview?.map((item, index) => <ProcessItem key={index} {...item} />)
             }
           </View>
           <View className={styles['reward']}>
             <View className={styles['reward-img']}></View>
-              <View className={styles['reward-info']}>累计奖金：{totalAward}元</View>
+              <View className={styles['reward-info']}>累计奖金：{numeral(totalAward).format('0,0.00')}元</View>
             </View>
           <View className={styles['button']} onClick={handleInviteRecord}></View>
       </View>
@@ -142,7 +143,7 @@ const Invitation = () => {
         <View className='title' />
         <View className='red-packets'>
           {
-            inviteEnum.map((p,index) => {
+            inviteEnum?.map((p,index) => {
               return (
                 <View className='red-packet-item'>
                   <View className='red-packet'>{p.award + '元'}</View>

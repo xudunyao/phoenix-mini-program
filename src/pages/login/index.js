@@ -133,7 +133,7 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
         auth.setInfo(res.data);
-        if(Taro.getCurrentPages().length > 0 ){
+        if(Taro.getCurrentPages().length > 1 ){
           Taro.navigateBack({
             delta: 2,
           })

@@ -4,4 +4,5 @@ export type Props = {
   visible?: boolean;
   showClose?:boolean;
   imageUrl?: string;
+  jumpUrl?: string;
 };

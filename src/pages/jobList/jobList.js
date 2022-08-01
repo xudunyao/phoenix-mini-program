@@ -124,22 +124,9 @@ const Index = () => {
   }
   const handleCloseAdvert = () => {
     setAdvertVisible(false);
-    const { jumpUrl } = popAds;
-    if (jumpUrl) {
-      const http = /^http:\/\/.*/i.test(jumpUrl);
-      const https = /^https:\/\/.*/i.test(jumpUrl);
-      if (!http && !https) {
-        Taro.navigateTo({
-          url: jumpUrl,
-        });
-      }else{
-        Taro.navigateTo({
-          url: '../../packageA/pages/webView/index?url=' + jumpUrl,
-        });
-      }
-    }
   }
   const handleAuthLocation =  () => {
+   if(!isH5){
     Taro.getSetting({
       success: (res) => {
         if(res.authSetting['scope.userLocation']){
@@ -170,6 +157,7 @@ const Index = () => {
         }
       }
     })
+   }
   } 
   useDidShow(() => {
     scrollTop.current = 0;
@@ -216,10 +204,12 @@ const Index = () => {
             </Tabs>
           </View>
       </ScrollView>
-      <AdvertModal 
+      <AdvertModal
+        maskClosable 
         visible={advertVisible}
         onClose={handleCloseAdvert}
         imageUrl={popAds?.imageUrl}
+        jumpUrl={popAds?.jumpUrl}
       />
       <Dialog 
         maskClosable

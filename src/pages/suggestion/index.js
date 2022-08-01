@@ -95,7 +95,7 @@ const Suggestion = () => {
         <View className={styles.options}>
           {
             categories.map(item => {
-              return (<View className={`${styles.option} ${selected ===item.categoryId ? styles.active : ''}`} onClick={()=>{handleClick(item)}}>{item.categoryName}</View>)
+              return (<View key={item.categoryId} className={`${styles.option} ${selected ===item.categoryId ? styles.active : ''}`} onClick={()=>{handleClick(item)}}>{item.categoryName}</View>)
             })
           }
         </View>
