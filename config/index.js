@@ -35,6 +35,7 @@ const config = {
     '@/utils' : path.resolve(__dirname, '..', 'src/utils'),
     '@/scss' : path.resolve(__dirname, '..', 'src/scss'),
     '@/hooks' : path.resolve(__dirname, '..', 'src/hooks'),
+    '@/packageActivity' : path.resolve(__dirname, '..', 'src/packageActivity'),
   },
   mini: {
     postcss: {
@@ -57,7 +58,12 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
+    imageUrlLoaderOption: {
+      limit: 10000,
+      mimetype: 'image/png',
+      encoding: 'base64'
+    },
   },
   h5: {
     publicPath: '/',

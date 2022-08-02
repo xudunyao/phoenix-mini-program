@@ -19,7 +19,8 @@ module.exports = {
           ["@/modules", "./src/modules"],
           ["@/stores", "./src/stores"],
           ["@/styles", "./src/styles"],
-          ["@/utils", "./src/utils"]
+          ["@/utils", "./src/utils"],
+          ["@/packageActivity", "./src/packageActivity"]
         ],
         "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"]
       }

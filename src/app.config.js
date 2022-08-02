@@ -101,5 +101,5 @@ export default defineAppConfig({
     "scope.userLocation": {
       "desc": "你的位置信息将用于推荐最近的工作",
     }
-  }
+  },
 })

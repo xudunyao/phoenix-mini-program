@@ -18,8 +18,9 @@ const sms = (val) => {
   const reg = /^\d{6}$/;
   return reg.test(val);
 }
-const bankCard = () => {
-  return true;
+const bankCard = (val) => {
+  const reg = /^[0-9]{6,19}$/;
+  return reg.test(val);
 }
 const mobile = (val) => {
   const reg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;

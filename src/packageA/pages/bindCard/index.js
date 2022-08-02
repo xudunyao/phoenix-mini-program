@@ -1,6 +1,6 @@
 import { useState, useMemo,useEffect } from 'react';
 import { View, Text,Button } from "@tarojs/components";
-import { showToast } from '@tarojs/taro';
+import Taro,{ showToast } from '@tarojs/taro';
 import { IconFont ,Dialog } from "@/components";
 import { FormItem, Input } from '@/components/form';
 import { httpRequest } from '@/utils';
@@ -30,8 +30,6 @@ const BindCard = () => {
   const [isMove,setIsMove] = useState(false);
   const [form, setForm] = useState(initForm);
   const [sendStatus, setSendStatus] = useState(true);
-  const [data, setData] = useState({});
-  const [isDialogShow,setIsDialogShow] = useState(false);
   const getCode = async (cb) => {
     if(regExp.phone(form.phone.value) && regExp.bankCard(form.cardId.value)){
       try {
@@ -43,7 +41,8 @@ const BindCard = () => {
         });
         if (res?.code !== 0) {
           showToast({
-            title: res.msg
+            title: res.msg,
+            icon: 'none',
           })
         }
         cb && cb();
@@ -106,13 +105,19 @@ const BindCard = () => {
   const handleBindCard = async () => {
     try {
       const res = await httpRequest.post(`phoenix-center-backend/client/wallet/bindCard/${form.sms.value}`);
-      setData(res);
-      setIsDialogShow(true);
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
+      showToast({
+        title: '绑定成功',
+        icon: 'none',
+      })
+      Taro.navigateBack();
     } catch (err) {
-      console.log('err', err);
+      showToast({
+        title: `${err.message}`,
+        icon: 'none'
+      })
     }
   }
   const getRealName = async () => {
@@ -120,7 +125,8 @@ const BindCard = () => {
       const res = await httpRequest.get('phoenix-center-backend/client/member/info');
       if (res?.code !== 0) {
         showToast({
-          title: res.msg
+          title: res.msg,
+          icon: 'none',
         })
       }
       setForm({
@@ -211,26 +217,6 @@ const BindCard = () => {
               <Button className={`${styles.button} ${isButtonActive ? styles.active : styles.inactive}`} onClick={isButtonActive && handleBindCard}>确认</Button>
             </View>
       </View>
-      <Dialog
-        title={<View className={styles['dialog-title']}>{data?.msg}</View>}
-        visible={isDialogShow}
-        maskClosable
-        onClose={() => {
-          setIsDialogShow(false);
-        }}
-        actions={[
-          {
-            title: '确定',
-            onClick: ()=>{
-              setIsDialogShow(false);
-              if(data.code !== 1){
-                Taro.navigateBack();
-              }
-            },
-            type: 'primary'
-          },
-        ]}
-      />
     </View>
   );
 };

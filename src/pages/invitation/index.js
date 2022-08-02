@@ -1,6 +1,6 @@
-import { useEffect,useState } from 'react';
+import { useEffect,useState,useRef } from 'react';
 import { View, Image,Button, Text } from '@tarojs/components';
-import Taro,{ useShareAppMessage,showToast } from '@tarojs/taro';
+import Taro,{ useShareAppMessage,showToast,useDidShow,useDidHide } from '@tarojs/taro';
 import backgroundImg from '@/constants/backgroundImg';
 import numeral from 'numeral';
 import { httpRequest } from '@/utils';
@@ -21,10 +21,25 @@ const enumType = Object.freeze({
   inviteRegisterCount: '好友注冊',
   signedUpCount: '好友报名',
 });
+const getRandom = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+const money = [8.88,88.8,6.6,18.8];
+const getRandomPhone = () => {
+  const phone = ['134','135','136','137','138','139','150','151','152','157','158','159','187','188','133','153','180','189'];
+  const random = Math.floor(Math.random() * 100000000)
+  const result =  '' + getRandom(phone) + random;
+  return result.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+}
 const Invitation = () => {
   const [interview,setInterView] = useState([])
   const [totalAward,setTotalAward] = useState(0)
   const [count,setCount] = useState(0)
+  const [inviteInfo,setInviteInfo] = useState({
+    invitePhone: getRandomPhone(),
+    inviteAward: getRandom(money),
+  })
+  const timer = useRef();
   const [inviteEnum,setInviteEnum] = useState([])
   const [urlParams,setUrlParams] = useState()
   const getInviteStatistics = async () => {
@@ -108,16 +123,26 @@ const Invitation = () => {
     }
   }
   )
-  useEffect(() => {
+  useDidShow(() => {
     getInviteStatistics();
     getInviteEnum();
     getInviteLink();
-  },[])
+    timer.current = setInterval(() => {
+      setInviteInfo({
+        invitePhone: getRandomPhone(),
+        inviteAward: getRandom(money),
+      })
+    }
+    ,5000)
+  })
+  useDidHide(() => {
+    clearInterval(timer.current);
+  })
   return  (
     <View className={styles.container} style={{backgroundImage: `url(${backgroundImg.base})`}}>
       <View className={styles.tipsContainer}>   
         <View className={styles.tips}>
-          123****1223 刚邀请了1位好友 获得8.88元
+          {`${inviteInfo.invitePhone} 刚邀请了1位好友 获得${inviteInfo.inviteAward}元`}
         </View>
       </View> 
       <View className={styles.rule} onClick={handleRuleClick}>

@@ -9,18 +9,13 @@ import { resultImg } from '@/constants';
 import  Progress from './components/progress'
 import ListItem  from './components/listItem';
 import styles from "./GiftBag.module.scss";
-import gift from './img/gift.png';
-import undone from './img/undone.png';
-import finished from './img/finished.png';
-import pending from './img/pending.png';
 
-
-const giftImg = Object.freeze({
-  "GIFT":gift,
-  "UNDONE": undone,
-  "PENDING": pending,
-  "FINISHED": finished,
-})
+const giftImg = {
+  "GIFT":'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/gift.png',
+  "UNDONE": 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/undone.png',
+  "PENDING": 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/pending.png',
+  "FINISHED": 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/finished.png',
+}
 const GiftStyles = Object.freeze({
   "UNDONE":"undone",
   "PENDING":"pending",
@@ -53,29 +48,17 @@ const icon = {
   width: 120,
   height: 120,
 }
-const ProcessItem = ({ award, status,index,stage}) => {
+const ProcessItem = ({ award, status,index,stage,getDetail}) => {
   const handleClick = async (step,s) => {
-    if(s === 'UNDONE'){
+    if(s === 'FINISHED' || s === 'PENDING'){
       showToast({
-        title: '还未达到红包领取条件，请努力完成哦！',
+        title: `${s === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
         icon: 'none',
       })
       return ;
     }
-    if(s === 'FINISHED'){
-      showToast({
-        title: '红包已领取，请继续完成哦！',
-        icon: 'none',
-      })
-      return ;
-    }
-    const res = null;
     try{
-       if(step === 'ENTRY_SUCCESS'){
-        res = await httpRequest.put(`phoenix-center-backend/client/register/receiveEntrySuccessAward/${step}`);
-       }else{
-        res = await httpRequest.put(`phoenix-center-backend/client/register/receiveRegisterAward/${step}`);
-       }
+      const res = httpRequest.pus(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
       if (res.code ==! 0) {
         throw new Error(res.msg);
       }
@@ -83,17 +66,16 @@ const ProcessItem = ({ award, status,index,stage}) => {
         title: '领取成功',
         icon: 'none',
       })
+      getDetail();
     } catch(err) {
       showToast({
         title: `${err.message}`,
         icon: 'none',
       })
-    }finally{
-      Taro.reload();
     }
   }
   return (
-    <View className={styles['reward-item']} style={{backgroundImage:`url(${index === 0 && stage !== 'FIRST_ENTRY_CLOCK_IN_7_DAYS' ? giftImg['GIFT'] : giftImg[status]})`}} onClick={() => {handleClick(stage,status)}}>
+    <View className={styles['reward-item']} style={{background:`url(${index === 0 && stage !== 'FIRST_ENTRY_CLOCK_IN_7_DAYS' ? giftImg['GIFT'] : giftImg[status]})`,backgroundSize:'cover'}} onClick={() => {handleClick(stage,status)}}>
       <View className={`${styles['reward-tips']} ${GiftStyles[status]}`}>{GiftStatus[status]}</View>
       <View className={styles['reward-count']}>{award}</View>
     </View>
@@ -117,9 +99,9 @@ const Invitation = () => {
         setRegisterProgress(result);
         setEntryProgress(0);
       }else{
-        const en = register[res.data?.currentStage];
-        if(en){
-          setEntryProgress(en);
+        const pro = register[res.data?.currentStage];
+        if(pro){
+          setEntryProgress(pro);
           setRegisterProgress(100);
         }else{
           setRegisterProgress(0);
@@ -131,7 +113,7 @@ const Invitation = () => {
       setRegisterWithdraw(res.data?.registerWithdraw);
     } catch(err) {
       showToast({
-        title: '获取数据失败',
+        title: `${err.message}`,
         icon: 'none',
       })
     }
@@ -196,7 +178,7 @@ const Invitation = () => {
         </View>
         <View className={styles['reward-item-wrapper']}>
           {
-            registerAwardStages.map((item,index) =>  <ProcessItem {...item} index={index}></ProcessItem> )
+            registerAwardStages.map((item,index) =>  <ProcessItem {...item} index={index} getDetail={getRegisterDetail}></ProcessItem> )
           }
         </View>
         <Progress size={5} percentage={registerProgress} />
@@ -259,7 +241,6 @@ const Invitation = () => {
             />
           }
           renderItem={(item) => {
-            console.log('item',item)
             return <ListItem  data={item} />
           }}
         >

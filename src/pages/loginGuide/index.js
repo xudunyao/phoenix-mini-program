@@ -61,9 +61,15 @@ const LoginGuide = () => {
                 Taro.setStorageSync(storageKeys.USERID, resInfo.data.userId);
                 Taro.setStorageSync(storageKeys.TOKEN, resInfo.data.jwt);
                 auth.setInfo(resInfo.data);
-                Taro.navigateBack({
-                  delta: 1
-                })
+                if(Taro.getCurrentPages().length > 1 ){
+                  Taro.navigateBack({
+                    delta: 1
+                  })
+                }else{
+                  Taro.switchTab({
+                    url: '/pages/jobList/jobList'
+                  })
+                }
               }
             } else {
               showToast({

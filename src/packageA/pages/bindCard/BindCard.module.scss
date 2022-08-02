@@ -11,6 +11,9 @@
     line-height: 22Px;
     justify-content: space-between;
   }
+  :global(.prefix){
+    margin-right: 0px;;
+  }
   :global(.form-item){
     box-sizing: border-box;
     margin-bottom: 0Px;

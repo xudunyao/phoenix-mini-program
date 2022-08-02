@@ -1,6 +1,6 @@
 import { useState,useEffect  } from 'react';
 import { View,Text} from '@tarojs/components';
-import Taro,{ showToast } from "@tarojs/taro";
+import Taro,{ showToast, useDidShow } from "@tarojs/taro";
 import { Dialog } from '@/components';
 import auth from '@/stores/auth';
 import { httpRequest } from '@/utils';
@@ -53,9 +53,9 @@ const Wallet = ({
       console.log('err',err)
     }
   }
-  useEffect(() => {
+  useDidShow(() => {
     getWalletInfo();
-  },[]);
+  });
   return (
     <>
      <View className={styles.wallet}>
