@@ -268,7 +268,7 @@ const MyResume = () => {
               onFocus={() => { handleInputFocus('smsCode') }}
               onBlur={() => { handleInputBlur('smsCode') }}
               suffix={
-                <VerifyCode onClick={sendStatus && getCode} listeners={handleListeners} />
+                <View style={{width: '120px'}}><VerifyCode onClick={sendStatus && getCode} listeners={handleListeners} /></View>
               }
             />
           </FormItem>
