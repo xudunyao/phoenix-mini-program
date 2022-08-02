@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import moment from 'moment';
 import { showToast } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import { InfiniteScroll, Result } from '@/components';
+import { InfiniteScroll, Result, Loading } from '@/components';
 import { httpRequest } from '@/utils';
 import { datetimeFormat, resultImg } from '@/constants';
 import styles from './MessageWork.module.scss';
 
 const MessageWork = () => {
+  const [isRead,setIsRead] = useState({})
   const icon = {
     src:resultImg.empty,
   }
@@ -25,6 +26,9 @@ const MessageWork = () => {
           title: res.msg
         })
       }
+      res.data.content.map((item) => {
+        setIsRead((val)=>({ ...val,[item.messageId]:false}))
+      })
       return res.data;
   
     } catch (err) {
@@ -32,6 +36,10 @@ const MessageWork = () => {
     }
   };
   const handleRead = async (messageId) => {
+    setIsRead((val)=>{
+      return{...val,[messageId]:true}
+    })
+    if(isRead[messageId]) return
     try{
       const res = await httpRequest.put(`phoenix-center-backend/client/message/${messageId}`);
       if (res?.code !== 0) {
@@ -42,15 +50,17 @@ const MessageWork = () => {
       console.log(err);
     }
   }
-  useEffect(() => {
-    getData()
-  },[])
   return (
     <View className={styles.content}>
       <InfiniteScroll
         getData={getData}
         pageSize={20}
         customStyle='justify-content: center'
+        loadingComponent={
+          (<View style={{height: '100%', display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
+            <Loading size='40px' color='#80A2FF' />
+          </View>)
+        }
         noDataComponent={
           <Result
             icon={icon}
@@ -63,10 +73,10 @@ const MessageWork = () => {
               <Text className={styles.name}>
                 {item.messageEventType}
                 {
-                  !item.hasRead ? (<Text className={styles.badge} />) : null
+                  item.hasRead || isRead[item.messageId]?'':(<Text className={styles.badge} />)
                 }
               </Text>
-              <Text className={styles.time}>{moment(item.time).format(datetimeFormat.dateTime)}</Text>
+              <Text className={styles.time}>{ item.time && moment(item.time).format(datetimeFormat.dateTime)}</Text>
             </View>
             <View className={styles.text}>{item.content}</View>
           </View>

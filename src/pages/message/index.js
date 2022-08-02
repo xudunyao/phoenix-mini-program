@@ -67,8 +67,8 @@ const Message = () =>{
   return(
     <View className={styles.content}>
       {
-       list.length > 0 ? list?.map((v) => (
-          <View className={styles.item} onClick={()=>toPage(v?.messageType)}>
+       list.length > 0 ? list?.map((v,index) => (
+          <View className={styles.item} onClick={()=>toPage(v?.messageType)} key={index} >
             <View className={styles['item-left']}>
               <Image className={styles.img} src={typeList[v?.messageType]} mode='widthFix' />
               {

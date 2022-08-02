@@ -7,10 +7,10 @@ import  idea from './img/idea.png';
 import real_name from './img/real_name.png';
 import setting from './img/setting.png';
 import sing_up from './img/sing_up.png';
-import bill from './img/bill.png';
 import introduce from './img/introduce.png';
 import resume from './img/resume.png';
-import invitation from './img/invitation.png';
+import customer from './img/customer.png';
+import bank_card from './img/bank_card.png';
 
 const workbenchList = [
   {
@@ -24,10 +24,9 @@ const workbenchList = [
     url: 'packageA/pages/myResume/index',
   },
   {
-    title: '邀请好友',
-    icon: invitation  ,
+    title: '客服电话',
+    icon: customer,
     url: 'packageActivity/pages/invitation/index',
-    tips: '1288.8元红包',
   },
   {
     title: '我的报名',
@@ -40,9 +39,9 @@ const workbenchList = [
     url: 'pages/introduce/index',
   },
   {
-    title: '账单明细',
-    icon: bill,
-    url: 'packageA/pages/wallet/index',
+    title: '解绑银行卡',
+    icon: bank_card,
+    url: 'packageA/pages/unbindCard/index',
   },
   {
     title: '意见反馈',

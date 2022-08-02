@@ -1,6 +1,6 @@
 import { showToast } from '@tarojs/taro';
 import { useState } from 'react';
-import { InfiniteScroll, Result } from '@/components';
+import { InfiniteScroll, Result, Loading } from '@/components';
 import { View, Text } from '@tarojs/components';
 import { httpRequest } from '@/utils';
 import moment from 'moment';
@@ -8,7 +8,6 @@ import { resultImg, datetimeFormat } from '@/constants';
 import styles from './MessageAccount.module.scss'
 
 const MessageAccount = () => {
-  const [key, setKey] = useState(0)
   const EventType = {
     'WALLET_MSG': "钱包到账提醒",
     'WITHDRAW_SUCCEED': "钱包提现到账",
@@ -17,6 +16,9 @@ const MessageAccount = () => {
   const icon = {
     src: resultImg.empty,
   }
+  const [isRead,setIsRead] = useState({})
+
+
   const getData = async (search) => {
     try {
       const res = await httpRequest.post('phoenix-center-backend/client/message/detail/accountMsg/inquiry',
@@ -33,6 +35,9 @@ const MessageAccount = () => {
         })
       }
       const content = res.data.content.map((item) => {
+        setIsRead((val)=>{
+          return{ ...val,[item.messageId]:false} 
+        })
         return {
           'messageEventType': item.messageEventType,
           'messageId': item.messageId,
@@ -78,12 +83,15 @@ const MessageAccount = () => {
     }
   };
   const handleRead = async (messageId) => {
+    setIsRead((val)=>{
+      return{...val,[messageId]:true}
+    })
+    if(isRead[messageId]) return
     try{
       const res = await httpRequest.put(`phoenix-center-backend/client/message/${messageId}`);
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      setKey(messageId)
     } catch (err) {
       console.log(err);
     }
@@ -91,10 +99,14 @@ const MessageAccount = () => {
   return (
     <View className={styles.content}>
       <InfiniteScroll
-        key={key}
         getData={getData}
         pageSize={20}
         customStyle='justify-content: center'
+        loadingComponent={
+          (<View style={{height: '100%', display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
+            <Loading size='40px' color='#80A2FF' />
+          </View>)
+        }
         noDataComponent={
           <Result
             icon={icon}
@@ -103,7 +115,7 @@ const MessageAccount = () => {
         }
         renderItem={(item) => (
           <View className={styles.item} onClick={() =>handleRead(item.messageId)}>
-            <View className={styles.title}><Text>{EventType[item.messageEventType]}</Text>{item.hasRead?'':<View style={{ display: 'inline-block',height: '5px',width:'5px',borderRadius:'50%',marginLeft:'5px',marginBottom: '6px',backgroundColor: '#EF6060'}}></View>}</View>
+            <View className={styles.title}><Text>{EventType[item.messageEventType]}</Text>{item.hasRead || isRead[item.messageId]?'':(<Text className={styles.badge} />)}</View>
             <View className={`${styles.type} ${item.activity ? styles.remindColor : ''}`}>{item.content}</View>
             <View className={styles.price}>
               <Text className={styles.unit}>￥</Text>

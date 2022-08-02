@@ -56,3 +56,11 @@
 .remindColor {
   color: #EF6060 ;
 }
+.badge{
+  height: 6px;
+  width: 6px;
+  display: inline-block;
+  background-color: $color-orange-red;
+  vertical-align: text-top;
+  border-radius: 10px;
+}

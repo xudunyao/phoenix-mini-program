@@ -15,6 +15,7 @@ const InfiniteScroll: React.FC<Props> = ({
   refreshComponent,
   noDataComponent,
   hasMoreComponent,
+  loadingComponent,
   loadingMoreComponent,
   noMoreComponent,
   customStyle,
@@ -110,11 +111,11 @@ const InfiniteScroll: React.FC<Props> = ({
       onScrollToLower={loadMore}
     >
       {
-        isLoading ? (
+        isLoading ? (loadingComponent ||(
           <View className='infinite-scroll-container'>
             <Loading size='40px' color='#80A2FF' />
           </View>
-        ) : (
+        )) : (
           <>
             <View>
               {isRefreshing && (refreshComponent || <Text className='infinite-scroll-text'>刷新中……</Text>)}

@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { View, Text, Image, Button, Picker } from "@tarojs/components";
-import Taro,{ showToast } from '@tarojs/taro';
+import Taro,{ showToast, useDidShow } from '@tarojs/taro';
 import { httpRequest } from '@/utils';
 import { Dialog } from "@/components";
 import { FormItem, Input } from '@/components/form';
@@ -48,6 +48,16 @@ const MyResume = () => {
   
   const [form, setForm] = useState(initForm);
 
+
+  const setFormFieldValue = (fieldName, value) => {
+    setForm({
+      ...form,
+      [fieldName]: {
+        value: value || '',
+        error: null,
+      },
+    })
+  }
   const getCode = async (cb) => {
     if(regExp.phone(form.mobile.value)){
       try {
@@ -81,31 +91,16 @@ const MyResume = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      setForm({
-        ...form,
-        name: {
-          value: res.data.name,       
-          error: '',
-        },
-        sex: {
-          value: res.data.sex,
-          error: '',
-        },
-        mobile: {
-          value: res.data.mobile,
-          error: '',
-        },
-        jobType: {
-          value: res.data.jobType,
-          error: '',
-        },
-        city: {
-          value: res.data.city,
-          error: '',
-        },
-      })
+      setFormFieldValue('name',res.data.name)
+      setFormFieldValue('sex',res.data.sex)
+      setFormFieldValue('mobile',res.data.mobile)
+      setFormFieldValue('jobType',res.data.jobType)
+      setFormFieldValue('city',res.data.city)
     } catch (err) {
-      console.log(err);
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
     }
   }
   const handleListeners = () => {
@@ -136,19 +131,11 @@ const MyResume = () => {
       console.log(err);
     }
   }
-  useEffect(()=>{
+  useDidShow(()=>{
       getCityData();
-      getInformation()
-  },[])
-  const setFormFieldValue = (fieldName, value) => {
-    setForm({
-      ...form,
-      [fieldName]: {
-        value,
-        error: null,
-      },
-    })
-  }
+      getInformation();
+  })
+
   const setFormFieldError = (fieldName, error) => {
     setForm({
       ...form,

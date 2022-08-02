@@ -17,6 +17,7 @@ export type Props = {
   refreshComponent?: JSX.Element;
   noDataComponent?: JSX.Element;
   hasMoreComponent?: JSX.Element;
+  loadingComponent?: JSX.Element;
   loadingMoreComponent?: JSX.Element;
   noMoreComponent?: JSX.Element;
   children?: JSX.Element;
