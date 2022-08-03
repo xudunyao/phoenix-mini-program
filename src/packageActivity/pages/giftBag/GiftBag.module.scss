@@ -97,9 +97,15 @@
   }
 }
 .award-title{
-  background-image: url('./img/titleThree.png');
+  background-image: url('./img/award.png');
 }
-
+.more-award{
+  background-image: url('./img/moreAward.png');
+}
+.sing-up-title{
+  background-image: url('./img/singUp.png');
+  margin-bottom: 13Px;
+}
 .reward-item-wrapper{
   display: flex;
   justify-content: space-between;
@@ -171,15 +177,7 @@
   width: 45px;
   height: 18px;
 }
-.sing-up-title{
-  width: 284px;
-  height:42px;
-  background-image: url('./img/titleThree.png');
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  margin-bottom: 13px;
-}
+
 .post-item{
   background: #FFF4DE;
   border-radius: 12px;
@@ -242,12 +240,12 @@
   font-size: 14px;
 }
 .infiniteScroll{
-  height: 330px;
-  padding: 0px 12px;
+  height: 300px;
   box-sizing: border-box;
   overflow: hidden;
+  width: 100%;
   padding-bottom: 12px;
   :global(.tabs) {
-    height: 330Px;
+    height: 300Px;
    }
 }

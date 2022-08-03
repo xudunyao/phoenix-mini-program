@@ -49,16 +49,17 @@ const icon = {
   height: 120,
 }
 const ProcessItem = ({ award, status,index,stage,getDetail}) => {
-  const handleClick = async (step,s) => {
-    if(s === 'FINISHED' || s === 'UNDONE'){
+  const handleClick = async (step,state) => {
+    if(s === 'FINISHED' || state === 'UNDONE'){
       showToast({
-        title: `${s === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
+        title: `${state === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
         icon: 'none',
       })
       return ;
     }
     try{
-      const res = await httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
+      const fetchKey = register[step] ? 'receiveMoreAward' : 'receiveEntrySuccessAward';
+      const res = await httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? fetchKey : 'receiveRegisterAward'}/${step}`);
       if (res.code ==! 0) {
         throw new Error(res.msg);
       }
@@ -200,9 +201,9 @@ const Invitation = () => {
         </View>
       </View>
       <View className={styles.induction}>
-        <View className={`title ${styles['award-title']}`} />
+        <View className={`title ${styles['more-award']}`} />
         <View className='desc'>
-          <Text className='modify' />所有岗位<Text className='modify' style='transform:rotate(180deg)' />
+          <Text className='modify' />特定岗位<Text className='modify' style='transform:rotate(180deg)' />
         </View>
         <View className={styles['reward-item-wrapper']}>
           {
@@ -229,22 +230,24 @@ const Invitation = () => {
           }
         </View>
       </View>
-      <View className={`${styles.induction} ${styles.infiniteScroll}`}>
-        <View className={styles['sing-up-title']} />
-        <InfiniteScroll
-          getData={getData}
-          pageSize={5}
-          noDataComponent={
-            <Result
-              icon={icon}
-              subTitle='暂无更多数据' 
-            />
-          }
-          renderItem={(item) => {
-            return <ListItem  data={item} />
-          }}
-        >
-        </InfiniteScroll>
+      <View className={`${styles.induction}`}>
+        <View className={`title ${styles['sing-up-title']}`} />
+        <View className={`${styles.infiniteScroll}`}>
+          <InfiniteScroll
+            getData={getData}
+            pageSize={5}
+            noDataComponent={
+              <Result
+                icon={icon}
+                subTitle='暂无更多数据' 
+              />
+            }
+            renderItem={(item) => {
+              return <ListItem  data={item} />
+            }}
+          >
+          </InfiniteScroll>
+        </View>
       </View>
     </View>
   )
