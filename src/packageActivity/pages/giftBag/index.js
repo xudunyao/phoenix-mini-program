@@ -58,7 +58,7 @@ const ProcessItem = ({ award, status,index,stage,getDetail}) => {
       return ;
     }
     try{
-      const res = httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
+      const res = await httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
       if (res.code ==! 0) {
         throw new Error(res.msg);
       }

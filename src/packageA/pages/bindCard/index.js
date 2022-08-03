@@ -29,6 +29,7 @@ const initForm = {
 const BindCard = () => {
   const [isMove,setIsMove] = useState(false);
   const [form, setForm] = useState(initForm);
+  const [isBind, setIsBind] = useState(false);
   const [sendStatus, setSendStatus] = useState(true);
   const getCode = async (cb) => {
     if(regExp.phone(form.phone.value) && regExp.bankCard(form.cardId.value)){
@@ -40,15 +41,16 @@ const BindCard = () => {
           }
         });
         if (res?.code !== 0) {
-          showToast({
-            title: res.msg,
-            icon: 'none',
-          })
+          setSendStatus(true)
+          throw new Error(res?.msg);
         }
         cb && cb();
         setSendStatus(false)
       } catch (err) {
-        console.log(err);
+        showToast({
+          title: `${err.message}`,
+          icon: 'none',
+        })
       }
     } else {
       showToast({
@@ -109,10 +111,15 @@ const BindCard = () => {
         throw new Error(res.msg);
       }
       showToast({
-        title: '绑定成功',
+        title: '绑定银行卡成功',
         icon: 'none',
+        duration: 1500,
+        success: () => {
+         setTimeout(() => {
+          Taro.navigateBack();
+         }, 2000);
+        }
       })
-      Taro.navigateBack();
     } catch (err) {
       showToast({
         title: `${err.message}`,
