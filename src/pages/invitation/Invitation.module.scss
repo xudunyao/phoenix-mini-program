@@ -33,9 +33,28 @@
   overflow: hidden;
   background: linear-gradient(0deg, #FAFBBD, #FFCA6F);
   border-radius: 25px;
-  padding:5px 12px;
   color: $color-activity-tips;
   box-sizing: border-box;
+}
+@keyframes marquee {
+  0%{left:0}
+  100%{left: -100%}
+}
+.marquee {
+  min-width: 242Px;
+  line-height: 25Px;
+  height: 25Px;
+  overflow: hidden;
+  position: relative;
+}
+.swiper{
+  display: block;
+  width: 200%;
+  line-height: 25Px;
+  height: 25Px;
+  position: absolute;
+  overflow: hidden;
+  animation: marquee 4s linear infinite;
 }
 .block{
   display: flex;

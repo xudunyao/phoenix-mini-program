@@ -27,15 +27,11 @@ const UnbindCard = () => {
       if (res?.code !== 0) {
         throw new Error(res?.msg);
       }
-      showToast({
-        title: '解绑成功',
-        success: () => {
-          setVisibleBind(true);
-        }
-      });
+      setVisibleBind(true);
     } catch (err) {
       showToast({
         title: `${err.message}`,
+        icon: 'none',
       });
     }
   }
@@ -96,7 +92,7 @@ const UnbindCard = () => {
       <Dialog
         maskClosable
         visible={visibleBind}
-        content='需要重新绑定银行卡吗？'
+        content='解绑成功需要重新绑定银行卡吗？'
         actions={
           [{
             title: '取消',

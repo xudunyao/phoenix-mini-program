@@ -134,6 +134,7 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
         auth.setInfo(res.data);
         if(Taro.getCurrentPages().length > 1 ){
+          console.log('aaaaaaa',Taro.getCurrentPages())
           Taro.navigateBack({
             delta: 2,
           })

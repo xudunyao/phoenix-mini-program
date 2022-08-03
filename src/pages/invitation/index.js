@@ -133,7 +133,6 @@ const Invitation = () => {
     return {
       title: '邀请好友',
       path: `${router.path}?scene=${urlParams}`
-
     }
   }
   )
@@ -152,11 +151,13 @@ const Invitation = () => {
   useDidHide(() => {
     clearInterval(timer.current);
   })
-  return (
-    <View className={styles.container} style={{ backgroundImage: `url(${backgroundImg.base})` }}>
-      <View className={styles.tipsContainer}>
-        <View className={styles.tips}>
-          {`${inviteInfo.invitePhone} 刚邀请了1位好友 获得${inviteInfo.inviteAward}元`}
+  return  (
+    <View className={styles.container} style={{backgroundImage: `url(${backgroundImg.base})`}}>
+      <View className={styles.tipsContainer}>   
+        <View className={`${styles.tips} ${styles.marquee}`}>
+          <View  className={`${styles.swiper}`}>
+           {`${inviteInfo.invitePhone} 刚邀请了1位好友 获得${inviteInfo.inviteAward}元`}
+          </View>
         </View>
       </View>
       <View className={styles.rule} onClick={handleRuleClick}>
