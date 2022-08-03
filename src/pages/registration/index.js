@@ -1,4 +1,5 @@
-import { InfiniteScroll, Result} from '@/components';
+import { InfiniteScroll, Result , Loading} from '@/components';
+import { showToast } from "@tarojs/taro";
 import { View } from '@tarojs/components';
 import { resultImg } from '@/constants';
 import { httpRequest } from '@/utils';
@@ -31,6 +32,11 @@ const Registration = () => {
       <InfiniteScroll
         getData={getData}
         pageSize={10}
+        loadingComponent={
+          (<View style={{height: '100%', display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
+            <Loading size='40px' color='#80A2FF' />
+          </View>)
+        }
         noDataComponent={
           <Result
             icon={icon}

@@ -45,18 +45,16 @@ const MyResume = () => {
   const [cityArr , setCityArr] = useState([]);
   const [list, setList] = useState([]);
   const [multiIndex, setMultiIndex]= useState([0,0]);
-  
   const [form, setForm] = useState(initForm);
 
-
   const setFormFieldValue = (fieldName, value) => {
-    setForm({
-      ...form,
+    setForm((val)=>({
+      ...val,
       [fieldName]: {
         value: value || '',
         error: null,
       },
-    })
+    }))
   }
   const getCode = async (cb) => {
     if(regExp.phone(form.mobile.value)){

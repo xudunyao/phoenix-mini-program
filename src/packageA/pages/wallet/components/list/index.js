@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
 import { View } from '@tarojs/components';
-import { datetimeFormat } from '@/constants';
-import { InfiniteScroll } from '@/components';
+import { datetimeFormat, resultImg } from '@/constants';
+import { InfiniteScroll, Result } from '@/components';
 import { httpRequest } from '@/utils';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
@@ -11,6 +11,11 @@ import styles from  './List.module.scss';
 const ListItem = ({
   type
 }) => {
+  const icon = {
+    src:resultImg.empty,
+    width: 100,
+    height: 100,
+  }
   const getData = async (search) => {
     try {
       const res = await httpRequest.post('phoenix-center-backend/client/wallet/transactionRecord',{
@@ -31,6 +36,12 @@ const ListItem = ({
     <InfiniteScroll
       getData={getData}
       pageSize={10}
+      noDataComponent={
+        <Result
+          icon={icon}
+          subTitle='暂无更多数据' 
+        />
+      }
       renderItem={(item) => (
       <View className={styles.list}>
         <View className={styles.info}>
