@@ -50,7 +50,7 @@ const icon = {
 }
 const ProcessItem = ({ award, status,index,stage,getDetail}) => {
   const handleClick = async (step,s) => {
-    if(s === 'FINISHED' || s === 'PENDING'){
+    if(s === 'FINISHED' || s === 'UNDONE'){
       showToast({
         title: `${s === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
         icon: 'none',
@@ -58,7 +58,7 @@ const ProcessItem = ({ award, status,index,stage,getDetail}) => {
       return ;
     }
     try{
-      const res = httpRequest.pus(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
+      const res = httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
       if (res.code ==! 0) {
         throw new Error(res.msg);
       }

@@ -205,7 +205,6 @@ const Index = () => {
           </View>
       </ScrollView>
       <AdvertModal
-        maskClosable 
         visible={advertVisible}
         onClose={handleCloseAdvert}
         imageUrl={popAds?.imageUrl}

@@ -1,9 +1,8 @@
 import { useState,useEffect } from "react";
 import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { Loading } from "@/components";
 import { getBaseUrl  } from "@/utils";
-import storageKeys from '@/constants/storageKeys';
+import { storageKeys } from '@/constants';
 import styles from  './SavePoster.module.scss';
 
 const SavePoster = () => {
@@ -12,6 +11,7 @@ const SavePoster = () => {
   const getInviteQrCode = async () => {
     setIsLoading(true);
     const token = Taro.getStorageSync(storageKeys.TOKEN);
+    Taro.showNavigationBarLoading();
     const base = await getBaseUrl();
     Taro.downloadFile({
       url:`${base}phoenix-center-backend/client/invite/generate/qrcode`,
@@ -21,6 +21,7 @@ const SavePoster = () => {
       success:(res)=>{
         setUrl(res.tempFilePath)
         setIsLoading(false);
+        Taro.hideNavigationBarLoading();
       }
     })
   }
@@ -29,13 +30,7 @@ const SavePoster = () => {
   },[])
   return (
     <View className={styles['container']}>
-      {
-        isLoading ? (
-          <View className={styles.loading}>
-            <Loading size='40px' color='#80A2FF' />
-          </View>
-        ) : <Image src={url} mode='widthFix' style={{width:'100%'}} showMenuByLongpress />
-      }
+      <Image src={url} mode='widthFix' style={{width:'100%'}} showMenuByLongpress />
     </View>
   );
 };

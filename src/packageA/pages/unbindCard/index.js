@@ -54,7 +54,7 @@ const UnbindCard = () => {
       }
       <View className={styles.title}>银行卡账号</View>
       <View className={styles.bank}>
-        <Image className={styles['bank-logo']} src={require(`../withdraw/img/${bankInfo.bankCode}.png`)} />
+        <Image className={styles['bank-logo']} src={require(`../withdraw/img/${bankInfo?.bankCode ? bankInfo.bankCode : '8888'}.png`)} />
         <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
         <View className={styles['bank-btn']} onClick={handleUnbindCard}>解除绑定</View>
       </View>

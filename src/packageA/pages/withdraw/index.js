@@ -69,7 +69,7 @@ const Withdraw = () => {
   const handleInputFocus = (type) =>{
     setFormFieldError(type,'');
   }
-  const handleWithdrawAll = async () => {
+  const handleWithdrawAll =  () => {
     setForm({
       ...form,
       money: {
@@ -144,7 +144,7 @@ const Withdraw = () => {
     <View className={styles.withdraw}>
       <View className={styles.title}>到账银行</View>
       <View className={styles['bank-info']}>
-        <Image className={styles['bank-logo']} src={require(`./img/${bankInfo.bankCode}.png`)} />
+        <Image className={styles['bank-logo']} src={require(`./img/${bankInfo?.bankCode ? bankInfo.bankCode : '8888'}.png`)} />
         <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
         <View style={{marginLeft:'auto'}} onClick={handleClick}>
           <IconFont name='right' size={25}></IconFont>

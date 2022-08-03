@@ -1,6 +1,6 @@
 import { useEffect,useState,useRef } from 'react';
 import { View, Image,Button, Text } from '@tarojs/components';
-import Taro,{ useShareAppMessage,showToast,useDidShow,useDidHide } from '@tarojs/taro';
+import Taro,{ useShareAppMessage,showToast,useDidShow,useDidHide,useRouter } from '@tarojs/taro';
 import backgroundImg from '@/constants/backgroundImg';
 import numeral from 'numeral';
 import { httpRequest } from '@/utils';
@@ -27,8 +27,8 @@ const getRandom = (arr) => {
 const money = [8.88,88.8,6.6,18.8];
 const getRandomPhone = () => {
   const phone = ['134','135','136','137','138','139','150','151','152','157','158','159','187','188','133','153','180','189'];
-  const random = Math.floor(Math.random() * 100000000)
-  const result =  '' + getRandom(phone) + random;
+  const random = Math.floor(Math.random() * 10000000)
+  const result =  '' + getRandom(phone) + String(random).padEnd(8,'0');
   return result.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
 }
 const Invitation = () => {
@@ -42,6 +42,8 @@ const Invitation = () => {
   const timer = useRef();
   const [inviteEnum,setInviteEnum] = useState([])
   const [urlParams,setUrlParams] = useState()
+  const isH5 = process.env.TARO_ENV === 'h5';
+  const router = useRouter();
   const getInviteStatistics = async () => {
     try{
       const res = await httpRequest.get('phoenix-center-backend/client/invite/statistics');
@@ -60,10 +62,7 @@ const Invitation = () => {
       }
       )
       const newResult = result.filter(item => item)
-      const totalAll = newResult.reduce((value,item) => {
-        return value + item.count
-      }
-      ,0)
+      const totalAll = newResult.reduce((value,item) => value + item.count,0)
       setCount(totalAll)
       setInterView(newResult);
     } catch(err) {
@@ -101,7 +100,20 @@ const Invitation = () => {
       })
     }
   }
-  const handleClick = () => {
+  const handleClick = async () => {
+    if(isH5) {
+      const url = `${process.env.APP_ENV}#/pages/jobList/jobList?scene=${urlParams}`;
+      Taro.setClipboardData({
+        data: url,
+        success: () => {
+          showToast({
+            icon: 'none',
+            title: '已经复制到剪贴板'
+          })
+        }
+      })
+      return;
+    }
     Taro.navigateTo({
       url: '/packageA/pages/savePoster/index'
     })
@@ -119,7 +131,8 @@ const Invitation = () => {
   useShareAppMessage(() => {
     return {
       title: '邀请好友',
-      path: `/pages/jobList/jobList/?scene=${urlParams}`,
+      path: `${router.path}?scene=${urlParams}`
+
     }
   }
   )
@@ -181,7 +194,7 @@ const Invitation = () => {
         </View>
         <View className={styles['activity-button']}>
           <View className={styles['activity-button-save']} onClick={handleClick} />
-          <Button  openType='share' className={styles['activity-button-share']}></Button>
+          <Button  openType='share' className={styles['activity-button-share']} ></Button>
         </View>
       </View>
     </View>
