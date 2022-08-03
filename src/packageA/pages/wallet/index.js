@@ -51,7 +51,7 @@ const Wallet = () => {
     if (walletInfo.bind) {
       {
         Taro.navigateTo({
-          url: '/packageA/pages/wallet/index'
+          url: '/packageA/pages/withdraw/index'
         });
         return;
       }

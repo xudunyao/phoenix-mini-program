@@ -1,12 +1,12 @@
-import { useEffect,useState,useRef } from 'react';
-import { View, Image,Button, Text } from '@tarojs/components';
-import Taro,{ useShareAppMessage,showToast,useDidShow,useDidHide,useRouter } from '@tarojs/taro';
+import { useEffect, useState, useRef } from 'react';
+import { View, Image, Button, Text } from '@tarojs/components';
+import Taro, { useShareAppMessage, showToast, useDidShow, useDidHide, useRouter } from '@tarojs/taro';
 import backgroundImg from '@/constants/backgroundImg';
 import numeral from 'numeral';
 import { httpRequest } from '@/utils';
 import styles from "./Invitation.module.scss";
 
-const ProcessItem = ({title,count}) => {
+const ProcessItem = ({ title, count }) => {
   return (
     <View className='statistics-item'>
       <View className={styles['process-title']}>{title}</View>
@@ -24,36 +24,36 @@ const enumType = Object.freeze({
 const getRandom = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)]
 }
-const money = [8.88,88.8,6.6,18.8];
+const money = [8.88, 88.8, 6.6, 18.8];
 const getRandomPhone = () => {
-  const phone = ['134','135','136','137','138','139','150','151','152','157','158','159','187','188','133','153','180','189'];
+  const phone = ['134', '135', '136', '137', '138', '139', '150', '151', '152', '157', '158', '159', '187', '188', '133', '153', '180', '189'];
   const random = Math.floor(Math.random() * 10000000)
-  const result =  '' + getRandom(phone) + String(random).padEnd(8,'0');
+  const result = '' + getRandom(phone) + String(random).padEnd(8, '0');
   return result.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
 }
 const Invitation = () => {
-  const [interview,setInterView] = useState([])
-  const [totalAward,setTotalAward] = useState(0)
-  const [count,setCount] = useState(0)
-  const [inviteInfo,setInviteInfo] = useState({
+  const [interview, setInterView] = useState([])
+  const [totalAward, setTotalAward] = useState(0)
+  const [count, setCount] = useState(0)
+  const [inviteInfo, setInviteInfo] = useState({
     invitePhone: getRandomPhone(),
     inviteAward: getRandom(money),
   })
   const timer = useRef();
-  const [inviteEnum,setInviteEnum] = useState([])
-  const [urlParams,setUrlParams] = useState()
+  const [inviteEnum, setInviteEnum] = useState([])
+  const [urlParams, setUrlParams] = useState()
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const getInviteStatistics = async () => {
-    try{
+    try {
       const res = await httpRequest.get('phoenix-center-backend/client/invite/statistics');
-      if (res.code ==! 0) {
+      if (res.code == !0) {
         throw new Error(res.msg);
       }
       const result = Object.keys(res.data).map(key => {
-        if(key === 'totalAward') {
+        if (key === 'totalAward') {
           setTotalAward(res.data[key])
-          return ;
+          return;
         }
         return {
           title: enumType[key],
@@ -62,10 +62,11 @@ const Invitation = () => {
       }
       )
       const newResult = result.filter(item => item)
-      const totalAll = newResult.reduce((value,item) => value + item.count,0)
-      setCount(totalAll)
+      setCount(() => {
+        return res.data.inviteRegisterCount
+      })
       setInterView(newResult);
-    } catch(err) {
+    } catch (err) {
       showToast({
         icon: 'none',
         title: `${err.message}`
@@ -73,27 +74,27 @@ const Invitation = () => {
     }
   }
   const getInviteEnum = async () => {
-  try{
-    const res = await httpRequest.get('phoenix-center-backend/client/invite/inviteNewStageEnum');
-    if (res.code ==! 0) {
-      throw new Error(res.msg);
+    try {
+      const res = await httpRequest.get('phoenix-center-backend/client/invite/inviteNewStageEnum');
+      if (res.code == !0) {
+        throw new Error(res.msg);
+      }
+      setInviteEnum(res.data);
+    } catch (err) {
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
     }
-    setInviteEnum(res.data);
-  } catch(err) {
-    showToast({
-      icon: 'none',
-      title: `${err.message}`
-    })
-  }
   }
   const getInviteLink = async () => {
-    try{
+    try {
       const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
-      if (res.code ==! 0) {
+      if (res.code == !0) {
         throw new Error(res.msg);
       }
       setUrlParams(res.data);
-    } catch(err) {
+    } catch (err) {
       showToast({
         icon: 'none',
         title: `${err.message}`
@@ -101,7 +102,7 @@ const Invitation = () => {
     }
   }
   const handleClick = async () => {
-    if(isH5) {
+    if (isH5) {
       const url = `${process.env.APP_ENV}#/pages/jobList/jobList?scene=${urlParams}`;
       Taro.setClipboardData({
         data: url,
@@ -123,7 +124,7 @@ const Invitation = () => {
       url: '/packageA/pages/activityRules/index'
     })
   }
-  const handleInviteRecord =  () => {
+  const handleInviteRecord = () => {
     Taro.navigateTo({
       url: '/packageA/pages/inviteRecord/index'
     })
@@ -146,55 +147,60 @@ const Invitation = () => {
         inviteAward: getRandom(money),
       })
     }
-    ,5000)
+      , 5000)
   })
   useDidHide(() => {
     clearInterval(timer.current);
   })
-  return  (
-    <View className={styles.container} style={{backgroundImage: `url(${backgroundImg.base})`}}>
-      <View className={styles.tipsContainer}>   
+  return (
+    <View className={styles.container} style={{ backgroundImage: `url(${backgroundImg.base})` }}>
+      <View className={styles.tipsContainer}>
         <View className={styles.tips}>
           {`${inviteInfo.invitePhone} 刚邀请了1位好友 获得${inviteInfo.inviteAward}元`}
         </View>
-      </View> 
+      </View>
       <View className={styles.rule} onClick={handleRuleClick}>
         规则说明
       </View>
       <View className={`${styles.block} ${styles.invitation}`}>
         <View className='title' />
-          <View className={styles['info-count']}>
-            累计邀请人数：{count}
-          </View>
-          <View className='statistics'>
-            {
-              interview?.map((item, index) => <ProcessItem key={index} {...item} />)
-            }
-          </View>
-          <View className={styles['reward']}>
-            <View className={styles['reward-img']}></View>
-              <View className={styles['reward-info']}>累计奖金：{numeral(totalAward).format('0,0.00')}元</View>
-            </View>
-          <View className={styles['button']} onClick={handleInviteRecord}></View>
+        <View className={styles['info-count']}>
+          累计邀请人数：{count}
+        </View>
+        <View className='statistics'>
+          {
+            interview?.map((item, index) => <ProcessItem key={index} {...item} />)
+          }
+        </View>
+        <View className={styles['reward']}>
+          <View className={styles['reward-img']}></View>
+          <View className={styles['reward-info']}>累计奖金：{numeral(totalAward).format('0,0.00')}元</View>
+        </View>
+        <View className={styles['button']} onClick={handleInviteRecord}></View>
       </View>
       <View className={`${styles.block} ${styles.activity}`}>
         <View className='title' />
         <View className='red-packets'>
           {
-            inviteEnum?.map((p,index) => {
+            inviteEnum?.map((p, index) => {
               return (
                 <View className='red-packet-item'>
                   <View className='red-packet'>{p.award + '元'}</View>
-                  <View className={`red-packet-separator ${index === 0 ? 'first' :null} ${index === inviteEnum.length ? 'last' :null}`}></View>
+                  <View className={`red-packet-separator ${index === 0 ? 'first' : null} ${index === inviteEnum.length ? 'last' : null}`}></View>
                   <View className='red-packet-title'>{p.desc}</View>
                 </View>
               )
             })
           }
         </View>
-        <View className={styles['activity-button']}>
-          <View className={styles['activity-button-save']} onClick={handleClick} />
-          <Button  openType='share' className={styles['activity-button-share']} ></Button>
+        <View className={isH5 ? styles['activity-button-h5'] : styles['activity-button']}>
+          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick}><Text>复制到剪切板</Text></View> :
+            (
+              <>
+                <View className={styles['activity-button-save']} onClick={handleClick}><Text>保存海报</Text></View>
+                <Button openType='share' className={styles['activity-button-share']} ><Text></Text></Button>
+              </>
+            )}
         </View>
       </View>
     </View>

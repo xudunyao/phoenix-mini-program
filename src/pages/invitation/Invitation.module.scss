@@ -255,13 +255,23 @@
   margin-bottom: 12px;
   width: calc(100% - 28px);
 }
+.activity-button-h5{
+  display: flex;
+  justify-content: center;
+  margin-top:30px;
+  margin-bottom: 12px;
+  width: calc(100% - 28px);
+}
 .activity-button-save{
   width: 140px;
   height:40px;
-  background-image: url('./img/save.png');
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: linear-gradient(6deg, #E41A2D, #FF7D43);
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  color: $color-white;
+  line-height: 40px;
+  text-align: center;
 }
 .activity-button-share{
   width: 140px;
@@ -272,4 +282,15 @@
   background-repeat: no-repeat;
   border-radius: 30Px;
   margin:0Px !important;
+}
+.activity-button-saveH5{
+  width: 200px;
+  height:40px;
+  background: linear-gradient(6deg, #E41A2D, #FF7D43);
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  color: $color-white;
+  line-height: 40px;
+  text-align: center;
 }
