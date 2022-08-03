@@ -8,6 +8,7 @@ import styles from "./UnbindCard.module.scss";
 const UnbindCard = () => {
   const [isTipsShow, setIsTipsShow] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [visibleBind, setVisibleBind] = useState(false);
   const [bankInfo, setBankInfo] = useState({});
   const getBankInfo = async () => {
     try {
@@ -29,18 +30,26 @@ const UnbindCard = () => {
       showToast({
         title: '解绑成功',
         success: () => {
-          setTimeout(() => {
-            Taro.switchTab({
-              url: '/pages/my/index',
-            })
-          }, 2000);
-         }
+          setVisibleBind(true);
+        }
       });
     } catch (err) {
       showToast({
         title: `${err.message}`,
       });
     }
+  }
+  const handleCancel = () => {
+    setVisibleBind(false);
+    Taro.switchTab({
+      url: '/pages/my/index',
+    })
+  }
+  const handleEnsure = () => {
+    setVisibleBind(false);
+    Taro.redirectTo({
+      url: '/packageA/pages/bindCard/index'
+    })
   }
   useDidShow(() => {
     getBankInfo();
@@ -61,7 +70,7 @@ const UnbindCard = () => {
       <View className={styles.bank}>
         <Image className={styles['bank-logo']} src={require(`../withdraw/img/${bankInfo?.bankCode ? bankInfo.bankCode : '8888'}.png`)} />
         <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
-        <View className={styles['bank-btn']} onClick={()=>setVisible(true)}>解除绑定</View>
+        <View className={styles['bank-btn']} onClick={() => setVisible(true)}>解除绑定</View>
       </View>
       <Dialog
         maskClosable
@@ -79,6 +88,24 @@ const UnbindCard = () => {
               setVisible(false)
               handleUnbindCard()
             },
+            type: 'primary',
+            size: 'mini'
+          }]
+        }
+      />
+      <Dialog
+        maskClosable
+        visible={visibleBind}
+        content='需要重新绑定银行卡吗？'
+        actions={
+          [{
+            title: '取消',
+            onClick: handleCancel,
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '确定',
+            onClick: handleEnsure,
             type: 'primary',
             size: 'mini'
           }]

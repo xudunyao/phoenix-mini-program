@@ -17,7 +17,7 @@ const tabLists = [{
 },];
 const Wallet = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
-  const [balance, setBalance] = useState(0);
+  const [walletInfo, setWalletInfo] = useState(0);
   const [visible, setVisible] = useState(false);
   const onTabClick = (index) => {
     setTabCurrent(index)
@@ -28,20 +28,27 @@ const Wallet = () => {
       if (res?.code !== 0) {
         throw new Error(res?.msg);
       }
-      setBalance(res.data?.balance);
+      setWalletInfo(res.data);
     } catch (err) {
       console.log('err', err)
     }
   }
   const handleClick = () => {
-    if (balance.disable) {
+    if (!walletInfo.validation) {
+      showToast({
+        title: '请先完成实名认证',
+        icon: 'none',
+      })
+      return;
+    }
+    if (walletInfo.disable) {
       showToast({
         title: '您的账户异常请联系管理员',
         icon: 'none',
       })
       return;
     }
-    if (balance.bind) {
+    if (walletInfo.bind) {
       {
         Taro.navigateTo({
           url: '/packageA/pages/wallet/index'
@@ -49,7 +56,7 @@ const Wallet = () => {
         return;
       }
     } else {
-      setVisible(!balance?.bind)
+      setVisible(!walletInfo?.bind)
     }
   }
   useDidShow(() => {
@@ -61,7 +68,7 @@ const Wallet = () => {
       <View className={styles.wallet}>
         <View className={styles.account}>
           <View className={styles['account-title']}>账户余额（元）</View>
-          <View className={styles['account-money']}>{numeral(balance).format('0,0.00')}</View>
+          <View className={styles['account-money']}>{numeral(walletInfo?.balance).format('0,0.00')}</View>
           <Button customStyles={{ maxWidth: '351Px', width: '80%', margin: '32px 0px 24px', lineHeight: '42px' }} onClick={handleClick}>提现</Button>
         </View>
         <View className={styles.detailed}>
