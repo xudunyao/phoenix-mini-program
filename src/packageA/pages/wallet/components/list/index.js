@@ -52,7 +52,7 @@ const ListItem = ({
           }
           </View>
         </View>
-        <View className={styles.time}>{moment(item.time).format(datetimeFormat.dateTime)}</View>
+        <View className={styles.time}>{moment(item.serialTime).format(datetimeFormat.dateTime)}</View>
       </View>
     )}
     >

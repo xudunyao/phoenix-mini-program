@@ -24,7 +24,7 @@ const enumType = Object.freeze({
 const getRandom = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)]
 }
-const money = [8.88, 88.8, 6.6, 18.8];
+const money = [8.88,6.66, 18.88];
 const getRandomPhone = () => {
   const phone = ['134', '135', '136', '137', '138', '139', '150', '151', '152', '157', '158', '159', '187', '188', '133', '153', '180', '189'];
   const random = Math.floor(Math.random() * 10000000)
@@ -41,7 +41,6 @@ const Invitation = () => {
   })
   const timer = useRef();
   const [inviteEnum, setInviteEnum] = useState([])
-  const [urlParams, setUrlParams] = useState()
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const getInviteStatistics = async () => {
@@ -87,31 +86,24 @@ const Invitation = () => {
       })
     }
   }
-  const getInviteLink = async () => {
-    try {
-      const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
-      if (res.code !== 0) {
-        throw new Error(res.msg);
-      }
-      setUrlParams(res.data);
-    } catch (err) {
-      console.log({ err })
-    }
-  }
   const handleClick = async () => {
-    await getInviteLink();
-    if (isH5) {
-      const url = `${process.env.APP_ENV}#/pages/jobList/jobList?scene=${urlParams}`;
-      Taro.setClipboardData({
-        data: url,
-        success: () => {
-          showToast({
-            icon: 'none',
-            title: '已经复制到剪贴板'
-          })
-        }
-      })
-      return;
+    try{
+      const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
+      if (isH5) {
+        const url = `https://xgn-h5-uat.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
+        Taro.setClipboardData({
+          data: url,
+          success: () => {
+            showToast({
+              icon: 'none',
+              title: '已经复制到剪贴板'
+            })
+          }
+        })
+        return;
+      }
+    }catch(err){
+      console.log({err})
     }
     Taro.navigateTo({
       url: '/packageA/pages/savePoster/index'
@@ -128,10 +120,15 @@ const Invitation = () => {
     })
   }
   useShareAppMessage(async () => {
-    await getInviteLink();
+    let res = null;
+    try{
+      res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
+    }catch(err){
+      console.log({err})
+    }
     return {
       title: '邀请好友',
-      path: `${router.path}?scene=${urlParams}`
+      path: `/pages/jobList/jobList?scene=${res?.data}`
     }
   }
   )
@@ -143,8 +140,7 @@ const Invitation = () => {
         invitePhone: getRandomPhone(),
         inviteAward: getRandom(money),
       })
-    }
-      , 5000)
+    }, 5000)
   })
   useDidHide(() => {
     clearInterval(timer.current);

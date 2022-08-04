@@ -81,6 +81,7 @@ const BindCard = () => {
     })
   }
   const handleInputBlur = (type) => {
+    console.log({type})
     if (!regExp.name(form.name.value) && type === 'name') {
       setFormFieldError('name', '用户姓名格式不正确');
       return false;
@@ -98,7 +99,6 @@ const BindCard = () => {
       setIsMove(true)
       return false;
     }
-    setIsMove(false);
     return true;
   }
   const handleInputFocus = (type) =>{
@@ -207,7 +207,10 @@ const BindCard = () => {
               <Input
                 suffix={<VerifyCode className={styles['withdraw-amount-tips']} onClick={sendStatus && getCode} listeners={handleListeners} />}
                 value={form.sms.value}
-                onInput={(value) => setFormFieldValue('sms', value)}
+                onInput={(value) => {
+                  setFormFieldValue('sms', value)
+                  setIsMove(regExp.sms(form.sms.value) && value.length === 6);
+                }}
                 onBlur={() =>{ handleInputBlur('sms') }}
                 error={!!form.sms.error}
                 style={{textAlign:'left'}}

@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
 import Taro, { getAccountInfoSync } from '@tarojs/taro';
+import auth from '@/stores/auth';
 
 import { storageKeys } from '@/constants';
 import { getStorageSync, removeStorageSync } from '@/utils';
@@ -33,10 +34,10 @@ getBaseUrl();
 
 const handleUnauthorized = () => {
   removeStorageSync(storageKeys.TOKEN);
-  Taro.navigateTo({
-    url: '../loginGuide/index'
-  });
-  // TODO: 登录失效操作
+  Taro.redirectTo({
+    url: '/pages/loginGuide/index'
+  })
+  auth.clearInfo();
 };
 
 const interceptor = async (chain) => {
