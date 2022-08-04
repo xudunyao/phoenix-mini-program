@@ -46,8 +46,8 @@ const Invitation = () => {
   const router = useRouter();
   const getInviteStatistics = async () => {
     try {
-      const res = await httpRequest.get('phoenix-center-backend/client/invite/statistics');
-      if (res.code == !0) {
+      const res = await httpRequest.get('phoenix-center-backend/client/noauth/invite/statistics');
+      if (res.code !== 0) {
         throw new Error(res.msg);
       }
       const result = Object.keys(res.data).map(key => {
@@ -75,8 +75,8 @@ const Invitation = () => {
   }
   const getInviteEnum = async () => {
     try {
-      const res = await httpRequest.get('phoenix-center-backend/client/invite/inviteNewStageEnum');
-      if (res.code == !0) {
+      const res = await httpRequest.get('phoenix-center-backend/client/noauth/invite/inviteNewStageEnum');
+      if (res.code !== 0) {
         throw new Error(res.msg);
       }
       setInviteEnum(res.data);
@@ -90,18 +90,16 @@ const Invitation = () => {
   const getInviteLink = async () => {
     try {
       const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
-      if (res.code == !0) {
+      if (res.code !== 0) {
         throw new Error(res.msg);
       }
       setUrlParams(res.data);
     } catch (err) {
-      showToast({
-        icon: 'none',
-        title: `${err.message}`
-      })
+      console.log({ err })
     }
   }
   const handleClick = async () => {
+    await getInviteLink();
     if (isH5) {
       const url = `${process.env.APP_ENV}#/pages/jobList/jobList?scene=${urlParams}`;
       Taro.setClipboardData({
@@ -129,7 +127,8 @@ const Invitation = () => {
       url: '/packageA/pages/inviteRecord/index'
     })
   }
-  useShareAppMessage(() => {
+  useShareAppMessage(async () => {
+    await getInviteLink();
     return {
       title: '邀请好友',
       path: `${router.path}?scene=${urlParams}`
@@ -139,7 +138,6 @@ const Invitation = () => {
   useDidShow(() => {
     getInviteStatistics();
     getInviteEnum();
-    getInviteLink();
     timer.current = setInterval(() => {
       setInviteInfo({
         invitePhone: getRandomPhone(),

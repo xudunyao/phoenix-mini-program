@@ -92,7 +92,7 @@ const Invitation = () => {
   const getRegisterDetail = async () => {
     try{
       const res = await httpRequest.get('phoenix-center-backend/client/register/award/detail');
-      if (res.code ==! 0) {
+      if (res.code !== 0) {
         throw new Error(res.msg);
       }
       const result = entry[res.data?.currentStage];

@@ -17,9 +17,11 @@
 .title{
   font-size: 16Px;
   font-weight: 600;
-  color: #061748;
+  color: $text-primary;
   line-height: 22Px;
   margin-top: 16Px;
+  padding:0 12px;
+  box-sizing: border-box;
 }
 .bank{
   margin-top: 16px;
@@ -41,13 +43,13 @@
   margin-right: 8Px;
   line-height: 20Px;
   font-size: 14Px;
-  color: #061748;
+  color:$text-primary;
   margin-left: 8Px;
 }
 .bank-btn{
   line-height: 14Px;
   font-size: 10Px;
-  color: #FFFFFF;
+  color:$color-white;
   padding: 4Px 11Px;
   box-sizing: border-box;
   border-radius: 12Px;
