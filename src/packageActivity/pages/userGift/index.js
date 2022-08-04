@@ -46,6 +46,9 @@ const userGift = () => {
                     <View className={styles.activityText}>
                         <Text>（6）特殊说明：以上红包奖励需用户B入职签订劳动合同后，相对应奖金才可以提现。</Text>
                     </View>
+                    <View className={styles.activityText}>
+                        <Text>（7）邀请奖励时效说明：每邀请一个用户，从用户注册时间起算，一个自然月内有效。   </Text>
+                    </View>
                 </View>
                 <View className={styles.activityRules}>
                     <View className={styles.activityObjectHeader}>

@@ -34,6 +34,7 @@ export default defineAppConfig({
         "pages/savePoster/index",
         "pages/inviteRecord/index",
         'pages/form/index',
+        'pages/invitePoster/index',
       ]
     },
     {

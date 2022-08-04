@@ -65,7 +65,7 @@ const InviteRecord = () => {
     setType(inviteStatus[e.detail.value].value)
   }
   const getInformation = async () => {
-    const res = await httpRequest.get('phoenix-center-backend/client/invite/statistics')
+    const res = await httpRequest.get('phoenix-center-backend/client/noauth/invite/statistics')
     if (res?.code !== 0) {
       throw new Error(res?.msg);
     }
