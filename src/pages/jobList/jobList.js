@@ -11,19 +11,25 @@ import styles from  './Index.module.scss';
 import Swiper from './components/swiper/index'
 import ListIndex from './components/list/index';
 import Login from './components/login/index';
+import tabBg from './img/tab-bg.png';
 
 const tabLists = [{
   key: 'ALL',
   title: '全部',
-}, {
+}, 
+{
+  key: 'ALL',
+  title: 'award',
+  background: tabBg,
+},{
   key: 'FORMAL_WORKER',
   title: '正式工',
 }, {
   key: 'DISPATCH_WORKER',
-  title: '派遣工',
+  title: '日结工',
 }, {
   key: 'PRAT_TIME_WORKER',
-  title: '兼职工',
+  title: '小时工',
 }];
 
 const Index = () => {
@@ -166,8 +172,8 @@ const Index = () => {
           page: 'home',
           memberId: auth?.userid,
           event: 'home_page_view',
-          type: 'view',
-          channelNo: Taro.getStorageSync(storageKeys.scene),
+          type: process.env.TARO_ENV === 'h5' ? 'H5' : 'WECHAT',
+          scene: Taro.getStorageSync(storageKeys.scene),
           time: new Date().getTime(),
           openId: auth?.openid,
         }
@@ -218,7 +224,7 @@ const Index = () => {
               {
                 tabList.length > 0 && tabList.map((item) => (
                   <TabsPanel key={item.key}>
-                    <ListIndex name={item.key} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
+                    <ListIndex name={item.key} title={item.title} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
                   </TabsPanel>
                 ))
               }

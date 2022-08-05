@@ -128,7 +128,7 @@ const Invitation = () => {
     }
     return {
       title: '邀请好友',
-      path: `/pages/jobList/jobList?scene=${res?.data}`
+      path: `/packageA/pages/invitePoster/index?scene=${res?.data}`
     }
   }
   )

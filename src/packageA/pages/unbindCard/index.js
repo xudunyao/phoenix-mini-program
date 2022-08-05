@@ -43,7 +43,7 @@ const UnbindCard = () => {
   }
   const handleEnsure = () => {
     setVisibleBind(false);
-    Taro.redirectTo({
+    Taro.reLaunch({
       url: '/packageA/pages/bindCard/index'
     })
   }

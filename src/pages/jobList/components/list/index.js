@@ -10,6 +10,7 @@ import styles from  './List.module.scss';
 
 const List = ({
   name,
+  title,
   closeDialog,
   scrollY,
   handleSubmit,
@@ -25,6 +26,7 @@ const List = ({
         data: {
           searchEnum: name,
           ...search,
+          registerAward: title === 'award' ? true : false,
         }
       });
       if (res?.code !== 0) {
@@ -76,14 +78,23 @@ const List = ({
                 <Text className={styles['price_unit']}>{item.orderPriceType}</Text>
               </Text>
               {
-                item.subsidyAmount && (
-                  <Text className={styles.subsidy}>
-                    <Text className={styles['subsidy_count']}>{`+${item.subsidyAmount}`}</Text>
-                    <Text className={styles['subsidy_unit']}>元/小时补贴</Text>
+                 item.subsidyAmount || item.subsidyAmount && <Text className={styles.subsidy}>
+                    {
+                      item.subsidyAmount && (
+                        <>
+                           <Text className={styles['subsidy_count']}>{`+${item.subsidyAmount}`}</Text>
+                           <Text className={styles['subsidy_unit']}>元/小时补贴</Text>
+                        </>
+                      )
+                    }
+                    { item.registerAward && (
+                        <>
+                          <Text className={styles['subsidy_award']}>入职即奖<Text className={styles['subsidy_money']}>1288</Text>元</Text>
+                        </>
+                      )
+                    }
                   </Text> 
-                )
               }
-              
             </View>
             <View className={styles.tags}>
               {

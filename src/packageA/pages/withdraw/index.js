@@ -134,7 +134,7 @@ const Withdraw = () => {
     getWalletInfo();
     getBankInfo();
   })
-  const isButtonActive = useMemo(() => !!(regExp.money(form.money.value) && form.money.value !== '' && form.money.value !== '0.00' && form.money.value < balance), [form]);
+  const isButtonActive = useMemo(() => !!(regExp.money(form.money.value) && form.money.value !== '' && form.money.value !== '0.00' && Number(form.money.value) <= Number(balance)), [form]);
   return  (
     <View className={styles.withdraw}>
       <View className={styles.title}>到账银行</View>

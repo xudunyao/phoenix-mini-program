@@ -117,7 +117,7 @@ const BindCard = () => {
         success: () => {
          setTimeout(() => {
           Taro.navigateBack();
-         }, 2000);
+         }, 1000);
         }
       })
     } catch (err) {

@@ -50,16 +50,20 @@ const icon = {
 }
 const ProcessItem = ({ award, status,index,stage,getDetail}) => {
   const handleClick = async (step,state) => {
-    if(step === 'FINISHED' || state === 'UNDONE'){
+    if(state === 'FINISHED' || state === 'UNDONE'){
       showToast({
         title: `${state === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
         icon: 'none',
       })
       return ;
     }
+    let res = null;
     try{
-      const fetchKey = register[step] ? 'receiveMoreAward' : 'receiveEntrySuccessAward';
-      const res = await httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? fetchKey : 'receiveRegisterAward'}/${step}`);
+      if(register[step]){
+        res = await httpRequest.put(`phoenix-center-backend/client/register/receiveMoreAward/${step}`);
+      }else{
+        res = await httpRequest.put(`phoenix-center-backend/client/register/${step === 'ENTRY_SUCCESS' ? 'receiveEntrySuccessAward' : 'receiveRegisterAward'}/${step}`);
+      }
       if (res.code ==! 0) {
         throw new Error(res.msg);
       }
@@ -151,7 +155,7 @@ const Invitation = () => {
         url: '/pages/jobList/jobList',
       })
     }
-    if(value === 'THIRD_ENTRY_CLOCK_IN_30_DAYS'){
+    if(value === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' || value === 'ENTRY_SUCCESS'){
       Taro.navigateTo({
         url: '/packageA/pages/wallet/index',
       })
@@ -207,7 +211,7 @@ const Invitation = () => {
         </View>
         <View className={styles['reward-item-wrapper']}>
           {
-            entryAwardStages.map((item,index) =>  <ProcessItem {...item} index={index}></ProcessItem> )
+            entryAwardStages.map((item,index) =>  <ProcessItem {...item} index={index} getDetail={getRegisterDetail}></ProcessItem> )
           }
         </View>
         <Progress size={4} percentage={entryProgress} />
@@ -221,7 +225,7 @@ const Invitation = () => {
                   <Text>{item.desc.substring(4)}</Text>
                 </View>
                 {
-                  item.stage === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' && item.status === 'ENTRY_SUCCESS' ? 
+                  item.stage === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' && item.status === 'FINISHED' ? 
                   (<View className={styles['award-register-btn']} onClick={()=>handleRegister(item?.stage)}>去提现</View>): null
                 }
               </View>

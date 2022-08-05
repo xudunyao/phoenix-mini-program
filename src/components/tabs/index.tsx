@@ -1,4 +1,4 @@
-import {  View,Swiper,SwiperItem} from '@tarojs/components'
+import {  View,Swiper,SwiperItem } from '@tarojs/components'
 import { Props } from './type';
 import './styles.scss';
 
@@ -24,13 +24,20 @@ const Tabs: React.FC<Props> = (
                   onClick={() => onTabClick(index)}
                   className={`${current === index ? 'tab-item-active' : 'tab-item-inactive'}`}
                   key={index}
+                  style={item.background && {
+                    width:'70px',
+                    height:'20px',
+                    backgroundImage: `url(${item.background})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                  }}
                 >
-                  {item.title}
+                  {!item.background && item.title }
                 </View>
                 {
-                  extra && current === index ? extra : (<view className={current === index ? 'tab-line':'tab-empty'}></view>)
+                  extra && current === index ? extra : (<View className={current === index ? 'tab-line':'tab-empty'}></View>)
                 }
-                
               </view>
             )
           })

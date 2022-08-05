@@ -10,5 +10,6 @@ export type Props = {
   extra?: JSX.Element|string;
 };
 type Tab = {
-  title: string;
+  title: string ;
+  background?: string;
 }
