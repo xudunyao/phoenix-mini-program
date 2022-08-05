@@ -50,7 +50,7 @@ const icon = {
 }
 const ProcessItem = ({ award, status,index,stage,getDetail}) => {
   const handleClick = async (step,state) => {
-    if(s === 'FINISHED' || state === 'UNDONE'){
+    if(step === 'FINISHED' || state === 'UNDONE'){
       showToast({
         title: `${state === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
         icon: 'none',
@@ -151,7 +151,7 @@ const Invitation = () => {
         url: '/pages/jobList/jobList',
       })
     }
-    if(value === 'ENTRY_SUCCESS' || value === 'THIRD_ENTRY_CLOCK_IN_30_DAYS'){
+    if(value === 'THIRD_ENTRY_CLOCK_IN_30_DAYS'){
       Taro.navigateTo({
         url: '/packageA/pages/wallet/index',
       })
@@ -221,7 +221,7 @@ const Invitation = () => {
                   <Text>{item.desc.substring(4)}</Text>
                 </View>
                 {
-                  item.stage === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' ? 
+                  item.stage === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' && item.status === 'ENTRY_SUCCESS' ? 
                   (<View className={styles['award-register-btn']} onClick={()=>handleRegister(item?.stage)}>去提现</View>): null
                 }
               </View>

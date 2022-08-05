@@ -81,6 +81,12 @@
   height: 17Px;
   margin-top:8Px;
 }
+.inactive{
+  opacity: 0.5;
+}
+.active{
+  opacity: 1;
+}
 .withdraw-all{
   color:$color-medium-slateBlue;
 }

@@ -159,6 +159,26 @@ const Index = () => {
     })
    }
   } 
+  const handleHomePage = async () => {
+    try {
+      const res = await httpRequest.post(`phoenix-center-backend/client/noauth/track/record`,{
+        data: {
+          page: 'home',
+          memberId: auth?.userid,
+          event: 'home_page_view',
+          type: 'view',
+          channelNo: Taro.getStorageSync(storageKeys.scene),
+          time: new Date().getTime(),
+          openId: auth?.openid,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+    } catch (err) {
+      console.log('err',err)
+    }
+  }
   useDidShow(() => {
     scrollTop.current = 0;
     setTabList(tabLists);
@@ -175,6 +195,7 @@ const Index = () => {
   });
   useEffect(() => {
     getPopAds();
+    handleHomePage();
     handleAuthLocation();
   },[]);
   return (

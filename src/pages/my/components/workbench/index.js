@@ -65,6 +65,7 @@ const Workbench = (
   }
 ) => {
   const [visible, setVisible] = useState(false);
+  const [isRealName,setIsRealName] = useState(false);
   const [walletInfo, setWalletInfo] = useState(0);
   const handleClick = (item) => {
     if (!auth.info.token) {
@@ -89,11 +90,8 @@ const Workbench = (
       })
     }
     if (item.card) {
-      if (walletInfo.disable) {
-        showToast({
-          title: '您的账户异常请联系管理员',
-          icon: 'none',
-        })
+      if(!validation){
+        setIsRealName(true);
         return;
       }
       if (walletInfo.bind) {
@@ -169,6 +167,29 @@ const Workbench = (
             type: 'primary',
             size: 'mini'
           }]
+        }
+      />
+      <Dialog
+        maskClosable
+        visible={isRealName}
+        content='您还未进行实名认证'
+        actions={
+        [{
+          title: '下次再说',
+          onClick: () => { setIsRealName(false) },
+          type: 'default',
+          size: 'mini'
+        }, {
+          title: '去实名',
+          onClick: () => {
+            setIsRealName(false)
+            Taro.navigateTo({
+              url: '/pages/auth/index'
+            })
+          },
+          type: 'primary',
+          size: 'mini'
+        }]
         }
       />
     </>

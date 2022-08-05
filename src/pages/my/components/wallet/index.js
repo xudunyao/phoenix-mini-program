@@ -12,16 +12,14 @@ const Wallet = ({
   notLogin,
 }) => {
   const [walletInfo, setWalletInfo] = useState(0);
+  const [visible, setVisible] = useState(false);
   const handleClick = () => {
     if (!auth.info.token) {
       notLogin();
       return;
     }
     if (!walletInfo.validation) {
-      showToast({
-        title: '请先完成实名认证',
-        icon: 'none',
-      })
+      setVisible(true);
       return;
     }
     if (walletInfo.disable) {
@@ -60,6 +58,29 @@ const Wallet = ({
           去提现
         </View>
       </View>
+      <Dialog
+        maskClosable
+        visible={visible}
+        content='您还未完成实名认证，是否先去实名认证?'
+        actions={
+          [{
+            title: '下次再说',
+            onClick: () => { setVisible(false) },
+            type: 'default',
+            size: 'mini'
+          }, {
+            title: '去认证',
+            onClick: () => {
+              setVisible(false)
+              Taro.navigateTo({
+                url: '/pages/auth/index'
+              })
+            },
+            type: 'primary',
+            size: 'mini'
+          }]
+        }
+      />
     </>
   )
 };

@@ -133,16 +133,9 @@ const Login = () => {
         Taro.setStorageSync(storageKeys.USERID, res.data.userId);
         Taro.setStorageSync(storageKeys.TOKEN, res.data.jwt);
         auth.setInfo(res.data);
-        if(Taro.getCurrentPages().length > 1 ){
-          console.log('aaaaaaa',Taro.getCurrentPages())
-          Taro.navigateBack({
-            delta: 2,
-          })
-        }else{
-          Taro.switchTab({
-            url: '/pages/jobList/jobList'
-          })
-        }
+        Taro.switchTab({
+          url: '/pages/jobList/jobList'
+        })
       }
     } catch (err) {
       showToast({

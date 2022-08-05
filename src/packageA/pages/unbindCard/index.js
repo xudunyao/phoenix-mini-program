@@ -56,8 +56,8 @@ const UnbindCard = () => {
         isTipsShow ? (
           <View className={styles.prompt}>
             <Text>暂只支持绑定一个银行卡账号，若要更换请先解绑</Text>
-            <View style={{ marginLeft: 'auto' }}>
-              <IconFont name='close' size={16} color='#F5B253' onClick={() => { setIsTipsShow(false) }} />
+            <View style={{ marginLeft: 'auto' }} onClick={() => setIsTipsShow(false)} >
+              <IconFont name='close' size={16} color='#F5B253' />
             </View>
           </View>
         ) : null

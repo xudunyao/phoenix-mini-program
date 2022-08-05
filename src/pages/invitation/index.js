@@ -100,14 +100,14 @@ const Invitation = () => {
             })
           }
         })
-        return;
+      }else{
+        Taro.navigateTo({
+          url: '/packageA/pages/savePoster/index'
+        })
       }
     }catch(err){
       console.log({err})
     }
-    Taro.navigateTo({
-      url: '/packageA/pages/savePoster/index'
-    })
   }
   const handleRuleClick = () => {
     Taro.navigateTo({

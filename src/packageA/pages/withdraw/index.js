@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { View,Image, Text } from '@tarojs/components';
 import { FormItem, Input } from '@/components/form';
@@ -55,17 +55,6 @@ const Withdraw = () => {
       console.log('err',err)
     }
   }
-  const handleInputBlur = (type) => {
-    if (!regExp.money(form.money.value) && type === 'money') {
-      setFormFieldError('money', '提现金额格式不正确');
-      return false;
-    }
-    if(form.money.value > balance){
-      setFormFieldError('money', '提现金额不能大于余额');
-      return false;
-    }
-    return true;
-  }
   const handleInputFocus = (type) =>{
     setFormFieldError(type,'');
   }
@@ -79,9 +68,6 @@ const Withdraw = () => {
     })
   }
   const handleWithdraw = async () => {
-    if(!handleInputBlur('money')){
-      return;
-    }
     try {
       const res = await httpRequest.post('phoenix-center-backend/client/wallet/withdraw',{
         data: {
@@ -131,6 +117,14 @@ const Withdraw = () => {
   const handleClick = () => {
     Taro.navigateTo({
       url: '/packageA/pages/unbindCard/index',
+      events: {
+        acceptDataFromOpenedPage: function(data) {
+          console.log(data)
+        },
+        someEvent: function(data) {
+          console.log(data)
+        }
+      },
       success: function(res) {
         res.eventChannel.emit('acceptDataFromOpenerPage', { data: bankInfo })
       }
@@ -140,6 +134,7 @@ const Withdraw = () => {
     getWalletInfo();
     getBankInfo();
   })
+  const isButtonActive = useMemo(() => !!(regExp.money(form.money.value) && form.money.value !== '' && form.money.value !== '0.00' && form.money.value < balance), [form]);
   return  (
     <View className={styles.withdraw}>
       <View className={styles.title}>到账银行</View>
@@ -160,10 +155,18 @@ const Withdraw = () => {
             <Input
               prefix={<View className={styles['label-text']}>¥</View>}
               value={form.money.value}
-              onInput={(value) => setFormFieldValue('money', value)}
+              onInput={(value) => {
+                if (regExp.money(value) || /^(([1-9]\d{0,9})|0)(\.)?$/.test(value) || value === '') {
+                  setFormFieldValue('money', value);
+                }else{
+                  setFormFieldValue('money',form.money.value);
+                }
+                if(value > balance){
+                  setFormFieldError('money','提现金额不能大于余额');
+                }
+              }}
               error={!!form.money.error}
               onFocus={() =>{ handleInputFocus('money') }}
-              onBlur={() =>{ handleInputBlur('money') }}
               placeholder=''
             />
           </FormItem>
@@ -174,7 +177,7 @@ const Withdraw = () => {
            :<View className={styles['withdraw-amount-tips']} />
         }
       </View>
-      <View className={styles['withdraw-button']} onClick={handleWithdraw}>
+      <View className={`${styles['withdraw-button']} ${isButtonActive ? styles.active : styles.inactive}`} onClick={isButtonActive && handleWithdraw}>
         <Button type='primary'>确认</Button>
       </View>
     </View>

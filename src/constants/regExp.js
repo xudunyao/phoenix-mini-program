@@ -11,7 +11,7 @@ const name = (val) => {
   return reg.test(val);
 }
 const money = (val) => {
-  const reg = /^\d+(\.\d{2})?$/;
+  const reg = /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/;
   return reg.test(val);
 }
 const sms = (val) => {
