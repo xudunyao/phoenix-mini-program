@@ -20,6 +20,7 @@
   background-repeat: no-repeat;
 }
 .registry-message{
+  height: 50px;
   margin-left: 10px;
   flex-grow:1;
 }
@@ -80,15 +81,16 @@
 }
 .phone-number{
   width: 93px;
+  height: 16px;
+  margin-top: 5px;
+  line-height: 16px;
   font-size: 16px;
   font-weight: 500;
   color: $color-activity-text;
 }
 .reward{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 120px;
+  position: relative;
+  width: 135Px;
   height: 50px;
   font-size: 12px;
   font-weight: 400;
@@ -96,10 +98,136 @@
 }
 .rewardOffset{
   margin-right: 12Px;
+  margin-top: 5px;
+  text-align: right;
+  font-size: 12Px;
+  line-height: 16px;
 }
 .logoImage{
   width: 10px;
   height: 10px;
   margin-right: 4px;
   margin-top: 3px;
+}
+.time {
+  position: absolute;
+  top: -18Px;
+  width: 135Px;
+  height: 18Px;
+  text-align: center;
+  background: #FFC7B8;
+  border-radius: 0px 5px 0px 9px;
+}
+.timeText {
+  line-height: 18Px;
+  font-size: 10Px;
+  color: #4F0606;
+  opacity: 0.6;
+}
+.content-item-disable{
+  height: 87px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #F1F1F1;
+  margin: 0px 9px 8px 9px;
+  border-radius: 5px;
+}
+.image-disable{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+  background-image: url(../../images/headPortraitDisable.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.registry-status-disable{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #AEAEAE;
+}
+.signUp-status-disable{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #AEAEAE;
+}
+.interview-status-disable{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #AEAEAE;
+}
+.pass-status-disable{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #AEAEAE;
+}
+.success-status-disable{
+  height: 16px;
+  padding: 0 6px;
+  margin-top: 10px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: $color-white;
+  border-radius: 10px;
+  background-color: #AEAEAE ;
+}
+.phone-number-disable{
+  width: 93px;
+  height: 16px;
+  margin-top: 5px;
+  line-height: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #AAAAAA;
+  opacity: 0.6;
+}
+.reward-disable{
+  position: relative;
+  width: 135Px;
+  height: 50px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #959595;
+}
+.time-disable {
+  position: absolute;
+  top: -18Px;
+  width: 135Px;
+  height: 18Px;
+  text-align: center;
+  background: #DBDBDB;
+  border-radius: 0px 5px 0px 9px;
+}
+.timeText-disable {
+  line-height: 18Px;
+  font-size: 10Px;
+  color: #ABABAB;
+  opacity: 0.6;
 }

@@ -1,5 +1,6 @@
 export default {
   date: 'YYYY/MM/DD',
+  dateRung: 'YYYY-MM-DD',
   time: 'HH:mm:ss',
   hourMin: 'HH:mm',
   dateTime: 'YYYY-MM-DD HH:mm:ss',
