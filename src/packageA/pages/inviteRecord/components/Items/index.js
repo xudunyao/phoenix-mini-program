@@ -123,7 +123,7 @@ const Items = ({ type }) => {
             </View>
           </View>
           <View className={styles['reward-disable']}>
-            <View className={styles['time-disable']}><Text className={styles['timeText-disable']}>注册时间：{item.registerTime && moment(item.registerTime).format(datetimeFormat.dateRung)}</Text></View>
+            <View className={styles['time-disable']}><Text className={styles['timeText-disable']}>注册时间：{item.registerTime && moment(item.registerTime).format(datetimeFormat.date)}</Text></View>
             <View className={styles.rewardOffset} >累计奖励：{item.award}元</View>
             {
               (() => {
@@ -152,7 +152,7 @@ const Items = ({ type }) => {
               </View>
             </View>
             <View className={styles.reward}>
-              <View className={styles.time}><Text className={styles.timeText}>注册时间：{item.registerTime && moment(item.registerTime).format(datetimeFormat.dateRung)}</Text></View>
+              <View className={styles.time}><Text className={styles.timeText}>注册时间：{item.registerTime && moment(item.registerTime).format(datetimeFormat.date)}</Text></View>
               <View className={styles.rewardOffset} >累计奖励：{item.award}元</View>
               {
                 (() => {

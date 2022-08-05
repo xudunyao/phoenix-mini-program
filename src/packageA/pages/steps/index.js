@@ -1,10 +1,11 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
+import Taro from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
+import { httpRequest } from '@/utils';
 import { View, Text } from '@tarojs/components';
 import { datetimeFormat } from '@/constants';
 import moment from 'moment';
 import numeral from 'numeral';
-import Taro,{ useDidShow } from '@tarojs/taro';
 import styles from  './steps.module.scss';
 
 const process = [
@@ -25,14 +26,24 @@ const process = [
 ]
 const Steps = () => {
   const [data, setData] = useState();
-  useDidShow(() => {
-    const pages = Taro.getCurrentPages()
-    const current = pages[pages.length - 1]
-    const eventChannel = current.getOpenerEventChannel()
-    eventChannel.on('acceptDataFromOpenerPage',(res)=>{
-    setData(res.data);
-    })
-  })
+
+  const getWithdrawInfo = async () => {
+    try {
+      const res = await httpRequest.post('phoenix-center-backend/client/wallet/fetchWithdraw');
+      if (res.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setData(res.data);
+    } catch (err) {
+      Taro.showToast({
+        title: `${err.message}`,
+        icon: 'none',
+      });
+    }
+  }
+  useEffect(() => {
+    getWithdrawInfo();
+  }, [])
   return  (
     <View className={styles.steps}>
       <View className={styles.process}>
@@ -67,7 +78,7 @@ const Steps = () => {
       <View className={styles.info}>
         <View className={styles['info-item']}>
           <View className={styles.type}>提现金额</View>
-          <View className={styles.value}>{ numeral(data?.balance).format('0,0.00')}</View>
+          <View className={styles.value}>{ numeral(data?.amount).format('0,0.00')}</View>
         </View>
         <View className={styles['info-item']}>
           <View className={styles.type}>到账银行卡</View>

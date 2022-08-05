@@ -225,23 +225,11 @@
   font-weight: 500;
 }
 .reward{
-  position: relative;
   margin-top:16px;
   width: 171px;
-  background: linear-gradient(90deg, #E2152D, rgba(255,125,67,0));
-}
-.reward-info{
-  width: 171px;
-  font-size: 14px;
+  padding-left: 40px;
+  line-height: 30px;
   color: $color-white;
-  text-align: center;
-}
-.reward-img{
-  position: absolute;
-  width: 31px;
-  height:30px;
-  top: -3px;
-  left: -12px;
   background-image: url('./img/reward.png');
   background-size: cover;
   background-position: center center;

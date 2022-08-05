@@ -50,7 +50,7 @@ const Item = (
             </View>
             <View className={`${styles['root-text']} ${styles.center}`}>
                <IconFont name='clock' color='#ccc' style={{marginRight:'4px'}} />
-               <Text>{ moment(data?.signUpTime).format(datetimeFormat.dateTime)}</Text>
+               <Text>{ moment(data?.signUpTime).format(datetimeFormat.date)}</Text>
             </View>
         </View>
     </View>

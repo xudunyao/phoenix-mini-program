@@ -167,10 +167,7 @@ const Invitation = () => {
             interview?.map((item, index) => <ProcessItem key={index} {...item} />)
           }
         </View>
-        <View className={styles['reward']}>
-          <View className={styles['reward-img']}></View>
-          <View className={styles['reward-info']}>累计奖金：{numeral(totalAward).format('0,0.00')}元</View>
-        </View>
+        <View className={styles['reward']}>累计奖金：{numeral(totalAward).format('0,0.00')}元</View>
         <View className={styles['button']} onClick={handleInviteRecord}></View>
       </View>
       <View className={`${styles.block} ${styles.activity}`}>

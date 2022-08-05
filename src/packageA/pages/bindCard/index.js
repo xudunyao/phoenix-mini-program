@@ -116,7 +116,9 @@ const BindCard = () => {
         duration: 1500,
         success: () => {
          setTimeout(() => {
-          Taro.navigateBack();
+          Taro.switchTab({
+            url: '/pages/my/index'
+          })
          }, 1000);
         }
       })

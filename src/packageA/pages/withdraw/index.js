@@ -80,21 +80,6 @@ const Withdraw = () => {
       setForm(initForm);
       Taro.navigateTo({
         url: '/packageA/pages/steps/index',
-        events: {
-          acceptDataFromOpenedPage: function(data) {
-            console.log(data)
-          },
-          someEvent: function(data) {
-            console.log(data)
-          }
-        },
-        success: function (result) {
-          result.eventChannel.emit('acceptDataFromOpenerPage', { data: {
-            ...bankInfo,
-            balance: form.money.value,
-          }
-        })
-        }
       })
     } catch (err) {
       showToast({

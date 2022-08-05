@@ -26,7 +26,7 @@ const List = ({
         data: {
           searchEnum: name,
           ...search,
-          registerAward: title === 'award' ? true : false,
+          registerAward: title === 'award',
         }
       });
       if (res?.code !== 0) {
@@ -78,7 +78,7 @@ const List = ({
                 <Text className={styles['price_unit']}>{item.orderPriceType}</Text>
               </Text>
               {
-                 item.subsidyAmount || item.subsidyAmount && <Text className={styles.subsidy}>
+                 item.subsidyAmount || item.registerAward && <Text className={styles.subsidy}>
                     {
                       item.subsidyAmount && (
                         <>

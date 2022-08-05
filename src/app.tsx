@@ -9,7 +9,7 @@ const App = ({ children }) => {
   const setScene = () => {
     if (isH5) {
       const { scene } = router;
-      scene && Taro.setStorageSync('scene', scene);
+      scene && Taro.setStorageSync('SCENE', scene);
     }else{
       const url = children[children?.length - 1]?.key;
       const sceneParams = url ? url?.split('?')[1] : '';
@@ -18,7 +18,7 @@ const App = ({ children }) => {
         const [key, value] = item.split('=')
         sceneObj[key] = value
       })
-      sceneObj?.scene && Taro.setStorageSync('scene', sceneObj.scene);
+      sceneObj?.scene && Taro.setStorageSync('SCENE', sceneObj.scene);
     }
   }
   setScene();
