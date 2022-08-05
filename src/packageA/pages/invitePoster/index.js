@@ -17,6 +17,6 @@ const InvitePoster = () => {
       })
     }
   })
-  return <View onClick={handleClick} className={styles.content} style={{backgroundImage:  `url(${backgroundImg.poster})`}}></View>
+  return <View><View onClick={handleClick} className={styles.content} style={{backgroundImage:  `url(${backgroundImg.poster})`}}><View className={styles.img}></View></View></View>
 }
 export default InvitePoster;
