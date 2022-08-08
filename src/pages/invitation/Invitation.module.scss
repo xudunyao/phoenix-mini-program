@@ -3,7 +3,7 @@
 .container{
   padding-top: 130px;
   padding-bottom: 65px;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 .rule{
@@ -229,6 +229,7 @@
   width: 171px;
   padding-left: 40px;
   line-height: 30px;
+  font-size: 14px;
   color: $color-white;
   background-image: url('./img/reward.png');
   background-size: cover;
