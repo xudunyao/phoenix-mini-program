@@ -2,7 +2,8 @@
 
 .content{
   height: 100%;
-  background-size: 100% auto;
+  background-color: #E9202F;
+  background-size: contain;
   background-repeat: no-repeat;
   :global(.tabs) {
     flex: 1;
