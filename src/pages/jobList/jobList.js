@@ -5,7 +5,7 @@ import { duration } from 'moment';
 import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
 import { View, Image, ScrollView,WebView  } from '@tarojs/components';
 import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal } from '@/components';
-import { resultImg, storageKeys } from '@/constants';
+import { resultImg, storageKeys, defaultBanner } from '@/constants';
 import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
 import Swiper from './components/swiper/index'
@@ -31,6 +31,14 @@ const tabLists = [{
   key: 'PRAT_TIME_WORKER',
   title: '小时工',
 }];
+
+const defaultImages = defaultBanner.map((item,index)=>{
+  return {
+    id: index,
+    imageUrl: item?.defaultImg,
+    jumpUrl: ''
+  }
+}) 
 
 const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
@@ -106,7 +114,7 @@ const Index = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
-      setImageBanners(res.data);
+      setImageBanners(res.data.length> 0 ? res.data : defaultImages);
     } catch (err) {
       showToast({
         icon: 'none',

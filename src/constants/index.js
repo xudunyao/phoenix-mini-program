@@ -5,3 +5,4 @@ export { default as message } from './message';
 export { default as datetimeFormat } from './datetimeFormat';
 export { default as imagesKeys } from './imagesKeys';
 export { default as pageKeys } from './page';
+export { default as defaultBanner } from './defaultBanner';
