@@ -181,7 +181,7 @@ const Index = () => {
           memberId: auth?.userid,
           event: 'home_page_view',
           type: process.env.TARO_ENV === 'h5' ? 'H5' : 'WECHAT',
-          scene: Taro.getStorageSync(storageKeys.scene),
+          scene: Taro.getStorageSync(storageKeys.scene) || '',
           time: new Date().getTime(),
           openId: auth?.openid,
         }

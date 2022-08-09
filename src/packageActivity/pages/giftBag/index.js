@@ -1,54 +1,24 @@
 import { useState } from 'react';
 import Taro,{ useDidShow,showToast } from '@tarojs/taro';
 import { View,Text} from '@tarojs/components';
-import { InfiniteScroll,Result} from '@/components';
+import { InfiniteScroll,Result } from '@/components';
 import { httpRequest } from '@/utils';
 import numeral from 'numeral';
 import backgroundImg from '@/constants/backgroundImg'
 import { resultImg } from '@/constants';
+import { giftImg, GiftStyles, GiftStatus, register, entry,rewardModalBg} from './constants';
 import  Progress from './components/progress'
 import ListItem  from './components/listItem';
+import RewardModal from './components/rewardModal'
 import styles from "./GiftBag.module.scss";
 
-const giftImg = {
-  "GIFT":'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/gift.png',
-  "UNDONE": 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/undone.png',
-  "PENDING": 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/pending.png',
-  "FINISHED": 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/finished.png',
-}
-const GiftStyles = Object.freeze({
-  "UNDONE":"undone",
-  "PENDING":"pending",
-  "FINISHED":"finished",
-})
-const GiftStatus = Object.freeze({
-  "UNDONE":"未完成",
-  "PENDING":"待领取",
-  "FINISHED":"已完成",
-})
-const register  = Object.freeze(
-  {
-    "FIRST_ENTRY_CLOCK_IN_7_DAYS":25,
-    "FIRST_ENTRY_CLOCK_IN_30_DAYS":50,
-    "SECOND_ENTRY_CLOCK_IN_30_DAYS":75,
-    "THIRD_ENTRY_CLOCK_IN_30_DAYS":100,
-  }
-)
-const entry  = Object.freeze(
-  {
-    "REGISTER_SUCCESS":20,
-    "FIRST_SIGNUP":40,
-    "ARRIVE_INTERVIEW":60,
-    "INTERVIEW_PASS":80,
-    "ENTRY_SUCCESS":100,
-  }
-)
 const icon = {
   src:resultImg.empty,
   width: 120,
   height: 120,
 }
 const ProcessItem = ({ award, status,index,stage,getDetail}) => {
+  const [visible, setVisible] = useState(false);
   const handleClick = async (step,state) => {
     if(state === 'FINISHED' || state === 'UNDONE'){
       showToast({
@@ -57,6 +27,7 @@ const ProcessItem = ({ award, status,index,stage,getDetail}) => {
       })
       return ;
     }
+    setVisible(true)
     let res = null;
     try{
       if(register[step]){
@@ -67,10 +38,6 @@ const ProcessItem = ({ award, status,index,stage,getDetail}) => {
       if (res.code ==! 0) {
         throw new Error(res.msg);
       }
-      showToast({
-        title: '领取成功',
-        icon: 'none',
-      })
       getDetail();
     } catch(err) {
       showToast({
@@ -79,11 +46,23 @@ const ProcessItem = ({ award, status,index,stage,getDetail}) => {
       })
     }
   }
+  const handleClose = () => {
+    setVisible(false);
+  }
   return (
+    <>
     <View className={styles['reward-item']} style={{background:`url(${index === 0 && stage !== 'FIRST_ENTRY_CLOCK_IN_7_DAYS' ? giftImg['GIFT'] : giftImg[status]})`,backgroundSize:'cover'}} onClick={() => {handleClick(stage,status)}}>
       <View className={`${styles['reward-tips']} ${GiftStyles[status]}`}>{GiftStatus[status]}</View>
       <View className={styles['reward-count']}>{award}</View>
     </View>
+    <RewardModal
+      maskClosable
+      visible={visible}
+      award={award}
+      imageUrl={rewardModalBg}
+      onClose={handleClose}
+    />
+    </>
   )
 }
 const Invitation = () => {
@@ -256,5 +235,4 @@ const Invitation = () => {
     </View>
   )
 }
-
 export default Invitation;
