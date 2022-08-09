@@ -57,6 +57,7 @@ const Suggestion = () => {
       if( res.code !== 0){
         throw new Error(res.msg);
       }
+      setFontCount(0);
       setIsSuccessShow(true);
     } catch (err) {
       showToast({

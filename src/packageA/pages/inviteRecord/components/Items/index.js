@@ -66,6 +66,8 @@ const status = [
 const Items = ({ type }) => {
   const icon = {
     src: resultImg.empty,
+    width: 140,
+    height: 140,
   }
   const [key, setKey] = useState('');
   const handleClick = async (id) => {

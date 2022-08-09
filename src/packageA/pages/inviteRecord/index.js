@@ -112,8 +112,8 @@ const InviteRecord = () => {
           }
         </View>
         <View style={{ height: "240px" }}><Items type={type}></Items></View>
-        <View className={styles.withdrawCash} onClick={handleClick} >去提现</View>
       </View>
+      <View className={styles.withdrawCash} onClick={handleClick} >去提现</View>
     </View>
   )
 };

@@ -28,7 +28,6 @@ const Result: React.FC<Props> = ({
       <View className='result-space'>
        {extra?<Button title={extra} onClick={hanldClick}></Button>:null}
       </View>
-      
     </View>
   )
 }
