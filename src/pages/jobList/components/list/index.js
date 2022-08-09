@@ -89,7 +89,7 @@ const List = ({
                     }
                     { item.registerAward && (
                         <>
-                          <Text className={styles['subsidy_award']}>入职即奖<Text className={styles['subsidy_money']}>1288</Text>元</Text>
+                          <Text className={styles['subsidy_award']}>入职即奖<Text className={styles['subsidy_money']}>1288.8</Text>元</Text>
                         </>
                       )
                     }

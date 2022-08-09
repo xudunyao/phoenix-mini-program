@@ -8,10 +8,11 @@ import avatar from './img/avatar.png';
 
 const Auth = (
   {
-    validation,
+    infoData,
     notLogin,
   }
 ) => {
+  console.log('infoData',infoData);
   const handleAuthClick = () => {
     if(!auth.info.token){
       notLogin();
@@ -25,11 +26,18 @@ const Auth = (
     <View className={styles.auth}>
         <View className={styles.center}>
           <Image src={avatar} className={styles.img}  />
-          <Text className={styles.name}>寻工鸟用户</Text>
+          {
+            infoData?.validation? 
+            <View className={styles.userInfo}>
+              <Text>张三</Text>
+              <Text>{1288+'****'+111}</Text>
+            </View> : <Text className={styles.name}>寻工鸟用户</Text>
+          }
+          
         </View>
-        <View className={`${styles.center} ${styles.base} ${validation ? styles.active : styles.inactive }`} onClick={validation || handleAuthClick}>
-          <Image src={validation ? active_auth : inactive_auth} className={styles.icon}  />
-          <Text>{validation ? '已认证' :'去认证'}</Text>
+        <View className={`${styles.center} ${styles.base} ${infoData?.validation ? styles.active : styles.inactive }`} onClick={infoData?.validation || handleAuthClick}>
+          <Image src={infoData?.validation ? active_auth : inactive_auth} className={styles.icon}  />
+          <Text>{infoData?.validation ? '已认证' :'去认证'}</Text>
         </View>
     </View>
   )

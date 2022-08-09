@@ -47,3 +47,11 @@
   background: linear-gradient(270deg, #80A2FF 0%, #5482FF 100%);
   color: $color-white;
 }
+.userInfo{
+  display: flex;
+  height: 60Px;
+  font-size: 20Px;
+  font-weight: 600;
+  line-height: 30Px;
+  flex-direction: column;
+}

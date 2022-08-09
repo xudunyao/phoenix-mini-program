@@ -10,6 +10,7 @@ import styles from  './My.module.scss';
 
 const My = () => {
   const [isValidation,setIsValidation] = useState(false);
+  const [infoData,setInfoData] = useState();
   const [visible, setVisible] = useState(false);
   const isH5 = process.env.TARO_ENV === 'h5';
   const getUserInfo = async () => {
@@ -19,6 +20,7 @@ const My = () => {
        throw new Error(res?.msg);
       }
       setIsValidation(res?.data?.validation);
+      setInfoData(res?.data);
     } catch (err) {
       showToast({
         icon: 'none',
@@ -43,7 +45,7 @@ const My = () => {
   return  (
     <>
       <View className={styles.my}>
-        <Auth validation={isValidation} notLogin={notLogin} />
+        <Auth infoData={infoData} notLogin={notLogin} />
         <Wallet notLogin={notLogin} />
         <Check></Check>
         <Workbench validation={isValidation} notLogin={notLogin} />
