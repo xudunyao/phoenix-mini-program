@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { View, Image, Button, Text } from '@tarojs/components';
 import Taro, { useShareAppMessage, showToast, useDidShow, useDidHide, useRouter } from '@tarojs/taro';
 import backgroundImg from '@/constants/backgroundImg';
+import { inviteCover } from '@/constants'
 import numeral from 'numeral';
 import { httpRequest } from '@/utils';
 import styles from "./Invitation.module.scss";
@@ -127,8 +128,9 @@ const Invitation = () => {
       console.log({err})
     }
     return {
-      title: '邀请好友',
-      path: `/packageA/pages/invitePoster/index?scene=${res?.data}`
+      title: '你的好友邀请你领取【1288.8元】大礼包活动！',
+      path: `/packageA/pages/invitePoster/index?scene=${res?.data}`,
+      imageUrl:inviteCover.clickCover,
     }
   }
   )

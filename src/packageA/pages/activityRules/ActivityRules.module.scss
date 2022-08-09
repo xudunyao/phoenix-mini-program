@@ -1,6 +1,7 @@
 @import '@/scss/variable.scss';
 .userGift {
     padding-top: 155px;
+    padding-bottom: 16px;
     background-size: 100% auto;
     background-color: #E1172F;
     background-repeat: no-repeat;
@@ -8,11 +9,10 @@
 .body {
     margin-left: 12px;
     margin-right: 12px;
-    margin-bottom: 16px;
     border-radius: 12px;
     padding-top: 16px;
     padding-bottom: 20px;
-    background: linear-gradient(180deg, #FFCDD7 0%, #F38894 100%);;
+    background: linear-gradient(180deg, #FFCDD7 0%, #F38894 100%);
 }
 .activityObject {
     position: relative;
