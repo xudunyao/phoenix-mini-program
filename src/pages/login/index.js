@@ -25,7 +25,7 @@ const initForm = {
 const Login = () => {
   const [form, setForm] = useState(initForm);
   const [sendStatus, setSendStatus] = useState(true);
-  const [isAble, setIsAble] = useState(false);
+  const [isClick,setIsClick] = useState(false);
   const scene = Taro.getStorageSync('SCENE')|| null;
   const isH5 = process.env.TARO_ENV === 'h5';
   const setFormFieldValue = (fieldName, value) => {
@@ -68,7 +68,6 @@ const Login = () => {
       success: async (res) => {
         if (res.code) {
           try {
-            setIsAble(true);
             const resInfo = await httpRequest.post('phoenix-center-backend/client/noauth/wechat/login/wxCustomizePhone',{
               data: {
                 mobile: form.phone.value,
@@ -108,8 +107,6 @@ const Login = () => {
               icon: 'none',
               title: `${err.message}`
             })
-          } finally{
-            setIsAble(false);
           }
         } else {
           showToast({
@@ -122,7 +119,6 @@ const Login = () => {
   };
   const webLogin = async () => {
     try {
-      setIsAble(true)
       const res = await httpRequest.post('phoenix-center-backend/client/noauth/h5/login',{
         data: {
           mobile: form.phone.value,
@@ -147,19 +143,25 @@ const Login = () => {
         icon: 'none',
         title: `${err?.message}`
       })
-    }finally{
-      setIsAble(false)
     }
   };
   const handleSubmit = async () => {
-    console.log('handleSubmit');
+    if(isClick){
+      Taro.showToast({
+        icon: 'none',
+        title: '请勿重复点击',
+      })
+      return;
+    }
+    setIsClick(true);
     if (validate()) {
      if(isH5){
-      webLogin();
+      await webLogin();
      } else {
-      miniLogin()
+      await miniLogin()
      }
     }
+    setIsClick(true);
   };
   const getCode = async (cb) => {
     
@@ -219,7 +221,7 @@ const Login = () => {
           error={!!form.sms.error}
         />
       </FormItem>
-      <Button type='primary' onClick={handleSubmit} disabled={isAble}>
+      <Button type='primary' onClick={handleSubmit}>
         登录
       </Button>
       </View>

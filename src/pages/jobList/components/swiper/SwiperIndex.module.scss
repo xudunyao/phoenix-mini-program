@@ -28,9 +28,10 @@
   &-dot{
     width: 11px;
     height: 4px;
-    background: $color-primary;
+    background: $color-white;
     margin-left: 5px;
     border-radius: 2px;
+    opacity: 0.5;
     
   }
   &-dot_active{
@@ -39,5 +40,6 @@
     background: $color-dot;
     border-radius: 4px;
     margin-left: 5px;
+    opacity: 1;
   }
 }

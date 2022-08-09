@@ -23,6 +23,7 @@ const initForm = {
   },
 }
 const Withdraw = () => {
+  const [isClick, setIsClick] = useState(false);
   const [form, setForm] = useState(initForm);
   const [balance, setBalance] = useState(0);
   const [bankInfo, setBankInfo] = useState({});
@@ -68,6 +69,14 @@ const Withdraw = () => {
     })
   }
   const handleWithdraw = async () => {
+    if(isClick){
+      Taro.showToast({
+        icon: 'none',
+        title: '请勿重复点击',
+      })
+      return;
+    }
+    setIsClick(true);
     try {
       const res = await httpRequest.post('phoenix-center-backend/client/wallet/withdraw',{
         data: {
@@ -86,6 +95,8 @@ const Withdraw = () => {
         icon: 'none',
         title: `${err.message}`,
       })
+    }finally{
+      setIsClick(false);
     }
   }
   const getBankInfo = async () => {

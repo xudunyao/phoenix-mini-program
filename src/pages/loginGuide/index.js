@@ -31,8 +31,6 @@ const LoginGuide = () => {
   };
   const getPhoneNumber = (e) => {
     const { iv, encryptedData, code } = e.detail;
-    console.log(code)
-   
     Taro.login({
       success: async (res) => {
         if (res.code) {
