@@ -161,7 +161,9 @@ const Login = () => {
       await miniLogin()
      }
     }
-    setIsClick(true);
+    setTimeout(()=>{
+      setIsClick(false);
+    },2000)
   };
   const getCode = async (cb) => {
     
