@@ -59,7 +59,7 @@ const List = ({
   return (
     <InfiniteScroll
       getData={getData}
-      pageSize={15}
+      pageSize={5}
       scrollY={scrollY}
       noDataComponent={
         <Result

@@ -6,7 +6,7 @@
 }
 .container {
   flex-direction: column;
-  height: calc(100vh - 1rpx);
+  height: calc(100% - 1px);
   background: linear-gradient(178deg, rgba(128, 162, 255, 0.11) 0%, rgba(255, 255, 255, 0) 54%, rgba(255, 255, 255, 0) 100%);
   :global(.tabs) {
     flex: 1;
