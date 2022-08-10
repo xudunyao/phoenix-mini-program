@@ -36,7 +36,7 @@ const initForm = {
   },
 }
 const sex = ['男', '女'];
-const jobType = ['正式工','兼职工','派遣工'];
+const jobType = ['正式工','日结工','小时工'];
 const MyResume = () => {
   const [resumeInfo, setResumeInfo] = useState({});
   const [isDialogShow, setIsDialogShow] = useState(false);
