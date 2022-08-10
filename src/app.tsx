@@ -10,7 +10,6 @@ const App = ({ children }) => {
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter()
   const handleHomePage = async () => {
-    console.log('handleHomePage');
     try {
       const res = await httpRequest.post(`phoenix-center-backend/client/noauth/track/record`,{
         data: {

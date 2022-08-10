@@ -12,7 +12,6 @@ const Auth = (
     notLogin,
   }
 ) => {
-  console.log('infoData',infoData);
   const handleAuthClick = () => {
     if(!auth.info.token){
       notLogin();
@@ -29,8 +28,8 @@ const Auth = (
           {
             infoData?.validation? 
             <View className={styles.userInfo}>
-              <Text>张三</Text>
-              <Text>{1288+'****'+111}</Text>
+              <Text>{infoData.realName}</Text>
+              <Text>{infoData.mobile}</Text>
             </View> : <Text className={styles.name}>寻工鸟用户</Text>
           }
           

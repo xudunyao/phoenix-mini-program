@@ -15,7 +15,7 @@ const My = () => {
   const isH5 = process.env.TARO_ENV === 'h5';
   const getUserInfo = async () => {
     try {
-      const res = await httpRequest.get('phoenix-center-backend/client/certification/info');
+      const res = await httpRequest.get('phoenix-center-backend/client/member/info');
       if(res?.code !== 0){
        throw new Error(res?.msg);
       }
