@@ -10,7 +10,7 @@ import styles from  './List.module.scss';
 
 const List = ({
   name,
-  title,
+  isReward,
   closeDialog,
   scrollY,
   handleSubmit,
@@ -26,7 +26,7 @@ const List = ({
         data: {
           searchEnum: name,
           ...search,
-          registerAward: title === 'award',
+          registerAward: isReward,
         }
       });
       if (res?.code !== 0) {
@@ -118,12 +118,14 @@ const List = ({
 List.propTypes = {
   name: PropTypes.string,
   scrollY: PropTypes.bool,
+  isReward: PropTypes.bool,
   handleSubmit: PropTypes.func,
 };
 
 List.defaultProps = {
   name: '',
   scrollY: false,
+  isReward: false,
   handleSubmit: () => {},
 };
 export default observer(List);

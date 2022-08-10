@@ -35,11 +35,16 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  white-space: nowrap;
   font-weight: bolder;
   font-size: 30px;
   color:$color-white;
   background: linear-gradient(0deg, #FEFDF7 0%, #FFF3C7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+.content-title{
+  white-space: nowrap;
+}
+.content-desc{
+  white-space: nowrap;
 }

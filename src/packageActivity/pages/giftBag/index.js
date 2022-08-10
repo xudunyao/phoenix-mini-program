@@ -6,7 +6,7 @@ import { httpRequest } from '@/utils';
 import numeral from 'numeral';
 import backgroundImg from '@/constants/backgroundImg'
 import { resultImg } from '@/constants';
-import { giftImg, GiftStyles, GiftStatus, register, entry,rewardModalBg} from './constants';
+import { giftImg, GiftStyles, GiftStatus, register, entry,rewardBg,rewardBgTips} from './constants';
 import  Progress from './components/progress'
 import ListItem  from './components/listItem';
 import RewardModal from './components/rewardModal'
@@ -20,15 +20,11 @@ const icon = {
 const ProcessItem = ({ award, status,index,stage,getDetail}) => {
   const [visible, setVisible] = useState(false);
   const handleClick = async (step,state) => {
+    let res = null;
     if(state === 'FINISHED' || state === 'UNDONE'){
-      showToast({
-        title: `${state === 'UNDONE' ? '还未达到红包领取条件，请努力完成哦！' : '红包已领取，请继续完成哦'}`,
-        icon: 'none',
-      })
       return ;
     }
     setVisible(true)
-    let res = null;
     try{
       if(register[step]){
         res = await httpRequest.put(`phoenix-center-backend/client/register/receiveMoreAward/${step}`);
@@ -59,7 +55,7 @@ const ProcessItem = ({ award, status,index,stage,getDetail}) => {
       maskClosable
       visible={visible}
       award={award}
-      imageUrl={rewardModalBg}
+      imageUrl={(register[stage] || stage === 'ENTRY_SUCCESS') ? rewardBg : rewardBgTips}
       onClose={handleClose}
     />
     </>
@@ -72,6 +68,7 @@ const Invitation = () => {
   const [registerWithdraw, setRegisterWithdraw] = useState(false);
   const [registerProgress, setRegisterProgress] = useState(0);
   const [entryProgress, setEntryProgress] = useState(0);
+  const [currentStage, setCurrentStage] = useState('');
   const getRegisterDetail = async () => {
     try{
       const res = await httpRequest.get('phoenix-center-backend/client/register/award/detail');
@@ -79,6 +76,7 @@ const Invitation = () => {
         throw new Error(res.msg);
       }
       const result = entry[res.data?.currentStage];
+      setCurrentStage(res.data?.currentStage);
       if(result){
         setRegisterProgress(result);
         setEntryProgress(0);
@@ -134,7 +132,7 @@ const Invitation = () => {
         url: '/pages/jobList/jobList',
       })
     }
-    if(value === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' || value === 'ENTRY_SUCCESS'){
+    if(register[value] || value === 'ENTRY_SUCCESS'){
       Taro.navigateTo({
         url: '/packageA/pages/wallet/index',
       })
@@ -204,7 +202,7 @@ const Invitation = () => {
                   <Text>{item.desc.substring(4)}</Text>
                 </View>
                 {
-                  item.stage === 'THIRD_ENTRY_CLOCK_IN_30_DAYS' && item.status === 'FINISHED' ? 
+                  item.status === 'FINISHED' && currentStage === item.stage ? 
                   (<View className={styles['award-register-btn']} onClick={()=>handleRegister(item?.stage)}>去提现</View>): null
                 }
               </View>

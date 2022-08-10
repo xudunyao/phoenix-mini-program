@@ -16,20 +16,24 @@ import tabBg from './img/tab-bg.png';
 const tabLists = [{
   key: 'ALL',
   title: '全部',
+  isReward: false,
 }, 
 {
   key: 'ALL',
-  title: 'award',
+  isReward: true,
   background: tabBg,
 },{
   key: 'FORMAL_WORKER',
   title: '正式工',
+  isReward: false,
 }, {
   key: 'DISPATCH_WORKER',
   title: '日结工',
+  isReward: false,
 }, {
   key: 'PRAT_TIME_WORKER',
   title: '小时工',
+  isReward: false,
 }];
 
 const defaultImages = defaultBanner.map((item,index)=>{
@@ -139,6 +143,26 @@ const Index = () => {
   const handleCloseAdvert = () => {
     setAdvertVisible(false);
   }
+  const handleHomePage = async () => {
+    try {
+      const res = await httpRequest.post(`phoenix-center-backend/client/noauth/track/record`,{
+        data: {
+          page: 'home',
+          memberId: auth?.userid,
+          event: 'home_page_view',
+          type: process.env.TARO_ENV === 'h5' ? 'H5' : 'WECHAT',
+          scene: Taro.getStorageSync(storageKeys.scene),
+          time: new Date().getTime(),
+          openId: auth?.openid,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+    } catch (err) {
+      console.log('err',err)
+    }
+  }
   const handleAuthLocation =  () => {
    if(!isH5){
     Taro.getSetting({
@@ -176,6 +200,7 @@ const Index = () => {
   useDidShow(() => {
     scrollTop.current = 0;
     setTabList(tabLists);
+    setTabCurrent(0);
     if(auth.info.token) {
       if(!isH5){
         getOverview();
@@ -190,6 +215,7 @@ const Index = () => {
   useEffect(() => {
     handleAuthLocation();
     getPopAds();
+    handleHomePage();
   },[]);
   return (
     <View className={styles.page}>
@@ -209,9 +235,9 @@ const Index = () => {
               extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
             >
               {
-                tabList.length > 0 && tabList.map((item) => (
-                  <TabsPanel key={item.key}>
-                    <ListIndex name={item.key} title={item.title} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
+                tabList.length > 0 && tabList.map((item,index) => (
+                  <TabsPanel key={index}>
+                    <ListIndex  name={item.key} isReward={item.isReward} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
                   </TabsPanel>
                 ))
               }

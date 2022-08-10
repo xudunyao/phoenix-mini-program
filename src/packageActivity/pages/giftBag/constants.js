@@ -31,12 +31,14 @@ const entry = Object.freeze(
     "ENTRY_SUCCESS":100,
   }
 )
-const rewardModalBg = 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/%E7%A4%BC%E5%8C%85%402x.png'
+const rewardBgTips = 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/%E7%A4%BC%E5%8C%85%402x.png'
+const rewardBg = 'https://blue-collar-prod.oss-cn-shenzhen.aliyuncs.com/public/v1.0/pic.png'
 export {
   giftImg,
   GiftStyles,
   GiftStatus,
   register,
   entry,
-  rewardModalBg
+  rewardBg,
+  rewardBgTips
 }
