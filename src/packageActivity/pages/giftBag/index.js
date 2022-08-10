@@ -94,10 +94,7 @@ const Invitation = () => {
       setEntryAwardStages(res.data?.entryAwardStages);
       setRegisterWithdraw(res.data?.registerWithdraw);
     } catch(err) {
-      showToast({
-        title: `${err.message}`,
-        icon: 'none',
-      })
+      console.log({err})
     }
   }
   const getButtonText = (stage,status) => {

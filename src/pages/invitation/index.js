@@ -91,7 +91,7 @@ const Invitation = () => {
     try{
       const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
       if (isH5) {
-        const url = `https://xgn-h5-uat.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
+        const url = `https://xgn-h5.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
         Taro.setClipboardData({
           data: url,
           success: () => {
