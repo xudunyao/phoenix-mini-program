@@ -28,8 +28,8 @@ const Auth = (
           {
             infoData?.validation? 
             <View className={styles.userInfo}>
-              <Text>{infoData.realName}</Text>
-              <Text>{infoData.mobile}</Text>
+              <Text className={styles.userName}>{infoData.realName}</Text>
+              <Text className={styles.userMobile}>TEL:{infoData.mobile}</Text>
             </View> : <Text className={styles.name}>寻工鸟用户</Text>
           }
           

@@ -50,8 +50,19 @@
 .userInfo{
   display: flex;
   height: 60Px;
-  font-size: 20Px;
-  font-weight: 600;
-  line-height: 30Px;
   flex-direction: column;
+}
+.userName{
+  height: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: 20px;
+  margin: 9px 0 6px;
+}
+.userMobile{
+  height: 20px;
+  font-size: 14px;
+  color: $text-dark-slate-blue;
+  line-height: 20px;
 }
