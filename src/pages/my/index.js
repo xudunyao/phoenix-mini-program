@@ -22,10 +22,7 @@ const My = () => {
       setIsValidation(res?.data?.validation);
       setInfoData(res?.data);
     } catch (err) {
-      showToast({
-        icon: 'none',
-        title: `${err}`
-      })
+      console.log(err);
     }
   };
   const notLogin = () => {

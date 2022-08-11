@@ -67,7 +67,6 @@ const Index = () => {
   };
   const onScroll = (e) => {
     scrollTop.current = e.detail.scrollTop;
-    console.log("scrollTop",e.detail.scrollTop)
     if(e.detail.scrollTop >= 130){
       setScrollY(true)
     }else {
@@ -121,10 +120,7 @@ const Index = () => {
       }
       setImageBanners(res.data.length> 0 ? res.data : defaultImages);
     } catch (err) {
-      showToast({
-        icon: 'none',
-        title: `${err.message}`
-      })
+      console.log(err);
     }
   }
   const getPopAds = async () => {

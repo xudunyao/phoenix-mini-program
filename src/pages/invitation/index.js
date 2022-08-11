@@ -4,6 +4,7 @@ import Taro, { useShareAppMessage, showToast, useDidShow, useDidHide, useRouter 
 import backgroundImg from '@/constants/backgroundImg';
 import { inviteCover } from '@/constants'
 import numeral from 'numeral';
+import auth from '@/stores/auth';
 import { httpRequest } from '@/utils';
 import styles from "./Invitation.module.scss";
 
@@ -25,7 +26,7 @@ const enumType = Object.freeze({
 const getRandom = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)]
 }
-const money = [8.88,6.66, 18.88];
+const money = [8.88, 6.66, 18.88];
 const getRandomPhone = () => {
   const phone = ['134', '135', '136', '137', '138', '139', '150', '151', '152', '157', '158', '159', '187', '188', '133', '153', '180', '189'];
   const random = Math.floor(Math.random() * 10000000)
@@ -67,10 +68,7 @@ const Invitation = () => {
       })
       setInterView(newResult);
     } catch (err) {
-      showToast({
-        icon: 'none',
-        title: `${err.message}`
-      })
+      console.log(err);
     }
   }
   const getInviteEnum = async () => {
@@ -81,14 +79,11 @@ const Invitation = () => {
       }
       setInviteEnum(res.data);
     } catch (err) {
-      showToast({
-        icon: 'none',
-        title: `${err.message}`
-      })
+      console.log(err);
     }
   }
   const handleClick = async () => {
-    try{
+    try {
       const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
       if (isH5) {
         const url = `https://xgn-h5.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
@@ -101,13 +96,13 @@ const Invitation = () => {
             })
           }
         })
-      }else{
+      } else {
         Taro.navigateTo({
           url: '/packageA/pages/savePoster/index'
         })
       }
-    }catch(err){
-      console.log({err})
+    } catch (err) {
+      console.log({ err })
     }
   }
   const handleRuleClick = () => {
@@ -121,16 +116,22 @@ const Invitation = () => {
     })
   }
   useShareAppMessage(async () => {
+    if (!auth.info.token) {
+      Taro.redirectTo({
+        url: '/pages/loginGuide/index'
+      })
+      return;
+    }
     let res = null;
-    try{
+    try {
       res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
-    }catch(err){
-      console.log({err})
+    } catch (err) {
+      console.log({ err })
     }
     return {
       title: '你的好友邀请你领取【1288.8元】大礼包活动！',
       path: `/packageA/pages/invitePoster/index?scene=${res?.data}`,
-      imageUrl:inviteCover.clickCover,
+      imageUrl: inviteCover.clickCover,
     }
   }
   )
@@ -147,12 +148,12 @@ const Invitation = () => {
   useDidHide(() => {
     clearInterval(timer.current);
   })
-  return  (
-    <View className={styles.container} style={{backgroundImage: `url(${backgroundImg.base})`}}>
-      <View className={styles.tipsContainer}>   
+  return (
+    <View className={styles.container} style={{ backgroundImage: `url(${backgroundImg.base})` }}>
+      <View className={styles.tipsContainer}>
         <View className={`${styles.tips} ${styles.marquee}`}>
-          <View  className={`${styles.swiper}`}>
-           {`${inviteInfo.invitePhone} 刚邀请了1位好友 获得${inviteInfo.inviteAward}元`}
+          <View className={`${styles.swiper}`}>
+            {`${inviteInfo.invitePhone} 刚邀请了1位好友 获得${inviteInfo.inviteAward}元`}
           </View>
         </View>
       </View>
