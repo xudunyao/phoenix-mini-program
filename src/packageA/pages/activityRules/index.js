@@ -35,19 +35,19 @@ const userGift = () => {
                         <Text>（2）用户B完成报名后，用户A获得报名红包6.66元。</Text>
                     </View>
                     <View className={styles.activityText}>
-                        <Text>（3）用户B到线下面试后，用户A获得面试红包6.66元。  </Text>
+                        <Text>（3）用户B到线下面试后，用户A获得面试红包6.66元。</Text>
                     </View>
                     <View className={styles.activityText}>
                         <Text>（4）用户B线下面试成功后，用户A获得面试通过红包6.66元。  </Text>
                     </View>
                     <View className={styles.activityText}>
-                        <Text>（5）用户B线下签订劳动合同后，用户A获得入职红包18.88元。（可提现合计金额：47.74元）    </Text>
+                        <Text>（5）用户B线下签订劳动合同后，用户A获得入职红包18.88元。（可提现合计金额：47.74元）</Text>
                     </View>
                     <View className={styles.activityText}>
                         <Text>（6）特殊说明：以上红包奖励需用户B入职签订劳动合同后，相对应奖金才可以提现。</Text>
                     </View>
                     <View className={styles.activityText}>
-                        <Text>（7）邀请奖励时效说明：每邀请一个用户，从用户注册时间起算，一个自然月内有效。   </Text>
+                        <Text>（7）邀请奖励时效说明：每邀请一个用户，从用户注册时间起算，一个自然月内有效。</Text>
                     </View>
                 </View>
                 <View className={styles.activityRules}>
