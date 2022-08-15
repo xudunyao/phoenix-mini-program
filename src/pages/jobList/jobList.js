@@ -1,10 +1,10 @@
-import Taro, {useRouter,useDidShow, useDidHide, showToast, useReady } from '@tarojs/taro';
+import Taro, {useRouter,useDidShow, useDidHide, showToast, useReady,usePageScroll } from '@tarojs/taro';
 import { observer } from 'mobx-react-lite';
 import { useState, useRef, useEffect } from 'react';
 import { duration } from 'moment';
 import { getOverview, getUserInfo, httpRequest, templateIdQuery } from '@/utils';
 import { View, Image, ScrollView,WebView  } from '@tarojs/components';
-import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal } from '@/components';
+import { Tabs, TabsPanel, IconFont, Dialog, AdvertModal,NavBar } from '@/components';
 import { resultImg, storageKeys, defaultBanner } from '@/constants';
 import auth from '@/stores/auth';
 import styles from  './Index.module.scss';
@@ -16,24 +16,19 @@ import tabBg from './img/tab-bg.png';
 const tabLists = [{
   key: 'ALL',
   title: '全部',
-  isReward: false,
 }, 
 {
-  key: 'ALL',
-  isReward: true,
+  key: 'ALL_reward',
   background: tabBg,
 },{
   key: 'FORMAL_WORKER',
   title: '正式工',
-  isReward: false,
 }, {
   key: 'DISPATCH_WORKER',
   title: '日结工',
-  isReward: false,
 }, {
   key: 'PRAT_TIME_WORKER',
   title: '小时工',
-  isReward: false,
 }];
 
 const defaultImages = defaultBanner.map((item,index)=>{
@@ -45,34 +40,41 @@ const defaultImages = defaultBanner.map((item,index)=>{
 }) 
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [tabCurrent, setTabCurrent] = useState(0);
   const [visible, setVisible] = useState(false);
   const [signVisible, setSignVisible] = useState(false);
   const [loginVisible, setLoginVisible] =useState(false);
   const [advertVisible,setAdvertVisible] = useState(false);
   const [imageBanners, setImageBanners] = useState([]);
-  const [scrollY, setScrollY] = useState(false);
   const [popAds, setPopAds] = useState({});
   const [tabList, setTabList] =useState([]);
+  const [height, setHeight] = useState(0);
+  const [pagination, setPagination] = useState({
+    pageNumber: 0,
+    pageSize:5,
+    type: 'ALL',
+  });
+  const [statusHeight, setStatusHeight] = useState(0);
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
-  const scrollTop = useRef();
-  
   const { scene } = router.params;
   if(scene){
     Taro.setStorageSync(storageKeys.scene, scene);
   }
-  const onTabClick = (index) => {
+  const onTabClick = (index,item) => {
     setTabCurrent(index)
+    setPagination({
+      pageNumber: 0,
+      pageSize:5,
+      type: item.key,
+    });
   };
-  const onScroll = (e) => {
-    scrollTop.current = e.detail.scrollTop;
-    if(e.detail.scrollTop >= 130){
-      setScrollY(true)
-    }else {
-      setScrollY(false)
-    }
-  }
+  const getNavHeight =() =>{
+    const sysinfo = Taro.getSystemInfoSync(); 
+    const statusBarHeight = sysinfo.statusBarHeight; 
+    setStatusHeight(statusBarHeight);
+  };
   const closeDialog = (v, params) => {
     if(v){
       if(v==='login'){
@@ -144,13 +146,13 @@ const Index = () => {
     try {
       const res = await httpRequest.post(`phoenix-center-backend/client/noauth/track/record`,{
         data: {
-          page: 'home',
-          memberId: auth?.userid,
+          page: 'page/jobList/jobList',
+          memberId: auth?.info.userid,
           event: 'home_page_view',
           type: process.env.TARO_ENV === 'h5' ? 'H5' : 'WECHAT',
           scene: Taro.getStorageSync(storageKeys.scene),
           time: new Date().getTime(),
-          openId: auth?.openid,
+          openId: auth?.info?.openid,
         }
       });
       if (res?.code !== 0) {
@@ -193,11 +195,9 @@ const Index = () => {
       }
     })
    }
-  } 
+  }
   useDidShow(() => {
-    scrollTop.current = 0;
     setTabList(tabLists);
-    setTabCurrent(0);
     if(auth.info.token) {
       if(!isH5){
         getOverview();
@@ -205,40 +205,59 @@ const Index = () => {
       getUserInfo();
     }
     getImagesBanner();
-  });
-  useDidHide(() => {
-    setTabList([])
+    if(!Taro?.getCurrentPages()[0]?.data?.isBack){
+      setHeight(0 + Math.random());
+      setPagination((cur)=>{
+        return {
+          ...cur,
+          pageNumber: 0,
+        }
+      })
+    }else{
+      Taro?.getCurrentPages()[0].setData({
+        isBack: false,
+      })
+    }
   });
   useEffect(() => {
     handleAuthLocation();
     getPopAds();
     handleHomePage();
   },[]);
+  useEffect(() => {
+    if (!isH5) {
+      getNavHeight();
+    }
+  }, [])
+  const handleScrollToLower = () =>{
+    setPagination({
+      ...pagination,
+      pageNumber: pagination.pageNumber + 1
+    })
+  };
   return (
     <View className={styles.page}>
-      <ScrollView className={styles.container} scrollY onScroll={onScroll} enhanced bounces={false} showScrollbar={false} scrollTop={scrollTop.current} >
-          <Swiper list={imageBanners} />
+      <NavBar  title='首页' customStyle={{color:'black',background:'#F6F8FF'}} />
+      <ScrollView className={styles.container} onScrollToLower={handleScrollToLower} scrollY  lowerThreshold={100} scrollTop={height} style={{paddingTop:!isH5 && `${statusHeight + 44}px`}}>
+        <Swiper list={imageBanners} />
           {
             !auth.info.token ? 
             (<View className={styles.login}>
-               <Login />
+                <Login />
             </View>):null
           }
-          <View className={styles.list}  >
-            <Tabs 
-              tabList={tabList}
-              current={tabCurrent}
-              onTabClick={onTabClick}
-              extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
-            >
-              {
-                tabList.length > 0 && tabList.map((item,index) => (
-                  <TabsPanel key={index}>
-                    <ListIndex  name={item.key} isReward={item.isReward} closeDialog={closeDialog} scrollY={scrollY} handleSubmit={handleSignUp} />
-                  </TabsPanel>
-                ))
-              }
-            </Tabs>
+          <View style={{position:'relative'}}>
+            <View className={styles.list}  >
+              <Tabs 
+                tabList={tabList}
+                current={tabCurrent}
+                onTabClick={onTabClick}
+                extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
+              />
+            </View>
+            <View className={styles.demo}>
+              <ListIndex pagination={pagination} key={pagination.type} closeDialog={closeDialog} handleSubmit={handleSignUp} />
+            </View>
           </View>
       </ScrollView>
       <AdvertModal

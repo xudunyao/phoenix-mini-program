@@ -2,7 +2,7 @@ import { SwiperProps } from "@tarojs/components";
 
 export type Props = {
   tabList: Tab[];
-  onTabClick: (tab: any) => void;
+  onTabClick: (tab: any,item: any) => void;
   current?: number;
   children: JSX.Element | JSX.Element[] ;
   tabStyle?: React.CSSProperties;

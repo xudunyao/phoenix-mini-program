@@ -13,6 +13,7 @@ import styles from './Position.module.scss';
 
 const Position = () => {
   const router = useRouter();
+  const isH5 = process.env.TARO_ENV === 'h5';
   const {positionId,scene} = router.params;
   if(scene) {
     Taro.setStorageSync(storageKeys.scene, scene);
@@ -132,6 +133,9 @@ const Position = () => {
     if(token) {
       getUserInfo()
     }
+    !isH5 && Taro.getCurrentPages()[0]?.setData({
+      isBack: true
+    })
   })
   return (
     <View className={styles.position}>

@@ -4,6 +4,10 @@ import auth from '@/stores/auth';
 import { storageKeys } from '@/constants';
 
 export const templateIdQuery = async () => {
+  const isH5 = process.env.TARO_ENV === 'h5';
+  if(isH5) {
+    return ;
+  }
   try{
     const res = await httpRequest.get('phoenix-center-backend/client/message/templateId');
     if (res?.code !== 0) {

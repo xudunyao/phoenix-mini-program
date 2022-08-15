@@ -3,8 +3,9 @@
 .container{
   padding-top: 130px;
   padding-bottom: 65px;
-  background-size: 100% 100%;
+  background-size: cover;
   background-repeat: no-repeat;
+  background-color: #E2152D;
 }
 .rule{
   position: absolute;
@@ -62,7 +63,7 @@
   align-items: center;
   flex-direction: column;
   margin: 0 12px;
-  padding: 16px 9px;
+  padding: 16px 9px 0px;
   background: $color-white;
   border-radius: 14px;
   :global(.title) {
@@ -74,7 +75,7 @@
   }
 }
 .invitation{
-  margin-top: 292px;
+  margin-top: 285px;
   :global(.title) {
     background-image: url('./img/activity_title.png');
   }

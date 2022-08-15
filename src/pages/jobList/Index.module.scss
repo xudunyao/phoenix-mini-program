@@ -6,11 +6,16 @@
 }
 .container {
   flex-direction: column;
-  height: calc(100% - 1px);
-  background: linear-gradient(178deg, rgba(128, 162, 255, 0.11) 0%, rgba(255, 255, 255, 0) 54%, rgba(255, 255, 255, 0) 100%);
+  overflow:scroll;
+  height: 100%;
+  background:#F6F8FF;
+  box-sizing: border-box;
   :global(.tabs) {
     flex: 1;
   }
+}
+.wrapper{
+  height: 100%;
 }
 .content{
   height: 100vh;
@@ -18,15 +23,14 @@
 }
 
 .list{
-  border-radius: 12px 12px 0px 0px;
   padding-top: 10px;
   position: sticky;
-  height: 100%;
-  flex: 1;
+  top:0Px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  z-index: 11;
+  z-index: 99;
+  background:#F6F8FF;
 }
 
 .rebate {

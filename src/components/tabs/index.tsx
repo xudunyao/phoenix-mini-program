@@ -21,7 +21,7 @@ const Tabs: React.FC<Props> = (
             return (
               <view className='tab-horizontal tab-item' style={tabStyle}>
                 <View
-                  onClick={() => onTabClick(index)}
+                  onClick={() => onTabClick(index, item)}
                   className={`${current === index ? 'tab-item-active' : 'tab-item-inactive'}`}
                   key={index}
                   style={item.background && {
@@ -45,7 +45,7 @@ const Tabs: React.FC<Props> = (
       </view>
       <Swiper className='panel-content' current={current} onChange={(event)=>{ onTabClick(event?.detail?.current) }}>
         {
-          children.constructor === Array ? children.map((item, index) => (
+          children?.constructor === Array ? children.map((item, index) => (
             <SwiperItem key={index}>
               {item}
             </SwiperItem>
