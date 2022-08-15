@@ -189,7 +189,7 @@ const Invitation = () => {
           }
         </View>
         <View className={isH5 ? styles['activity-button-h5'] : styles['activity-button']}>
-          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick}><Text>复制到剪切板</Text></View> :
+          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick}><Text>复制分享链接到剪切板</Text></View> :
             (
               <>
                 <View className={styles['activity-button-save']} onClick={handleClick}><Text>保存海报</Text></View>
