@@ -104,7 +104,7 @@ const Position = () => {
   };
   const handleCall = () => {
     Taro.makePhoneCall({
-      phoneNumber: '15203910705',
+      phoneNumber: positionObj.contactMobile ? positionObj.contactMobile : '18948762157',
     })
   };
   const toMap = () => {
