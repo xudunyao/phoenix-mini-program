@@ -87,15 +87,31 @@ const Invitation = () => {
       const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
       if (isH5) {
         const url = `https://xgn-h5.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
-        Taro.setClipboardData({
-          data: url,
-          success: () => {
-            showToast({
-              icon: 'none',
-              title: '已经复制到剪贴板'
-            })
+        if (document.execCommand('copy') && typeof document.execCommand === 'function') {
+            const input = document.createElement('input')
+            input.setAttribute('readonly', 'readonly')
+            input.setAttribute('value', url)
+            input.readOnly = true
+            input.value = url
+            input.style.position = 'absolute'
+            input.style.width = '100px'
+            input.style.left = '-10000px'
+            document.body.appendChild(input)
+            input.select()
+            input.setSelectionRange(0, 999999)
+            const results = document.execCommand('copy')
+            input.setSelectionRange(0, input.value.length)
+            document.execCommand('copy')
+            document.body.removeChild(input)
+            if (results) {
+              showToast({
+                icon: 'none',
+                title: '已经复制到剪贴板'
+              })
+            }
+          } else {
+            throw new Error(`Unsupported Function: 'document.execCommand'.`)
           }
-        })
       } else {
         Taro.navigateTo({
           url: '/packageA/pages/savePoster/index'
