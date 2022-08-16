@@ -58,9 +58,10 @@ const Index = () => {
   const [statusHeight, setStatusHeight] = useState(0);
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
-  const { scene } = router.params;
-  if(scene){
+  const { scene,channelCode} = router.params;
+  if(scene || channelCode){
     Taro.setStorageSync(storageKeys.scene, scene);
+    Taro.setStorageSync('channelCode', channelCode);
   }
   const onTabClick = (index,item) => {
     setTabCurrent(index)

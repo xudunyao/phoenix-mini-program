@@ -77,6 +77,7 @@ const Login = () => {
                   longitude: Taro.getStorageSync(storageKeys.longitude),
                   latitude: Taro.getStorageSync(storageKeys.latitude),
                 },
+                channelCode:Taro.getStorageSync('channelCode') ? Taro.getStorageSync('channelCode') : '',
                 scene,
               }
             }

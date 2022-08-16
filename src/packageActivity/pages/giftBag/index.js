@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import Taro,{ useDidShow,showToast } from '@tarojs/taro';
-import { View,Text} from '@tarojs/components';
-import { InfiniteScroll,Result } from '@/components';
+import { View,Text,Image} from '@tarojs/components';
+import { InfiniteScroll,Result, Dialog } from '@/components';
 import { httpRequest } from '@/utils';
 import numeral from 'numeral';
 import backgroundImg from '@/constants/backgroundImg'
 import { resultImg } from '@/constants';
+import auth from '@/stores/auth';
 import { giftImg, GiftStyles, GiftStatus, register, entry,rewardBg,rewardBgTips} from './constants';
 import  Progress from './components/progress'
 import ListItem  from './components/listItem';
@@ -69,6 +70,66 @@ const Invitation = () => {
   const [registerProgress, setRegisterProgress] = useState(0);
   const [entryProgress, setEntryProgress] = useState(0);
   const [currentStage, setCurrentStage] = useState('');
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [resumeVisible, setResumeVisible] = useState(false);
+  const platform = process.env.TARO_ENV;
+  const token = auth.info.token;
+  const handleSubmit = async(data) => {
+    try {
+      const res = await httpRequest.post(`phoenix-manager-backend/client/signUp/${data.id}`, {
+        data: {
+          mobile: auth.realInfo.realMobile,
+          name: auth.realInfo.realName,
+          platform,
+        }
+      });
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setSignUpSuccess(true);
+    } catch (err) {
+      showToast({
+        icon: 'none',
+        title: `${err.message}`
+      })
+    }
+  }
+  const handleCurrentState = (state,data = {}) => {
+    switch (state.step) {
+      case 'init':
+        setLoginVisible(false);
+        setResumeVisible(false);
+        setSignUpSuccess(false);
+        break;
+      case 'login':
+        Taro.navigateTo({
+          url: `/pages/loginGuide/index`
+        });
+        break;
+      case 'signUp':
+        if(token){
+          if(!auth.realInfo.completeInfo){
+            setResumeVisible(true);
+          }else{
+            handleSubmit(data);
+          }
+        }else{
+          setLoginVisible(true);
+        }
+        break;
+      case 'detail':
+        Taro.navigateTo({
+          url: `/pages/position/index?positionId=${data?.id}`,
+        })
+        break;
+      case 'resume':
+        Taro.navigateTo({
+          url: `/packageA/pages/myResume/index`,
+        })
+      break;
+    }
+  }
   const getRegisterDetail = async () => {
     try{
       const res = await httpRequest.get('phoenix-center-backend/client/register/award/detail');
@@ -221,10 +282,65 @@ const Invitation = () => {
               />
             }
             renderItem={(item) => {
-              return <ListItem  data={item} />
+              return <ListItem  data={item}  handleCurrentState={handleCurrentState} />
             }}
           >
           </InfiniteScroll>
+          <Dialog 
+            maskClosable
+            visible={signUpSuccess}
+            content={
+              <View className={styles['dialog-content']}>
+                <Image mode='widthFix' src={resultImg.success} className={styles['dialog-img']} />
+                <View className={styles['dialog-subtitle']}>恭喜您，报名成功</View>
+              </View>
+            }
+            onClose={() => { 
+              handleCurrentState({step:'init'});
+            }}
+          />
+          <Dialog 
+            maskClosable
+            visible={loginVisible}
+            content='您还未登录'
+            onClose={()=>setLoginVisible(false)}
+            actions={
+              [{
+                title: '下次再说',
+                onClick: () =>{ handleCurrentState({step:'init'}); },
+                type: 'default',
+                size: 'mini'
+              }, {
+                title: '去登录',
+                onClick: () =>{
+                  handleCurrentState({step:'login'});
+                },
+                type: 'primary',
+                size: 'mini'
+              }]
+            }
+          />
+          <Dialog 
+            maskClosable
+            visible={resumeVisible}
+            title='提示'
+            content='报名岗位需要先完善您的个人简历'
+            actions={
+              [{
+                title: '取消',
+                onClick: () =>{ handleCurrentState({step:'init'}); },
+                type: 'default',
+                size: 'mini'
+              }, {
+                title: '去完善',
+                onClick: () =>{
+                  handleCurrentState({step:'resume'});
+                },
+                type: 'primary',
+                size: 'mini'
+            }]
+            }
+          />
         </View>
       </View>
     </View>

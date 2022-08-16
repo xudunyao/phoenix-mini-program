@@ -164,7 +164,6 @@ const MyResume = () => {
       return 
     }
     setMultiIndex((val)=>{
-      console.log('val',val)
       return [val[0],e.detail.value]
     })
   }
@@ -173,7 +172,7 @@ const MyResume = () => {
       setFormFieldError('name', '用户姓名格式不正确');
       return false;
     }
-    if (!regExp.mobile(form.mobile.value) && type === 'mobile') {
+    if (!regExp.phone(form.mobile.value) && type === 'mobile') {
       setFormFieldError('mobile', '手机号码格式不正确');
       return false;
     }
@@ -204,7 +203,7 @@ const MyResume = () => {
       setIsDialogShow(false);
     }
   }
-  const isButtonActive = useMemo(() => !!(regExp.mobile(form.mobile.value) && regExp.name(form.name.value) && regExp.sms(form.smsCode.value)), [form]);
+  const isButtonActive = useMemo(() => !!(regExp.phone(form.mobile.value) && regExp.name(form.name.value) && regExp.sms(form.smsCode.value)), [form]);
   return (
     <View className={styles.container}>
       <View>
@@ -327,7 +326,7 @@ const MyResume = () => {
               setIsDialogShow(false);
               resumeInfo?.code !== 1 && Taro.switchTab(
                 {
-                  url:'/pages/my/index'
+                  url:'/pages/jobList/jobList'
                 })
             },
             type: 'primary'
