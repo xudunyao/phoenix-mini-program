@@ -5,4 +5,5 @@ export type Props = {
   showClose?:boolean;
   imageUrl?: string;
   jumpUrl?: string;
+  id?: string;
 };

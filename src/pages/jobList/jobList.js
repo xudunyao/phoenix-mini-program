@@ -144,13 +144,16 @@ const Index = () => {
     setAdvertVisible(false);
   }
   const handleHomePage = async () => {
+    const pages = Taro.getCurrentPages();
+    const currentPage = pages[pages.length - 1];
+    const url = currentPage.route.split('?')[0];
     try {
       const res = await httpRequest.post(`phoenix-center-backend/client/noauth/track/record`,{
         data: {
-          page: 'page/jobList/jobList',
+          page: url || 'page/jobList/jobList',
           memberId: auth?.info.userid,
           event: 'home_page_view',
-          type: process.env.TARO_ENV === 'h5' ? 'H5' : 'WECHAT',
+          type: process.env.TARO_ENV === 'h5' ? 'H5' : 'MINI_PROGRAM',
           scene: Taro.getStorageSync(storageKeys.scene),
           time: new Date().getTime(),
           openId: auth?.info?.openid,
@@ -253,10 +256,10 @@ const Index = () => {
                 tabList={tabList}
                 current={tabCurrent}
                 onTabClick={onTabClick}
-                extra={<View style={{width:'16px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center'}} /></View>}
+                extra={<View style={{width:'24px',margin:'0 auto'}}><IconFont name='tabs_selected' style={{textAlign:'center',width:'24px',height:'8px'}} /></View>}
               />
             </View>
-            <View className={styles.demo}>
+            <View>
               <ListIndex pagination={pagination} key={pagination.type} closeDialog={closeDialog} handleSubmit={handleSignUp} />
             </View>
           </View>
@@ -266,6 +269,7 @@ const Index = () => {
         onClose={handleCloseAdvert}
         imageUrl={popAds?.imageUrl}
         jumpUrl={popAds?.jumpUrl}
+        id={popAds?.id}
       />
       <Dialog 
         maskClosable

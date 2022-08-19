@@ -1,6 +1,7 @@
 import React from 'react'
 import Taro from '@tarojs/taro';
 import { View,Image } from '@tarojs/components';
+import { httpRequest } from '@/utils';
 import { Props } from './types';
 import './styles.scss';
 import IconFont from '../iconfont';
@@ -11,6 +12,7 @@ const AdvertModal: React.FC<Props> = ({
   imageUrl = '',
   jumpUrl = '',
   visible = false,
+  id = '',
 }) => {
   const handleMaskClick = () => {
     if (maskClosable) {
@@ -30,6 +32,17 @@ const AdvertModal: React.FC<Props> = ({
           url: '../../packageA/pages/webView/index?url=' + jumpUrl,
         });
       }
+      id && handleClickStatistics(id);
+    }
+  }
+  const handleClickStatistics = async (params) => {
+    try {
+      const res = await httpRequest.put(`phoenix-center-backend/client/noauth/banner/click/${params}`);
+      if (res?.code !== 0) {
+        throw new Error(res.msg);
+      }
+    } catch (err) {
+     console.log('err',err)
     }
   }
   const style:React.CSSProperties= {

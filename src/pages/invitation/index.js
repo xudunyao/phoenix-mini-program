@@ -4,6 +4,7 @@ import Taro, { useShareAppMessage, showToast, useDidShow, useDidHide, useRouter 
 import backgroundImg from '@/constants/backgroundImg';
 import { inviteCover } from '@/constants'
 import numeral from 'numeral';
+import Clipboard from 'clipboard';
 import auth from '@/stores/auth';
 import { httpRequest } from '@/utils';
 import styles from "./Invitation.module.scss";
@@ -37,12 +38,16 @@ const Invitation = () => {
   const [interview, setInterView] = useState([])
   const [totalAward, setTotalAward] = useState(0)
   const [count, setCount] = useState(0)
+  const [param, setParam] = useState();
   const [inviteInfo, setInviteInfo] = useState({
     invitePhone: getRandomPhone(),
     inviteAward: getRandom(money),
   })
   const timer = useRef();
-  const [inviteEnum, setInviteEnum] = useState([])
+  const isFirst = useRef(true);
+  const [inviteEnum, setInviteEnum] = useState([]);
+  const clipboard = useRef(null);
+
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const getInviteStatistics = async () => {
@@ -81,21 +86,34 @@ const Invitation = () => {
     } catch (err) {
       console.log(err);
     }
-  }
-  const handleClick = async () => {
+  }  
+  const handleClick =  (event) => {
     try {
-      const res = await httpRequest.get('phoenix-center-backend/client/invite/url/param');
+      const res =   httpRequest.get('phoenix-center-backend/client/invite/url/param');
       if (isH5) {
         const url = `https://xgn-h5.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
-        Taro.setClipboardData({
-          data: url,
-          success: () => {
-            showToast({
-              icon: 'none',
-              title: '已经复制到剪贴板'
-            })
+        clipboard.current = new Clipboard('#copyCode', {
+          text: () => {
+            return url;
           }
-        })
+        });
+        clipboard.current.on('success', function (e) {
+          showToast({
+            title: `成功复制到剪贴板`,
+            icon: 'none',
+          })
+          clipboard.current.destroy(); 
+        });
+        clipboard.current.on('error', function (e) {
+          showToast({
+            title: '复制失败',
+            icon: 'none',
+          })
+        });
+        if(isFirst.current){
+          isFirst.current = false;
+          document.getElementById('copyCode').click();
+        }
       } else {
         Taro.navigateTo({
           url: '/packageA/pages/savePoster/index'
@@ -135,6 +153,7 @@ const Invitation = () => {
     }
   }
   )
+  
   useDidShow(() => {
     getInviteStatistics();
     getInviteEnum();
@@ -148,6 +167,7 @@ const Invitation = () => {
   useDidHide(() => {
     clearInterval(timer.current);
   })
+  
   return (
     <View className={styles.container} style={{ backgroundImage: `url(${backgroundImg.base})` }}>
       <View className={styles.tipsContainer}>
@@ -188,11 +208,11 @@ const Invitation = () => {
             })
           }
         </View>
-        <View className={isH5 ? styles['activity-button-h5'] : styles['activity-button']}>
-          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick}><Text>复制分享链接到剪切板</Text></View> :
+        <View className={isH5 ? styles['activity-button-h5'] : styles['activity-button']} id='inviteCode'>
+          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick} id='copyCode' data-clipboard-target='#inviteCode' ><Text>复制分享链接到剪切板</Text></View> :
             (
               <>
-                <View className={styles['activity-button-save']} onClick={handleClick}><Text>保存海报</Text></View>
+                <View className={styles['activity-button-save']} onClick={handleClick} ><Text>保存海报</Text></View>
                 <Button openType='share' className={styles['activity-button-share']} ><Text></Text></Button>
               </>
             )}

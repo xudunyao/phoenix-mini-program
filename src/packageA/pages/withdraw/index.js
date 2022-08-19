@@ -22,6 +22,15 @@ const initForm = {
     error: '',
   },
 }
+const backImg = [
+  '0100',
+  '0102',
+  '0103',
+  '0104',
+  '0105',
+  '0301',
+  '0308',
+]
 const Withdraw = () => {
   const [isClick, setIsClick] = useState(false);
   const [form, setForm] = useState(initForm);
@@ -113,17 +122,6 @@ const Withdraw = () => {
   const handleClick = () => {
     Taro.navigateTo({
       url: '/packageA/pages/unbindCard/index',
-      events: {
-        acceptDataFromOpenedPage: function(data) {
-          console.log(data)
-        },
-        someEvent: function(data) {
-          console.log(data)
-        }
-      },
-      success: function(res) {
-        res.eventChannel.emit('acceptDataFromOpenerPage', { data: bankInfo })
-      }
     })
   }
   useDidShow(() => {
@@ -135,7 +133,7 @@ const Withdraw = () => {
     <View className={styles.withdraw}>
       <View className={styles.title}>到账银行</View>
       <View className={styles['bank-info']}>
-        <Image className={styles['bank-logo']} src={require(`./img/${bankInfo?.bankCode ? bankInfo.bankCode : '8888'}.png`)} />
+        <Image className={styles['bank-logo']} src={require(`./img/${backImg.includes(bankInfo?.bankCode) ? bankInfo.bankCode : '8888'}.png`)} />
         <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
         <View style={{marginLeft:'auto'}} onClick={handleClick}>
           <IconFont name='right' size={25}></IconFont>

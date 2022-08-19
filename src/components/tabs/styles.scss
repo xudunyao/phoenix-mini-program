@@ -14,18 +14,18 @@
   display: inline-block;
 }
 .tab-item{
-  font-size: 14px;
-  padding: 6px 0px;
+  font-size: 16px;
   color: $text-primary;
-  line-height: 20px;
+  line-height: 24px;
 }
 .tab-item-active{
   font-weight: 600;
-  line-height: 20px;
+  line-height: 24px;
+  font-size: 18px;
 }
 .tab-item-inactive{
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 24px;
 }
 .tab-line{
   height:2Px;

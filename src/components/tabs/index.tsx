@@ -26,7 +26,7 @@ const Tabs: React.FC<Props> = (
                   key={index}
                   style={item.background && {
                     width:'70px',
-                    height:'20px',
+                    height:'26px',
                     backgroundImage: `url(${item.background})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',

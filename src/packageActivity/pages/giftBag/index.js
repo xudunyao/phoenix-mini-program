@@ -88,6 +88,7 @@ const Invitation = () => {
         throw new Error(res.msg);
       }
       setSignUpSuccess(true);
+      httpRequest.put('phoenix-center-backend/client/register/signedUpAward');
     } catch (err) {
       showToast({
         icon: 'none',

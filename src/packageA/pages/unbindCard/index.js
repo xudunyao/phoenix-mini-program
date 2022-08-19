@@ -5,6 +5,15 @@ import { IconFont, Dialog } from "@/components";
 import { httpRequest } from '@/utils';
 import styles from "./UnbindCard.module.scss";
 
+const backImg = [
+  '0100',
+  '0102',
+  '0103',
+  '0104',
+  '0105',
+  '0301',
+  '0308',
+]
 const UnbindCard = () => {
   const [isTipsShow, setIsTipsShow] = useState(true);
   const [visible, setVisible] = useState(false);
@@ -64,7 +73,7 @@ const UnbindCard = () => {
       }
       <View className={styles.title}>银行卡账号</View>
       <View className={styles.bank}>
-        <Image className={styles['bank-logo']} src={require(`../withdraw/img/${bankInfo?.bankCode ? bankInfo.bankCode : '8888'}.png`)} />
+        <Image className={styles['bank-logo']} src={require(`../withdraw/img/${backImg.includes(bankInfo?.bankCode) ? bankInfo.bankCode : '8888'}.png`)} />
         <View className={styles['bank-name']}>{`${bankInfo?.bankName}(尾号${bankInfo.bankNo?.substr(bankInfo.bankNo?.length - 4)})`}</View>
         <View className={styles['bank-btn']} onClick={() => setVisible(true)}>解除绑定</View>
       </View>
