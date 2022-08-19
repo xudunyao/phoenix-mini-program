@@ -10,4 +10,5 @@ export default {
   realMobile: 'realMobile',
   longitude: 'longitude',
   latitude: 'latitude',
+  idNo: 'idNo',
 }

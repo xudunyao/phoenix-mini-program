@@ -38,16 +38,13 @@ const Invitation = () => {
   const [interview, setInterView] = useState([])
   const [totalAward, setTotalAward] = useState(0)
   const [count, setCount] = useState(0)
-  const [param, setParam] = useState();
   const [inviteInfo, setInviteInfo] = useState({
     invitePhone: getRandomPhone(),
     inviteAward: getRandom(money),
   })
   const timer = useRef();
-  const isFirst = useRef(true);
+  const [param, setParam] = useState('');
   const [inviteEnum, setInviteEnum] = useState([]);
-  const clipboard = useRef(null);
-
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const getInviteStatistics = async () => {
@@ -88,32 +85,33 @@ const Invitation = () => {
     }
   }  
   const handleClick =  (event) => {
+    if(!auth.info.token){
+      Taro.navigateTo({
+        url: '/pages/loginGuide/index'
+      })
+      return;
+    }
     try {
-      const res =   httpRequest.get('phoenix-center-backend/client/invite/url/param');
       if (isH5) {
-        const url = `https://xgn-h5.fuzfu.net/#/pages/jobList/jobList?scene=${res.data}`;
-        clipboard.current = new Clipboard('#copyCode', {
+        const url = `https://xgn-h5.fuzfu.net/#/pages/jobList/jobList?scene=${param}`;
+        const clipboard = new Clipboard('#copyCode', {
           text: () => {
             return url;
           }
         });
-        clipboard.current.on('success', function (e) {
+        clipboard.on('success', function (e) {
           showToast({
             title: `成功复制到剪贴板`,
             icon: 'none',
           })
-          clipboard.current.destroy(); 
+          clipboard.destroy(); 
         });
-        clipboard.current.on('error', function (e) {
+        clipboard.on('error', function (e) {
           showToast({
             title: '复制失败',
             icon: 'none',
           })
         });
-        if(isFirst.current){
-          isFirst.current = false;
-          document.getElementById('copyCode').click();
-        }
       } else {
         Taro.navigateTo({
           url: '/packageA/pages/savePoster/index'
@@ -132,6 +130,17 @@ const Invitation = () => {
     Taro.navigateTo({
       url: '/packageA/pages/inviteRecord/index'
     })
+  }
+  const fetchParam = async () => {
+    try {
+    const res =  await  httpRequest.get('phoenix-center-backend/client/invite/url/param');
+      if (res.code !== 0) {
+        throw new Error(res.msg);
+      }
+      setParam(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
   useShareAppMessage(async () => {
     if (!auth.info.token) {
@@ -153,7 +162,6 @@ const Invitation = () => {
     }
   }
   )
-  
   useDidShow(() => {
     getInviteStatistics();
     getInviteEnum();
@@ -163,11 +171,11 @@ const Invitation = () => {
         inviteAward: getRandom(money),
       })
     }, 5000)
+    auth.info.token && isH5 && fetchParam();
   })
   useDidHide(() => {
     clearInterval(timer.current);
   })
-  
   return (
     <View className={styles.container} style={{ backgroundImage: `url(${backgroundImg.base})` }}>
       <View className={styles.tipsContainer}>
@@ -199,7 +207,7 @@ const Invitation = () => {
           {
             inviteEnum?.map((p, index) => {
               return (
-                <View className='red-packet-item'>
+                <View className='red-packet-item' key={index}>
                   <View className='red-packet'>{p.award + '元'}</View>
                   <View className={`red-packet-separator ${index === 0 ? 'first' : null} ${index === inviteEnum.length ? 'last' : null}`}></View>
                   <View className='red-packet-title'>{p.desc}</View>
@@ -208,8 +216,8 @@ const Invitation = () => {
             })
           }
         </View>
-        <View className={isH5 ? styles['activity-button-h5'] : styles['activity-button']} id='inviteCode'>
-          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick} id='copyCode' data-clipboard-target='#inviteCode' ><Text>复制分享链接到剪切板</Text></View> :
+        <View className={isH5 ? styles['activity-button-h5'] : styles['activity-button']} >
+          {isH5 ? <View className={styles['activity-button-saveH5']} onClick={handleClick} id='copyCode'><Text>复制分享链接到剪切板</Text></View> :
             (
               <>
                 <View className={styles['activity-button-save']} onClick={handleClick} ><Text>保存海报</Text></View>

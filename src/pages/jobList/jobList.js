@@ -56,6 +56,7 @@ const Index = () => {
     type: 'ALL',
   });
   const [statusHeight, setStatusHeight] = useState(0);
+  const isFirst = useRef(true);
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const { scene,channelCode} = router.params;
@@ -98,6 +99,7 @@ const Index = () => {
         data: {
           mobile: auth.realInfo.realMobile,
           name: auth.realInfo.realName,
+          idNo: auth.realInfo.idNo,
           platform,
         }
       });
@@ -226,13 +228,10 @@ const Index = () => {
   useEffect(() => {
     handleAuthLocation();
     getPopAds();
-    handleHomePage();
+    !isH5 && getNavHeight();
+    isFirst.current && handleHomePage();
+    isFirst.current = false;
   },[]);
-  useEffect(() => {
-    if (!isH5) {
-      getNavHeight();
-    }
-  }, [])
   const handleScrollToLower = () =>{
     setPagination({
       ...pagination,
@@ -334,5 +333,4 @@ const Index = () => {
     </View>
   )
 };
-
 export default observer(Index);

@@ -15,6 +15,7 @@ class Auth{
     completeInfo: Taro.getStorageSync(storageKeys.completeInfo),
     realMobile: Taro.getStorageSync(storageKeys.realMobile),
     realName: Taro.getStorageSync(storageKeys.realName),
+    idNo: Taro.getStorageSync(storageKeys.idNo),
   }
   constructor() {
     makeAutoObservable(this);
@@ -32,6 +33,7 @@ class Auth{
     this.realInfo.completeInfo = obj?.completeInfo;
     this.realInfo.realMobile = obj?.mobile;
     this.realInfo.realName = obj?.name;
+    this.realInfo.idNo = obj?.idNo;
   }
   clearInfo() {
     this.info = {

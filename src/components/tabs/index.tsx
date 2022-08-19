@@ -14,12 +14,12 @@ const Tabs: React.FC<Props> = (
 }
 ) => {
   return (
-    <view className='tabs'>
-      <view  className='tab-content' style={{overflowX:'scroll',width:'100%'}}>
+    <View className='tabs'>
+      <View  className='tab-content' style={{overflowX:'scroll',width:'100%'}}>
         {
            tabList.map((item, index) => {
             return (
-              <view className='tab-horizontal tab-item' style={tabStyle}>
+              <View className='tab-horizontal tab-item' style={tabStyle} key={index}>
                 <View
                   onClick={() => onTabClick(index, item)}
                   className={`${current === index ? 'tab-item-active' : 'tab-item-inactive'}`}
@@ -38,22 +38,22 @@ const Tabs: React.FC<Props> = (
                 {
                   extra && current === index ? extra : (<View className={current === index ? 'tab-line':'tab-empty'}></View>)
                 }
-              </view>
+              </View>
             )
           })
         }
-      </view>
+      </View>
       <Swiper className='panel-content' current={current} onChange={(event)=>{ onTabClick(event?.detail?.current) }}>
         {
           children?.constructor === Array ? children.map((item, index) => (
-            <SwiperItem key={index}>
+            <SwiperItem>
               {item}
             </SwiperItem>
             )
           ): (<SwiperItem>{children}</SwiperItem>)
         }
       </Swiper>
-    </view>
+    </View>
   )
 }
 export const TabsPanel = (props) => {

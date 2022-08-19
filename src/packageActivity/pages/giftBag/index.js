@@ -81,6 +81,7 @@ const Invitation = () => {
         data: {
           mobile: auth.realInfo.realMobile,
           name: auth.realInfo.realName,
+          idNo: auth.realInfo.idNo,
           platform,
         }
       });
