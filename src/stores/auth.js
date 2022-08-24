@@ -47,6 +47,7 @@ class Auth{
       completeInfo: false,
       realMobile: '',
       realName: '',
+      idNo: '',
     }
   }
 };

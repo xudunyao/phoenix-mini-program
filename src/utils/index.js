@@ -1,3 +1,3 @@
 export { default as httpRequest , getBaseUrl} from './httpRequest';
-export { templateIdQuery, getOverview, getUserInfo } from './common';
+export { templateIdQuery, getOverview, getUserInfo, setScene } from './common';
 export { getStorageSync, removeStorageSync } from './storage';

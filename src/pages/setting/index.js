@@ -20,6 +20,8 @@ const Setting = () => {
         Taro.removeStorageSync(storageKeys.completeInfo);
         Taro.removeStorageSync(storageKeys.realMobile);
         Taro.removeStorageSync(storageKeys.realName);
+        Taro.removeStorageSync(storageKeys.idNo);
+        Taro.removeStorageSync(storageKeys.isFirst);
         auth.clearInfo();
         Taro.reLaunch({
           url: '../jobList/jobList',

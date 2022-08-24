@@ -11,4 +11,5 @@ export default {
   longitude: 'longitude',
   latitude: 'latitude',
   idNo: 'idNo',
+  isFirst: 'isFirst',
 }

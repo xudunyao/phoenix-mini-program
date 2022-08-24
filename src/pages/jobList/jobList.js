@@ -56,7 +56,6 @@ const Index = () => {
     type: 'ALL',
   });
   const [statusHeight, setStatusHeight] = useState(0);
-  const isFirst = useRef(true);
   const isH5 = process.env.TARO_ENV === 'h5';
   const router = useRouter();
   const { scene,channelCode} = router.params;
@@ -73,8 +72,8 @@ const Index = () => {
     });
   };
   const getNavHeight =() =>{
-    const sysinfo = Taro.getSystemInfoSync(); 
-    const statusBarHeight = sysinfo.statusBarHeight; 
+    const info = Taro.getSystemInfoSync(); 
+    const statusBarHeight = info.statusBarHeight; 
     setStatusHeight(statusBarHeight);
   };
   const closeDialog = (v, params) => {
@@ -142,9 +141,6 @@ const Index = () => {
       console.log('err',err)
     }
   }
-  const handleCloseAdvert = () => {
-    setAdvertVisible(false);
-  }
   const handleHomePage = async () => {
     const pages = Taro.getCurrentPages();
     const currentPage = pages[pages.length - 1];
@@ -152,7 +148,7 @@ const Index = () => {
     try {
       const res = await httpRequest.post(`phoenix-center-backend/client/noauth/track/record`,{
         data: {
-          page: url || 'page/jobList/jobList',
+          page: url || 'pages/jobList/jobList',
           memberId: auth?.info.userid,
           event: 'home_page_view',
           type: process.env.TARO_ENV === 'h5' ? 'H5' : 'MINI_PROGRAM',
@@ -164,6 +160,7 @@ const Index = () => {
       if (res?.code !== 0) {
         throw new Error(res.msg);
       }
+      Taro.setStorageSync(storageKeys.isFirst,false);
     } catch (err) {
       console.log('err',err)
     }
@@ -229,8 +226,7 @@ const Index = () => {
     handleAuthLocation();
     getPopAds();
     !isH5 && getNavHeight();
-    isFirst.current && handleHomePage();
-    isFirst.current = false;
+    Taro.getStorageSync(storageKeys.isFirst) && handleHomePage();
   },[]);
   const handleScrollToLower = () =>{
     setPagination({
@@ -265,7 +261,7 @@ const Index = () => {
       </ScrollView>
       <AdvertModal
         visible={advertVisible}
-        onClose={handleCloseAdvert}
+        onClose={() => { setAdvertVisible(false) }}
         imageUrl={popAds?.imageUrl}
         jumpUrl={popAds?.jumpUrl}
         id={popAds?.id}

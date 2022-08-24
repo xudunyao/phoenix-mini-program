@@ -57,3 +57,20 @@ export const getUserInfo = async () => {
     console.log(err);
   }
 };
+export const setScene = ( children, router ) => {
+  const isH5 = process.env.TARO_ENV === 'h5';
+  if (isH5) {
+    const { scene } = router;
+    scene && Taro.setStorageSync(storageKeys.scene, scene);
+  }else{
+    const url = children[children?.length - 1]?.key;
+    const sceneParams = url ? url?.split('?')[1] : '';
+    const sceneObj = {}
+    sceneParams.split('&').forEach(item => {
+      const [key, value] = item.split('=')
+      sceneObj[key] = value
+    })
+    sceneObj?.scene && Taro.setStorageSync(storageKeys.scene, sceneObj.scene);
+  }
+}
+
