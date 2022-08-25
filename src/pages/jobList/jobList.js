@@ -44,7 +44,6 @@ const Index = () => {
   const [tabCurrent, setTabCurrent] = useState(0);
   const [visible, setVisible] = useState(false);
   const [signVisible, setSignVisible] = useState(false);
-  const [loginVisible, setLoginVisible] =useState(false);
   const [advertVisible,setAdvertVisible] = useState(false);
   const [imageBanners, setImageBanners] = useState([]);
   const [popAds, setPopAds] = useState({});
@@ -79,14 +78,15 @@ const Index = () => {
   const closeDialog = (v, params) => {
     if(v){
       if(v==='login'){
-        setLoginVisible(true);
+        Taro.navigateTo({
+          url: '../loginGuide/index'
+        })
       } else if(v === 'success') {
         setVisible(true);
       } else {
         setSignVisible(true)
       }
     } else {
-      setLoginVisible(false);
       setVisible(false);
       setSignVisible(false);
     }
@@ -278,29 +278,6 @@ const Index = () => {
         onClose={() => { 
           setVisible(false);
         }}
-      />
-      <Dialog 
-        maskClosable
-        visible={loginVisible}
-        content='您还未登录'
-        actions={
-          [{
-            title: '下次再说',
-            onClick: () =>{ setLoginVisible(false) },
-            type: 'default',
-            size: 'mini'
-          }, {
-            title: '去登录',
-            onClick: () =>{
-            setLoginVisible(false)
-            Taro.navigateTo({
-            url: '../loginGuide/index'
-          })
-          },
-          type: 'primary',
-          size: 'mini'
-        }]
-        }
       />
       <Dialog 
         maskClosable

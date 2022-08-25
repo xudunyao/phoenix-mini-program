@@ -21,7 +21,6 @@ const Position = () => {
   const [shareCode, setShareCode] = useState();
   const [positionObj, setPositionObj] = useState({});
   const [visible, setVisible] = useState(false);
-  const [loginVisible, setLoginVisible] = useState(false);
   const [signVisible, setSignVisible] = useState(false);
   const token = auth.info.token;
   const platform = process.env.TARO_ENV;
@@ -101,7 +100,9 @@ const Position = () => {
         console.log(err);
       }
     } else {
-      setLoginVisible(true);
+      Taro.navigateTo({
+        url: '../loginGuide/index'
+      })
     }
   };
   const handleCall = () => {
@@ -240,7 +241,7 @@ const Position = () => {
                 token ? (
                   <Button className={styles.share} openType='share' />
                 ) : (
-                  <Button className={styles.share} onClick={() => setLoginVisible(true)} />
+                  <Button className={styles.share} onClick={() => { Taro.navigateTo({url: '../loginGuide/index'})}} />
                 )
               }
               
@@ -262,29 +263,6 @@ const Position = () => {
         onClose={() => { 
           setVisible(false);
         }}
-      />
-      <Dialog 
-        maskClosable
-        visible={loginVisible}
-        content='您还未登录'
-        actions={
-          [{
-            title: '下次再说',
-            onClick: () =>{ setLoginVisible(false) },
-            type: 'default',
-            size: 'mini'
-          }, {
-            title: '去登录',
-            onClick: () =>{
-              setLoginVisible(false)
-              Taro.navigateTo({
-                url: '../loginGuide/index'
-              })
-            },
-            type: 'primary',
-            size: 'mini'
-          }]
-        }
       />
       <Dialog 
         maskClosable
