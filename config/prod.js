@@ -4,8 +4,8 @@ module.exports = {
   },
   defineConstants: {
     // uat用于小程序预览环境
-    //API_ENDPOINT_UAT: '"https://xgn-gateway-uat.fuzfu.net/"',
-    API_ENDPOINT_UAT: '"https://xgn-gateway.fuzfu.net/"',
+    API_ENDPOINT_UAT: '"https://xgn-gateway-uat.fuzfu.net/"',
+    // API_ENDPOINT_UAT: '"https://xgn-gateway.fuzfu.net/"',
     API_ENDPOINT: '"https://xgn-gateway.fuzfu.net/"',
   },
   mini: {},
