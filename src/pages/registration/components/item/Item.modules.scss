@@ -11,6 +11,35 @@
   display: flex;
   justify-content: space-between;
 }
+.head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status_signUP{
+  line-height: 20Px;
+  background: linear-gradient(187deg, #DDDDDD 0%, #C9C9C9 100%);
+  border-radius: 2px;
+  padding: 0 3Px;
+}
+.status_EMPLOYMENT{
+  line-height: 20Px;
+  background: linear-gradient(186deg, #8DF4BB 0%, #12D47F 100%);
+  border-radius: 2px;
+  padding: 0 3Px;
+}
+.status_JOINED_ON{
+  line-height: 20Px;
+  background: linear-gradient(191deg, #7BC7FF 0%, #5088FB 100%);
+  border-radius: 2px;
+  padding: 0 3Px;
+}
+.status_INTERVIEW{
+  line-height: 20Px;
+  background: linear-gradient(188deg, #FFC955 0%, #FF9A17 100%);
+  border-radius: 2px;
+  padding: 0 3Px;
+}
 .title{
   max-width: 210Px;
   font-size: 16Px;
